@@ -1,5 +1,5 @@
 /*
- * System may restart on shutdown without this SSDT on macOS
+ * System may restart on shutdown without this SSDT on macOS.
  */
 DefinitionBlock ("", "SSDT", 2, "What", "PTS", 0x00000000)
 {
