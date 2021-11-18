@@ -1,5 +1,10 @@
 /*
  * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A and fixes RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A.
+ * More exploration is needed with RTC to on regular shutdown, sleep, and reboot and to support hibernation.
+ * https://github.com/acidanthera/bugtracker/issues/765
+ * Currently resuming from hibernation throws RTC clock error and on shutdown or restart thereafter.
+ * Without this SSDT, 0xDF region can be emulated with RTCMemoryFixup on kernel and blacklisted with OpenCore on firmware which reduces the chance of receiving RTC clock error.
+ *
  * IRQs are removed to match MacBookPro14,1.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
