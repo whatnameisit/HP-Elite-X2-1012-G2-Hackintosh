@@ -5,3 +5,4 @@
 - https://github.com/al3xtjames/ThunderboltPkg
 - https://github.com/the-darkvoid/macOS-IOElectrify
 - https://github.com/benbender/x1c6-hackintosh/tree/experimental/EFI/OC/dsl
+- https://github.com/khronokernel/DarwinDumped/blob/master/MacBookPro/MacBookPro14%2C1/ACPI%20Tables/DSL/SSDT-4.dsl
