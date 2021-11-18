@@ -60,80 +60,87 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
     External (_SB_.PCI0.LPCB.EC0_.XTST, MethodObj)    // 0 Arguments
     External (_SB_.XTIX, MethodObj)    // 0 Arguments
     External (_TZ_.XXGC, MethodObj)    // 0 Arguments
+    External (OSDW, MethodObj)    // 0 Arguments
 
     Scope (\)
     {
-        Method (R16B, 2, NotSerialized)
+        If (OSDW ())
         {
-            Return ((Arg0 | (Arg1 << 0x08)))
+            Method (R16B, 2, NotSerialized)
+            {
+                Return ((Arg0 | (Arg1 << 0x08)))
+            }
         }
     }
 
     Scope (_SB.PCI0.LPCB.EC0)
     {
-        OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
-        Field (ERM2, ByteAcc, NoLock, Preserve)
+        If (OSDW ())
         {
-            Offset (0x89), 
-            DC00,   8, 
-            DC01,   8, 
-            Offset (0x8D), 
-            FC00,   8, 
-            FC01,   8, 
-            TE00,   8, 
-            TE01,   8, 
-            Offset (0x92), 
-            ME00,   8, 
-            ME01,   8, 
-            Offset (0x95), 
-            DV00,   8, 
-            DV01,   8, 
-            CA00,   8, 
-            CA01,   8, 
-            Offset (0x9B), 
-            BE00,   8, 
-            BE01,   8, 
-            PR00,   8, 
-            PR01,   8, 
-            CR00,   8, 
-            CR01,   8, 
-            RC00,   8, 
-            RC01,   8, 
-            CC00,   8, 
-            CC01,   8, 
-            PV00,   8, 
-            PV01,   8, 
-            CB00,   8, 
-            CB01,   8, 
-            CD00,   8, 
-            CD01,   8, 
-            CE00,   8, 
-            CE01,   8, 
-            Offset (0xAF), 
-            TF00,   8, 
-            TF01,   8, 
-            Offset (0xB3), 
-            XC00,   8, 
-            XC01,   8, 
-            Offset (0xBA), 
-            TS00,   8, 
-            TS01,   8, 
-            Offset (0xC9), 
-            SN00,   8, 
-            SN01,   8, 
-            AT00,   8, 
-            AT01,   8, 
-            Offset (0xE1), 
-            BT00,   8, 
-            BT01,   8, 
-            Offset (0xF9), 
-            CP00,   8, 
-            CP01,   8
+            OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
+            Field (ERM2, ByteAcc, NoLock, Preserve)
+            {
+                Offset (0x89), 
+                DC00,   8, 
+                DC01,   8, 
+                Offset (0x8D), 
+                FC00,   8, 
+                FC01,   8, 
+                TE00,   8, 
+                TE01,   8, 
+                Offset (0x92), 
+                ME00,   8, 
+                ME01,   8, 
+                Offset (0x95), 
+                DV00,   8, 
+                DV01,   8, 
+                CA00,   8, 
+                CA01,   8, 
+                Offset (0x9B), 
+                BE00,   8, 
+                BE01,   8, 
+                PR00,   8, 
+                PR01,   8, 
+                CR00,   8, 
+                CR01,   8, 
+                RC00,   8, 
+                RC01,   8, 
+                CC00,   8, 
+                CC01,   8, 
+                PV00,   8, 
+                PV01,   8, 
+                CB00,   8, 
+                CB01,   8, 
+                CD00,   8, 
+                CD01,   8, 
+                CE00,   8, 
+                CE01,   8, 
+                Offset (0xAF), 
+                TF00,   8, 
+                TF01,   8, 
+                Offset (0xB3), 
+                XC00,   8, 
+                XC01,   8, 
+                Offset (0xBA), 
+                TS00,   8, 
+                TS01,   8, 
+                Offset (0xC9), 
+                SN00,   8, 
+                SN01,   8, 
+                AT00,   8, 
+                AT01,   8, 
+                Offset (0xE1), 
+                BT00,   8, 
+                BT01,   8, 
+                Offset (0xF9), 
+                CP00,   8, 
+                CP01,   8
+            }
         }
 
         Method (GACW, 0, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Local0 = Zero
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
@@ -153,7 +160,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (GBAW, 0, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Local0 = Zero
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
@@ -180,7 +187,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (BTIF, 1, Serialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Local7 = (One << Arg0)
                 BTDR (One)
@@ -234,7 +241,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (BTST, 2, Serialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Local7 = (One << Arg0)
                 BTDR (One)
@@ -325,7 +332,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (ITLB, 0, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
                 Divide (Local0, 0x64, Local3, Local4)
@@ -347,7 +354,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (GBTI, 1, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Debug = "Enter getbattinfo"
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
@@ -494,7 +501,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (GBTC, 0, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Debug = "Enter GetBatteryControl"
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
@@ -589,7 +596,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Method (SBTC, 3, NotSerialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Debug = "Enter SetBatteryControl"
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
@@ -904,7 +911,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         {
             If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
             {
-                If (_OSI ("Darwin"))
+                If (OSDW ())
                 {
                     Local7 = (One << Arg0)
                     BTDR (One)
@@ -980,7 +987,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
                 If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
-                    If (_OSI ("Darwin"))
+                    If (OSDW ())
                     {
                         \_SB.PCI0.LPCB.EC0.BSEL = Arg0
                         DerefOf (NBIX [Arg0]) [0x02] = R16B (DC00, DC01)
@@ -1029,7 +1036,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
     {
         Method (GCGC, 0, Serialized)
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Name (LTMP, Buffer (0x02){})
                 If (\_SB.PCI0.LPCB.EC0.ECRG)

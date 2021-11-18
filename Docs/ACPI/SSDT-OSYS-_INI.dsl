@@ -6,11 +6,12 @@
 DefinitionBlock ("", "SSDT", 2, "what", "WScreen", 0x00000000)
 {
     External (_SB_.PCI0.XINI, MethodObj)    // 0 Arguments
+    External (OSDW, MethodObj)    // 0 Arguments
     External (OSYS, FieldUnitObj)
 
     Method (\_SB.PCI0._INI, 0, Serialized)  // _INI: Initialize
     {
-        If (_OSI ("Darwin"))
+        If (OSDW ())
         {
             OSYS = 0x07DF
         }

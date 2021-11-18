@@ -1,8 +1,8 @@
 /*
- * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A and fixes RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A.
+ * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A and tries to fix RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A.
  * More exploration is needed with RTC to on regular shutdown, sleep, and reboot and to support hibernation.
  * https://github.com/acidanthera/bugtracker/issues/765
- * Currently resuming from hibernation throws RTC clock error and on shutdown or restart thereafter.
+ * Currently shutdown, restart, or resuming from hibernation throws RTC clock error by chance.
  * Without this SSDT, 0xDF region can be emulated with RTCMemoryFixup on kernel and blacklisted with OpenCore on firmware which reduces the chance of receiving RTC clock error.
  *
  * IRQs are removed to match MacBookPro14,1.
@@ -13,12 +13,13 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
     External (_SB_.PCI0.LPCB.RTC_, DeviceObj)
     External (_SB_.PCI0.LPCB.RTC_.XSTA, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.TIMR, DeviceObj)
+    External (OSDW, MethodObj)    // 0 Arguments
 
     Scope (\_SB.PCI0.LPCB)
     {
         Method (RTC._STA, 0, NotSerialized)  // _STA: Status
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Return (Zero)
             }
@@ -35,7 +36,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
 
         Method (TIMR._STA, 0, NotSerialized)  // _STA: Status
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Return (Zero)
             }
@@ -54,12 +55,12 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
                     0x0070,             // Range Minimum
                     0x0070,             // Range Maximum
                     0x01,               // Alignment
-                    0x02,               // Length
+                    0x08,               // Length
                     )
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                If (_OSI ("Darwin"))
+                If (OSDW ())
                 {
                     Return (0x0F)
                 }
