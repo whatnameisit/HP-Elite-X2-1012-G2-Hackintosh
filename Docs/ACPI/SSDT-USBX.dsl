@@ -1,5 +1,5 @@
 /*
- * This SSDT allows charging from USB in macOS.
+ * This SSDT allows charging from USB by injecting current supply properties in macOS.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "_USBX", 0x00001000)
 {
