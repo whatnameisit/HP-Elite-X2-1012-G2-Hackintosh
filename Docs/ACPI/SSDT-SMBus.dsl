@@ -1,13 +1,35 @@
 /*
  * This SSDT allows SMBus compatibility on macOS.
- * Note that Device MCHC is not defined because the device is physically not present.
- * Testing on different BIOS versions may be useful.
- * 01.29 has the physical device present found here: https://www.tonymacx86.com/threads/guide-hp-elite-x2-1012-g1-g2-clover-uefi-virtualsmc-hot-patch.276500/page-18#post-2020655.
+ * Note that Device MCHC is defined only if the device is not already occupied by the name DSC1.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 {
+    External (_SB_.PCI0, DeviceObj)
+    External (_SB_.PCI0.DSC1, DeviceObj)
     External (_SB_.PCI0.SBUS, DeviceObj)
     External (OSDW, MethodObj)    // 0 Arguments
+
+    Scope (_SB.PCI0)
+    {
+        If ((OSDW () && ~CondRefOf (DSC1)))
+        {
+            Device (MCHC)
+            {
+                Name (_ADR, Zero)  // _ADR: Address
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    If (OSDW ())
+                    {
+                        Return (0x0F)
+                    }
+                    Else
+                    {
+                        Return (Zero)
+                    }
+                }
+            }
+        }
+    }
 
     Device (_SB.PCI0.SBUS.BUS0)
     {
