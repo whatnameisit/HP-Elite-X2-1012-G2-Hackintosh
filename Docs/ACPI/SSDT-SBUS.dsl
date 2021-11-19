@@ -1,6 +1,8 @@
 /*
  * This SSDT allows SMBus compatibility on macOS.
  * Note that Device MCHC is not defined because the device is physically not present.
+ * Testing on different BIOS versions may be useful.
+ * 01.29 has the physical device present found here: https://www.tonymacx86.com/threads/guide-hp-elite-x2-1012-g1-g2-clover-uefi-virtualsmc-hot-patch.276500/page-18#post-2020655.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 {
