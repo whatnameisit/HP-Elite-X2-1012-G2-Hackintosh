@@ -3,7 +3,8 @@
  * More exploration is needed with RTC to on regular shutdown, sleep, and reboot and to support hibernation.
  * https://github.com/acidanthera/bugtracker/issues/765
  * Currently shutdown, restart, or resuming from hibernation throws RTC clock error by chance.
- * Without this SSDT, 0xDF region can be emulated with RTCMemoryFixup on kernel and blacklisted with OpenCore on firmware which reduces the chance of receiving RTC clock error.
+ * 
+ * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart. Hibernation wtill still show the very error.
  *
  * IRQs are removed to match MacBookPro14,1.
  */
