@@ -11,13 +11,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00000000)
 
     Method (\_SB.PCI0._INI, 0, Serialized)  // _INI: Initialize
     {
+        XINI ()
         If (OSDW ())
         {
             OSYS = 0x07DF
-        }
-        Else
-        {
-            \_SB.PCI0.XINI ()
         }
     }
 }
