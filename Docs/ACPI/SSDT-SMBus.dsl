@@ -18,14 +18,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
                 Name (_ADR, Zero)  // _ADR: Address
                 Method (_STA, 0, NotSerialized)  // _STA: Status
                 {
-                    If (OSDW ())
-                    {
-                        Return (0x0F)
-                    }
-                    Else
-                    {
-                        Return (Zero)
-                    }
+                    Return (0x0F)
                 }
             }
         }
