@@ -1,5 +1,11 @@
 /*
  * This SSDT fixes immediate wake from entering sleep.
+ *
+ * config.plist ACPI/Patch
+ * Comment: Fix sleep: M(GPRW) to XPRW
+ * Count:   1
+ * Find:    47 50 52 57 02
+ * Replace: 58 50 52 57 02
  */
 DefinitionBlock ("", "SSDT", 2, "what", "GPRW", 0x00000000)
 {

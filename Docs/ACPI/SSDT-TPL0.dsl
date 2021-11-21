@@ -1,6 +1,17 @@
 /*
  * This SSDT allows Wacom touchscreen to function correctly after sleep.
  * Correct power management would have to be implemented in VoodooI2C or its satellite kexts so the Methods _PSx would not be modified.
+ *
+ * config.plist ACPI/Patch
+ * Comment: Fix touchscreen: M(_PS0) to XPS0 in TPL0
+ * Count:   1
+ * Find:    5F 50 53 30 08 53 47
+ * Replace: 58 50 53 30 08 53 47
+ *
+ * Comment: Fix touchscreen: M(_PS3) to XPS3 in TPL0
+ * Count:   1
+ * Find:    5F 50 53 33 08 53 47
+ * Replace: 58 50 53 33 08 53 47
  */
 DefinitionBlock ("", "SSDT", 2, "what", "WScreen", 0x00000000)
 {

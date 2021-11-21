@@ -1,5 +1,11 @@
 /*
  * System may restart on shutdown without this SSDT on macOS.
+ *
+ * config.plist ACPI/Patch
+ * Comment: Fix restart from shutdown: M(_PTS) to ZPTS
+ * Count:   1
+ * Find:    5F 50 54 53 01
+ * Replace: 5A 50 54 53 01
  */
 DefinitionBlock ("", "SSDT", 2, "What", "PTS", 0x00000000)
 {

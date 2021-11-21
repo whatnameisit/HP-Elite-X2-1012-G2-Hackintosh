@@ -6,6 +6,13 @@
  *
  * This SSDT implements the latter method which is not expected in macOS; therefore, there are issues with sleep and wake.
  * Porting Thunderbolt 3 code from a Mac and initializing the devices like it is on macOS is the real fix.
+ * https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/blob/main/Docs/Thunderbolt3.md
+ *
+ * config.plist ACPI/Patch
+ * Comment: Enable USB-C hotplug: M(_RMV) to XRMV
+ * Count:   1
+ * Find:    31 50 58 53 58 14 0B 5F 52 4D 56
+ * Replace: 31 50 58 53 58 14 0B 58 52 4D 56
  */
 DefinitionBlock ("", "SSDT", 2, "what", "hotplg", 0x00000000)
 {

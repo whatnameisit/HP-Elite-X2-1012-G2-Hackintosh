@@ -7,6 +7,12 @@
  * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart. Hibernation wtill still show the very error.
  *
  * IRQs are removed to match MacBookPro14,1.
+ *
+ * config.plist ACPI/Patch
+ * Comment: Enable legacy RTC device on macOS
+ * Count:   1
+ * Find:    5F 53 54 41 00 A0 0A 93 53 54 41 53 01
+ * Replace: 58 53 54 41 00 A0 0A 93 53 54 41 53 01
  */
 DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
 {
