@@ -1,7 +1,7 @@
 /*
  * This SSDT contains methods that can be used in other code to make it specific to macOS.
  */
-DefinitionBlock ("", "SSDT", 2, "OSY86 ", "OsxDet", 0x00001000)
+DefinitionBlock ("", "SSDT", 2, "what", "OsxDet", 0x00001000)
 {
     Method (DTGP, 5, NotSerialized)
     {
