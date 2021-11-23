@@ -6,8 +6,8 @@
  * config.plist ACPI/Patch
  * Comment: Enable battery reading: M(_BIX) to XBIX
  * Count:   1
- * Find:    5F 42 49 58
- * Replace: 58 42 49 58
+ * Find:    5F 42 49 58 00
+ * Replace: 58 42 49 58 00
  *
  * Comment: Enable battery reading: M(BTIF) to XTIF
  * Count:   1
