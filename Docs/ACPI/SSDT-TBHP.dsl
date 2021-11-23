@@ -5,7 +5,7 @@
  * On a Windows PC, the controllers are not powered on until a device attaches to it.
  *
  * This SSDT implements the latter method which is not expected in macOS; therefore, there are issues with sleep and wake.
- * Porting Thunderbolt 3 code from a Mac and initializing the devices like it is on macOS is the real fix.
+ * Porting Thunderbolt 3 code from a Mac and initializing the controllers like they do on macOS is the real fix.
  * https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/blob/main/Docs/Thunderbolt3.md
  *
  * config.plist ACPI/Patch
