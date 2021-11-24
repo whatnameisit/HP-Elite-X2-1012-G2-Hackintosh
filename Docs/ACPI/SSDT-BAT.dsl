@@ -96,10 +96,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
     External (_SB_.PCI0.LPCB.EC0_.INCH, FieldUnitObj)
     External (_SB_.PCI0.LPCB.EC0_.LB1_, FieldUnitObj)
     External (_SB_.PCI0.LPCB.EC0_.LB2_, FieldUnitObj)
+    External (_SB_.PCI0.LPCB.EC0_.NBGX, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NDCB, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NGBF, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NGBT, IntObj)
-    External (_SB_.PCI0.LPCB.EC0_.NGBX, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NLB1, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NLB2, IntObj)
     External (_SB_.PCI0.LPCB.EC0_.NLO2, IntObj)
@@ -116,82 +116,76 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
     External (_SB_.PCI0.LPCB.EC0_.XTST, MethodObj)    // 0 Arguments
     External (_SB_.XTIX, MethodObj)    // 0 Arguments
     External (_TZ_.XXGC, MethodObj)    // 0 Arguments
-    External (OSDW, MethodObj)    // 0 Arguments
+    External (OSDW, MethodObj)
 
     Scope (\)
     {
-        If (OSDW ())
+        Method (R16B, 2, NotSerialized)
         {
-            Method (R16B, 2, NotSerialized)
-            {
-                Return ((Arg0 | (Arg1 << 0x08)))
-            }
+            Return ((Arg0 | (Arg1 << 0x08)))
         }
     }
 
     Scope (_SB.PCI0.LPCB.EC0)
     {
-        If (OSDW ())
+        OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
+        Field (ERM2, ByteAcc, NoLock, Preserve)
         {
-            OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
-            Field (ERM2, ByteAcc, NoLock, Preserve)
-            {
-                Offset (0x89), 
-                DC00,   8, 
-                DC01,   8, 
-                Offset (0x8D), 
-                FC00,   8, 
-                FC01,   8, 
-                TE00,   8, 
-                TE01,   8, 
-                Offset (0x92), 
-                ME00,   8, 
-                ME01,   8, 
-                Offset (0x95), 
-                DV00,   8, 
-                DV01,   8, 
-                CA00,   8, 
-                CA01,   8, 
-                Offset (0x9B), 
-                BE00,   8, 
-                BE01,   8, 
-                PR00,   8, 
-                PR01,   8, 
-                CR00,   8, 
-                CR01,   8, 
-                RC00,   8, 
-                RC01,   8, 
-                CC00,   8, 
-                CC01,   8, 
-                PV00,   8, 
-                PV01,   8, 
-                CB00,   8, 
-                CB01,   8, 
-                CD00,   8, 
-                CD01,   8, 
-                CE00,   8, 
-                CE01,   8, 
-                Offset (0xAF), 
-                TF00,   8, 
-                TF01,   8, 
-                Offset (0xB3), 
-                XC00,   8, 
-                XC01,   8, 
-                Offset (0xBA), 
-                TS00,   8, 
-                TS01,   8, 
-                Offset (0xC9), 
-                SN00,   8, 
-                SN01,   8, 
-                AT00,   8, 
-                AT01,   8, 
-                Offset (0xE1), 
-                BT00,   8, 
-                BT01,   8, 
-                Offset (0xF9), 
-                CP00,   8, 
-                CP01,   8
-            }
+            Offset (0x89), 
+            DC00,   8, 
+            DC01,   8, 
+            Offset (0x8D), 
+            FC00,   8, 
+            FC01,   8, 
+            TE00,   8, 
+            TE01,   8, 
+            Offset (0x92), 
+            ME00,   8, 
+            ME01,   8, 
+            Offset (0x95), 
+            DV00,   8, 
+            DV01,   8, 
+            CA00,   8, 
+            CA01,   8, 
+            Offset (0x9B), 
+            BE00,   8, 
+            BE01,   8, 
+            PR00,   8, 
+            PR01,   8, 
+            CR00,   8, 
+            CR01,   8, 
+            RC00,   8, 
+            RC01,   8, 
+            CC00,   8, 
+            CC01,   8, 
+            PV00,   8, 
+            PV01,   8, 
+            CB00,   8, 
+            CB01,   8, 
+            CD00,   8, 
+            CD01,   8, 
+            CE00,   8, 
+            CE01,   8, 
+            Offset (0xAF), 
+            TF00,   8, 
+            TF01,   8, 
+            Offset (0xB3), 
+            XC00,   8, 
+            XC01,   8, 
+            Offset (0xBA), 
+            TS00,   8, 
+            TS01,   8, 
+            Offset (0xC9), 
+            SN00,   8, 
+            SN01,   8, 
+            AT00,   8, 
+            AT01,   8, 
+            Offset (0xE1), 
+            BT00,   8, 
+            BT01,   8, 
+            Offset (0xF9), 
+            CP00,   8, 
+            CP01,   8
         }
 
         Method (GACW, 0, NotSerialized)
@@ -992,69 +986,16 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 }
             })
         }
+    }
 
-        // Paired with M(BTIX) to XTIX on 01.39Rev.A.
-        Method (PCI0.LPCB.EC0.BTIX, 1, Serialized)
+    // Paired with M(BTIX) to XTIX on 01.39Rev.A.
+    Method (\_SB.PCI0.LPCB.EC0.BTIX, 1, Serialized)
+    {
+        // If XTIX exists, if on 01.39Rev.A,
+        If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
         {
-           // If XTIX exists, if on 01.39Rev.A,
-           If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
-            {
-                // and the OS is "Darwin", execute the below
-                If (OSDW ())
-                {
-                    Local7 = (One << Arg0)
-                    BTDR (One)
-                    If ((\_SB.PCI0.LPCB.EC0.BSTA (Local7) == 0x0F))
-                    {
-                        Return (0xFF)
-                    }
-
-                    Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-                    Local0 = \_SB.PCI0.LPCB.EC0.NGBX /* External reference */
-                    Release (\_SB.PCI0.LPCB.EC0.BTMX)
-                    If (((Local0 & Local7) == Zero))
-                    {
-                        Return (Zero)
-                    }
-
-                    \_SB.NBST [Arg0] = \_SB.NDBS /* External reference */
-                    Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-                    \_SB.PCI0.LPCB.EC0.NGBT |= Local7
-                    Release (\_SB.PCI0.LPCB.EC0.BTMX)
-                    Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
-                    If (\_SB.PCI0.LPCB.EC0.ECRG)
-                    {
-                        \_SB.PCI0.LPCB.EC0.BSEL = Arg0
-                        DerefOf (NBTE [Arg0]) [0x02] = R16B (DC00, DC01)
-                        DerefOf (NBTE [Arg0]) [0x03] = R16B (FC00, FC01)
-                        DerefOf (NBTE [Arg0]) [0x05] = R16B (DV00, DV01)
-                        Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBTE [Arg0]) [0x06] = Local4
-                        Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBTE [Arg0]) [0x07] = Local4
-                        DerefOf (NBTE [Arg0]) [0x08] = R16B (CC00, CC01)
-                        Local0 = R16B (SN00, SN01)
-                        Local1 = R16B (AT00, AT01)
-                    }
-
-                    Release (\_SB.PCI0.LPCB.EC0.ECMX)
-                    Local2 = \_SB.PCI0.LPCB.EC0.GBSS (Local0, Local1)
-                    DerefOf (NBTE [Arg0]) [0x11] = Local2
-                    Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-                    \_SB.PCI0.LPCB.EC0.NGBX &= ~Local7
-                    Release (\_SB.PCI0.LPCB.EC0.BTMX)
-                    Return (Zero)
-                }
-                // and if the OS is not "Darwin", execute original BTIX.
-                Else
-                {
-                    Return (\_SB.PCI0.LPCB.EC0.XTIX ())
-                }
-            }
-            // If XTIX does not exist, if on 01.25, execute code copied from BTIX on 01.39Rev.A
-            Else
+            // and the OS is "Darwin", execute the below
+            If (OSDW ())
             {
                 Local7 = (One << Arg0)
                 BTDR (One)
@@ -1064,7 +1005,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 }
 
                 Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-                Local0 = \_SB.PCI0.LPCB.EC0.NGBF /* External reference */
+                Local0 = \_SB.PCI0.LPCB.EC0.NBGX /* External reference */
                 Release (\_SB.PCI0.LPCB.EC0.BTMX)
                 If (((Local0 & Local7) == Zero))
                 {
@@ -1078,50 +1019,103 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
                 If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
-                    // with a condition that if the OS is "Darwin", execute patched BTIX content
-                    If (OSDW ())
-                    {
-                        \_SB.PCI0.LPCB.EC0.BSEL = Arg0
-                        DerefOf (NBIX [Arg0]) [0x02] = R16B (DC00, DC01)
-                        DerefOf (NBIX [Arg0]) [0x03] = R16B (FC00, FC01)
-                        DerefOf (NBIX [Arg0]) [0x05] = R16B (DV00, DV01)
-                        Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBIX [Arg0]) [0x06] = Local4
-                        Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBIX [Arg0]) [0x07] = Local4
-                        DerefOf (NBIX [Arg0]) [0x08] = R16B (CC00, CC01)
-                        Local0 = R16B (SN00, SN01)
-                        Local1 = R16B (AT00, AT01)
-                    }
-                    // and if the OS is not "Darwin", execute original BTIX content.
-                    Else
-                    {
-                        BSEL = Arg0
-                        DerefOf (NBIX [Arg0]) [0x02] = \_SB.PCI0.LPCB.EC0.BDC /* External reference */
-                        DerefOf (NBIX [Arg0]) [0x03] = \_SB.PCI0.LPCB.EC0.BFC /* External reference */
-                        DerefOf (NBIX [Arg0]) [0x05] = \_SB.PCI0.LPCB.EC0.BDV /* External reference */
-                        Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBIX [Arg0]) [0x06] = Local4
-                        Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
-                        Local4 = (Local0 / 0x64)
-                        DerefOf (NBIX [Arg0]) [0x07] = Local4
-                        DerefOf (NBIX [Arg0]) [0x08] = \_SB.PCI0.LPCB.EC0.BCC /* External reference */
-                        Local0 = \_SB.PCI0.LPCB.EC0.BSN /* External reference */
-                        Local1 = \_SB.PCI0.LPCB.EC0.BDAT /* External reference */
-                    }
+                    \_SB.PCI0.LPCB.EC0.BSEL = Arg0
+                    DerefOf (NBTE [Arg0]) [0x02] = R16B (DC00, DC01)
+                    DerefOf (NBTE [Arg0]) [0x03] = R16B (FC00, FC01)
+                    DerefOf (NBTE [Arg0]) [0x05] = R16B (DV00, DV01)
+                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBTE [Arg0]) [0x06] = Local4
+                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBTE [Arg0]) [0x07] = Local4
+                    DerefOf (NBTE [Arg0]) [0x08] = R16B (CC00, CC01)
+                    Local0 = R16B (SN00, SN01)
+                    Local1 = R16B (AT00, AT01)
                 }
 
                 Release (\_SB.PCI0.LPCB.EC0.ECMX)
                 Local2 = \_SB.PCI0.LPCB.EC0.GBSS (Local0, Local1)
-                DerefOf (NBIX [Arg0]) [0x11] = Local2
+                DerefOf (NBTE [Arg0]) [0x11] = Local2
                 Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-                \_SB.PCI0.LPCB.EC0.NGBF &= ~Local7
+                \_SB.PCI0.LPCB.EC0.NBGX &= ~Local7
                 Release (\_SB.PCI0.LPCB.EC0.BTMX)
                 Return (Zero)
             }
+            // and if the OS is not "Darwin", execute original BTIX.
+            Else
+            {
+                Return (\_SB.PCI0.LPCB.EC0.XTIX ())
+            }
+        }
+        // If XTIX does not exist, if on 01.25, execute code copied from BTIX on 01.39Rev.A
+        Else
+        {
+            Local7 = (One << Arg0)
+            BTDR (One)
+            If ((\_SB.PCI0.LPCB.EC0.BSTA (Local7) == 0x0F))
+            {
+                Return (0xFF)
+            }
+
+            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
+            Local0 = \_SB.PCI0.LPCB.EC0.NGBF /* External reference */
+            Release (\_SB.PCI0.LPCB.EC0.BTMX)
+            If (((Local0 & Local7) == Zero))
+            {
+                Return (Zero)
+            }
+
+            \_SB.NBST [Arg0] = \_SB.NDBS /* External reference */
+            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
+            \_SB.PCI0.LPCB.EC0.NGBT |= Local7
+            Release (\_SB.PCI0.LPCB.EC0.BTMX)
+            Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
+            If (\_SB.PCI0.LPCB.EC0.ECRG)
+            {
+                // with a condition that if the OS is "Darwin", execute patched BTIX content
+                If (OSDW ())
+                {
+                    \_SB.PCI0.LPCB.EC0.BSEL = Arg0
+                    DerefOf (NBIX [Arg0]) [0x02] = R16B (DC00, DC01)
+                    DerefOf (NBIX [Arg0]) [0x03] = R16B (FC00, FC01)
+                    DerefOf (NBIX [Arg0]) [0x05] = R16B (DV00, DV01)
+                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBIX [Arg0]) [0x06] = Local4
+                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBIX [Arg0]) [0x07] = Local4
+                    DerefOf (NBIX [Arg0]) [0x08] = R16B (CC00, CC01)
+                    Local0 = R16B (SN00, SN01)
+                    Local1 = R16B (AT00, AT01)
+                }
+                // and if the OS is not "Darwin", execute original BTIX content.
+                Else
+                {
+                    BSEL = Arg0
+                    DerefOf (NBIX [Arg0]) [0x02] = \_SB.PCI0.LPCB.EC0.BDC /* External reference */
+                    DerefOf (NBIX [Arg0]) [0x03] = \_SB.PCI0.LPCB.EC0.BFC /* External reference */
+                    DerefOf (NBIX [Arg0]) [0x05] = \_SB.PCI0.LPCB.EC0.BDV /* External reference */
+                    Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBIX [Arg0]) [0x06] = Local4
+                    Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
+                    Local4 = (Local0 / 0x64)
+                    DerefOf (NBIX [Arg0]) [0x07] = Local4
+                    DerefOf (NBIX [Arg0]) [0x08] = \_SB.PCI0.LPCB.EC0.BCC /* External reference */
+                    Local0 = \_SB.PCI0.LPCB.EC0.BSN /* External reference */
+                    Local1 = \_SB.PCI0.LPCB.EC0.BDAT /* External reference */
+                }
+            }
+
+            Release (\_SB.PCI0.LPCB.EC0.ECMX)
+            Local2 = \_SB.PCI0.LPCB.EC0.GBSS (Local0, Local1)
+            DerefOf (NBIX [Arg0]) [0x11] = Local2
+            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
+            \_SB.PCI0.LPCB.EC0.NGBF &= ~Local7
+            Release (\_SB.PCI0.LPCB.EC0.BTMX)
+            Return (Zero)
         }
     }
 }
