@@ -9,7 +9,7 @@
  * https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/blob/main/Docs/Thunderbolt3.md
  *
  * config.plist ACPI/Patch
- * Comment: Enable USB-C hotplug: M(_RMV) to XRMV
+ * Comment: Enable USB-C hotplug: M(_RMV) to XRMV in _SB.PCI0.RP01.PXSX
  * Count:   1
  * Find:    31 50 58 53 58 14 0B 5F 52 4D 56
  * Replace: 31 50 58 53 58 14 0B 58 52 4D 56
