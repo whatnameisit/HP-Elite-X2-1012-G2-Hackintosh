@@ -37,7 +37,7 @@ In progress
 - [ ] what else
 
 ## Not working
-- I2C Cameras: Macs have not shipped with I2C cameras, and currently there are no drivers ported from Linux.
+- I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - Correct Thunderbolt 3 and USB-C device initialization for macOS: Thunderbolt 3 device will work only if connected at startup, and USB-C hotplug will work with an ACPI patch hack.
 - Accelerometer and Gyro sensors
 - Light sensor
