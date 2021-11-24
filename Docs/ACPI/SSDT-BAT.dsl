@@ -9,7 +9,7 @@
  * Find:    5F 42 49 58 00
  * Replace: 58 42 49 58 00
  *
- * Comment: Enable battery reading: M(BTIF) to XTIF
+ * Comment: Enable battery reading: M(BTIF) to XTIF in _SB.PCI0.LPCB.EC0
  * Count:   1
  * Find:    42 54 49 46 09 79 01
  * Replace: 58 54 49 46 09 79 01
