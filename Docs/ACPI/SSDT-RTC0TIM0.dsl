@@ -6,7 +6,7 @@
  * Currently shutdown, restart, or resuming from hibernation throws RTC clock error.
  * The error is reduced if parts of RTC map is emulated with RTCMemoryFixup, but not completely.
  * 
- * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart. Hibernation wtill still show the very error.
+ * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart. Hibernation will still show the very error.
  *
  * config.plist ACPI/Patch
  * Comment: Enable legacy RTC device on macOS by disabling RTC and creating RTC0: M(_STA) to XSTA in _SB.PCI0.LPCB.RTC
