@@ -872,7 +872,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 {
                     Return (\_SB.XTIX ())
                 }
-                If not, execute the code copied from BTIX on 01.39Rev.A.
+                // If not, execute the code copied from BTIX on 01.39Rev.A.
                 Else
                 {
                     Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
