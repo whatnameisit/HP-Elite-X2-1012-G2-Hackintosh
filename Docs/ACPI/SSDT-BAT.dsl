@@ -855,128 +855,151 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Return (\_SB.PCI0.LPCB.EC0.SXTC ())
             }
         }
+    }
 
-        Scope (\_SB)
+    Scope (\_TZ)
+    {
+        Method (GCGC, 0, Serialized)
         {
-            // Paired with M(_BIX) to XBIX on BIOS Version 01.39Rev.A.
-            Method (BAT0._BIX, 0, NotSerialized)  // _BIX: Battery Information Extended
+            If (OSDW ())
             {
-                Return (\_SB.BTIX (Zero))
-            }
-
-            // Paired with M(BTIX) to XTIX on 01.39Rev.A.
-            Method (BTIX, 1, Serialized)
-            {
-                // If _SB.XTIX exists, execute it; if on 01.39Rev.A, execute original method.
-                If (CondRefOf (\_SB.XTIX))
+                Name (LTMP, Buffer (0x02){})
+                If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
-                    Return (\_SB.XTIX ())
+                    Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
+                    LTMP = R16B (\_SB.PCI0.LPCB.EC0.PR00, \_SB.PCI0.LPCB.EC0.PR01)
+                    Release (\_SB.PCI0.LPCB.EC0.ECMX)
                 }
-                // If not, execute the code copied from BTIX on 01.39Rev.A.
+
+                Return (LTMP) /* \_TZ_.GCGC.LTMP */
+            }
+            Else
+            {
+                Return (\_TZ.XXGC ())
+            }
+        }
+    }
+
+    Scope (\_SB)
+    {
+        // Paired with M(_BIX) to XBIX on BIOS Version 01.39Rev.A.
+        Method (BAT0._BIX, 0, NotSerialized)  // _BIX: Battery Information Extended
+        {
+            Return (\_SB.BTIX (Zero))
+        }
+
+        // Paired with M(BTIX) to XTIX on 01.39Rev.A.
+        Method (BTIX, 1, Serialized)
+        {
+            // If _SB.XTIX exists, if on 01.39Rev.A, execute original method.
+            If (CondRefOf (\_SB.XTIX))
+            {
+                Return (\_SB.XTIX ())
+            }
+            // If not, if on 01.25, execute the code copied from BTIX on 01.39Rev.A.
+            Else
+            {
+                Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
+                If ((Local0 == 0xFF))
+                {
+                    Return (Package (0x15)
+                    {
+                        One, 
+                        One, 
+                        0xFFFFFFFF, 
+                        0xFFFFFFFF, 
+                        One, 
+                        0xFFFFFFFF, 
+                        Zero, 
+                        Zero, 
+                        0x64, 
+                        0x00017318, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        0x64, 
+                        0x64, 
+                        "", 
+                        "", 
+                        "", 
+                        "", 
+                        One
+                    })
+                }
                 Else
                 {
-                    Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
-                    If ((Local0 == 0xFF))
-                    {
-                        Return (Package (0x15)
-                        {
-                            One, 
-                            One, 
-                            0xFFFFFFFF, 
-                            0xFFFFFFFF, 
-                            One, 
-                            0xFFFFFFFF, 
-                            Zero, 
-                            Zero, 
-                            0x64, 
-                            0x00017318, 
-                            Zero, 
-                            Zero, 
-                            Zero, 
-                            Zero, 
-                            0x64, 
-                            0x64, 
-                            "", 
-                            "", 
-                            "", 
-                            "", 
-                            One
-                        })
-                    }
-                    Else
-                    {
-                        // NBTE on 01.39Rev.A
-                        Return (DerefOf (NBIX [Arg0]))
-                    }
+                    // NBTE on 01.39Rev.A
+                    Return (DerefOf (NBIX [Arg0]))
                 }
             }
+        }
 
-            // If NBTE does not exist,
-            If (~CondRefOf (\_SB.NBTE))
+        // If NBTE does not exist, if on 01.25,
+        If (~CondRefOf (\_SB.NBTE))
+        {
+            // Create NBIX with code copied from NBTE on 01.39Rev.A.
+            Name (NBIX, Package (0x02)
             {
-                // Create NBIX with code copied from NBTE on 01.39Rev.A.
-                Name (NBIX, Package (0x02)
+                Package (0x15)
                 {
-                    Package (0x15)
-                    {
-                        One, 
-                        One, 
-                        0xFFFFFFFF, 
-                        0xFFFFFFFF, 
-                        One, 
-                        0xFFFFFFFF, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x00017318, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x64, 
-                        "Primary", 
-                        "123456789", 
-                        "LIon", 
-                        "Hewlett-Packard", 
-                        One
-                    }, 
+                    One, 
+                    One, 
+                    0xFFFFFFFF, 
+                    0xFFFFFFFF, 
+                    One, 
+                    0xFFFFFFFF, 
+                    Zero, 
+                    Zero, 
+                    0x64, 
+                    0x00017318, 
+                    Zero, 
+                    Zero, 
+                    Zero, 
+                    Zero, 
+                    0x64, 
+                    0x64, 
+                    "Primary", 
+                    "123456789", 
+                    "LIon", 
+                    "Hewlett-Packard", 
+                    One
+                }, 
 
-                    Package (0x15)
-                    {
-                        One, 
-                        One, 
-                        0xFFFFFFFF, 
-                        0xFFFFFFFF, 
-                        One, 
-                        0xFFFFFFFF, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x00017318, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x64, 
-                        "Primary", 
-                        "100000", 
-                        "LIon", 
-                        "Hewlett-Packard", 
-                        One
-                    }
-                })
-            }
+                Package (0x15)
+                {
+                    One, 
+                    One, 
+                    0xFFFFFFFF, 
+                    0xFFFFFFFF, 
+                    One, 
+                    0xFFFFFFFF, 
+                    Zero, 
+                    Zero, 
+                    0x64, 
+                    0x00017318, 
+                    Zero, 
+                    Zero, 
+                    Zero, 
+                    Zero, 
+                    0x64, 
+                    0x64, 
+                    "Primary", 
+                    "100000", 
+                    "LIon", 
+                    "Hewlett-Packard", 
+                    One
+                }
+            })
         }
 
         // Paired with M(BTIX) to XTIX on 01.39Rev.A.
         Method (PCI0.LPCB.EC0.BTIX, 1, Serialized)
         {
-            // If XTIX exists
-            If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
+           // If XTIX exists, if on 01.39Rev.A,
+           If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
             {
-                // and if XTIX does not exist and the OS is "Darwin", execute the below.
+                // and the OS is "Darwin", execute the below
                 If (OSDW ())
                 {
                     Local7 = (One << Arg0)
@@ -1024,12 +1047,13 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     Release (\_SB.PCI0.LPCB.EC0.BTMX)
                     Return (Zero)
                 }
+                // and if the OS is not "Darwin", execute original BTIX.
                 Else
                 {
                     Return (\_SB.PCI0.LPCB.EC0.XTIX ())
                 }
             }
-            // If XTIX does not exist, execute code copied from BTIX on 01.39Rev.A.
+            // If XTIX does not exist, if on 01.25, execute code copied from BTIX on 01.39Rev.A
             Else
             {
                 Local7 = (One << Arg0)
@@ -1054,7 +1078,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
                 If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
-                    // If OS is "Darwin", execute patched BTIX content.
+                    // with a condition that if the OS is "Darwin", execute patched BTIX content
                     If (OSDW ())
                     {
                         \_SB.PCI0.LPCB.EC0.BSEL = Arg0
@@ -1071,7 +1095,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                         Local0 = R16B (SN00, SN01)
                         Local1 = R16B (AT00, AT01)
                     }
-                    // If OS is not "Darwin", execute original BTIX content.
+                    // and if the OS is not "Darwin", execute original BTIX content.
                     Else
                     {
                         BSEL = Arg0
@@ -1097,29 +1121,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 \_SB.PCI0.LPCB.EC0.NGBF &= ~Local7
                 Release (\_SB.PCI0.LPCB.EC0.BTMX)
                 Return (Zero)
-            }
-        }
-    }
-
-    Scope (\_TZ)
-    {
-        Method (GCGC, 0, Serialized)
-        {
-            If (OSDW ())
-            {
-                Name (LTMP, Buffer (0x02){})
-                If (\_SB.PCI0.LPCB.EC0.ECRG)
-                {
-                    Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
-                    LTMP = R16B (\_SB.PCI0.LPCB.EC0.PR00, \_SB.PCI0.LPCB.EC0.PR01)
-                    Release (\_SB.PCI0.LPCB.EC0.ECMX)
-                }
-
-                Return (LTMP) /* \_TZ_.GCGC.LTMP */
-            }
-            Else
-            {
-                Return (\_TZ.XXGC ())
             }
         }
     }
