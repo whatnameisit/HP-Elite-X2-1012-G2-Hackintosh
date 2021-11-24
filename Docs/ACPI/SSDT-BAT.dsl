@@ -858,17 +858,21 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         Scope (\_SB)
         {
+            // Paired with M(_BIX) to XBIX on BIOS Version 01.39Rev.A.
             Method (BAT0._BIX, 0, NotSerialized)  // _BIX: Battery Information Extended
             {
                 Return (\_SB.BTIX (Zero))
             }
 
+            // Paired with M(BTIX) to XTIX on 01.39Rev.A.
             Method (BTIX, 1, Serialized)
             {
+                // If _SB.XTIX exists, execute it; if on 01.39Rev.A, execute original method.
                 If (CondRefOf (\_SB.XTIX))
                 {
                     Return (\_SB.XTIX ())
                 }
+                If not, execute the code copied from BTIX on 01.39Rev.A.
                 Else
                 {
                     Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
@@ -901,13 +905,16 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     }
                     Else
                     {
+                        // NBTE on 01.39Rev.A
                         Return (DerefOf (NBIX [Arg0]))
                     }
                 }
             }
 
+            // If NBTE does not exist,
             If (~CondRefOf (\_SB.NBTE))
             {
+                // Create NBIX with code copied from NBTE on 01.39Rev.A.
                 Name (NBIX, Package (0x02)
                 {
                     Package (0x15)
@@ -963,10 +970,13 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
         }
 
-        Method (BTIX, 1, Serialized)
+        // Paired with M(BTIX) to XTIX on 01.39Rev.A.
+        Method (PCI0.LPCB.EC0.BTIX, 1, Serialized)
         {
+            // If XTIX exists
             If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
             {
+                // and if XTIX does not exist and the OS is "Darwin", execute the below.
                 If (OSDW ())
                 {
                     Local7 = (One << Arg0)
@@ -1019,6 +1029,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     Return (\_SB.PCI0.LPCB.EC0.XTIX ())
                 }
             }
+            // If XTIX does not exist, execute code copied from BTIX on 01.39Rev.A.
             Else
             {
                 Local7 = (One << Arg0)
@@ -1043,6 +1054,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
                 If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
+                    // If OS is "Darwin", execute patched BTIX content.
                     If (OSDW ())
                     {
                         \_SB.PCI0.LPCB.EC0.BSEL = Arg0
@@ -1059,6 +1071,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                         Local0 = R16B (SN00, SN01)
                         Local1 = R16B (AT00, AT01)
                     }
+                    // If OS is not "Darwin", execute original BTIX content.
                     Else
                     {
                         BSEL = Arg0
