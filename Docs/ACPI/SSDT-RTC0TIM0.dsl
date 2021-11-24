@@ -1,15 +1,15 @@
 /*
- * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A and tries to fix RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A.
+ * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A, allowing to boot into macOS.
+ * It also tries to fix RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A, if IRQs do anything at all on this laptop.
  * More exploration is needed with RTC to on regular shutdown, sleep, and reboot and to support hibernation.
  * https://github.com/acidanthera/bugtracker/issues/765
- * Currently shutdown, restart, or resuming from hibernation throws RTC clock error by chance.
+ * Currently shutdown, restart, or resuming from hibernation throws RTC clock error.
+ * The error is reduced if parts of RTC map is emulated with RTCMemoryFixup, but not completely.
  * 
  * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart. Hibernation wtill still show the very error.
  *
- * IRQs are removed to match MacBookPro14,1.
- *
  * config.plist ACPI/Patch
- * Comment: Enable legacy RTC device on macOS
+ * Comment: Enable legacy RTC device on macOS by disabling RTC and creating RTC0: M(_STA) to XSTA in RTC
  * Count:   1
  * Find:    5F 53 54 41 00 A0 0A 93 53 54 41 53 01
  * Replace: 58 53 54 41 00 A0 0A 93 53 54 41 53 01
