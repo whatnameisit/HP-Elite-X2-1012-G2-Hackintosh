@@ -10,9 +10,9 @@ DefinitionBlock ("", "SSDT", 2, "what", "MdrnSlp", 0x00000000)
 
     If (OSDW ())
     {
-        Debug = "SS3: enable S3 when 0, SOID: disable Modern Standby when 0"
+        Debug = "SS3: enable S3 when 1, SOID: disable Modern Standby when 0"
         Concatenate ("SS3 was: ", SS3, Debug)
-        SS3 = Zero
+        SS3 = One
         Concatenate ("SS3 is now: ", SS3, Debug)
         Concatenate ("SOID was: ", SOID, Debug)
         SOID = Zero
