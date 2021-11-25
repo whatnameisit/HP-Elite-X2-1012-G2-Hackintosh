@@ -7,7 +7,7 @@
  * Find:    5F 50 54 53 01
  * Replace: 5A 50 54 53 01
  */
-DefinitionBlock ("", "SSDT", 2, "What", "PTS", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "what", "PTS", 0x00000000)
 {
     External (_SB_.PCI0.XHC_.PMEE, IntObj)
     External (OSDW, MethodObj)    // 0 Arguments
