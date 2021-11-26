@@ -2,21 +2,21 @@
  * This SSDT tries to debug and support dual sleeping modes found in https://github.com/benbender/x1c6-hackintosh/blob/experimental/EFI/OC/dsl/SSDT-SLEEP.dsl.
  * Purely guessing by using same the offset as benbender and looking at how _S3 initializes.
  */
-DefinitionBlock ("", "SSDT", 2, "what", "MdrnSlp", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "what", "MdrnStby", 0x00000000)
 {
     External (OSDW, MethodObj)    // 0 Arguments
-    External (SOID, FieldUnitObj)
+    External (S0ID, FieldUnitObj)
     External (SS3, FieldUnitObj)
 
     If (OSDW ())
     {
-        Debug = "SS3: enable S3 when 1, SOID: disable Modern Standby when 0"
-        Concatenate ("SS3 was: ", SS3, Debug)
+        Debug = "SS3: enable S3 when 1, S0ID: disable Modern Standby when 0"
+        Concatenate ("SS3 was: ", SS3, Debug) // Probably 1
         SS3 = One
-        Concatenate ("SS3 is now: ", SS3, Debug)
-        Concatenate ("SOID was: ", SOID, Debug)
+        Concatenate ("SS3 is now: ", SS3, Debug) // 1
+        Concatenate ("S0ID was: ", S0ID, Debug) // Probably 1
         SOID = Zero
-        Concatenate ("SOID is now: ", SOID, Debug)
+        Concatenate ("S0ID is now: ", S0ID, Debug) // 0
     }
 
     Name (SLTP, Zero)
