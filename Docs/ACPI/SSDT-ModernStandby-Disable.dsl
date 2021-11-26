@@ -1,7 +1,15 @@
 /*
  * This SSDT supports dual sleeping modes.
+ * Turn on Modern Standby on BIOS, so that Windows uses Modern Standby while this SSDT disables it on macOS.
  * https://github.com/benbender/x1c6-hackintosh/blob/experimental/EFI/OC/dsl/SSDT-SLEEP.dsl
  * Look into DSDT and SSDT-16 to understand.
+ *
+ * config.plist ACPI/Patch
+ * Base:    \_SB.PEPD
+ * Comment: Fix sleep: M(_STA) to XSTA in \_SB.PEPD
+ * Count:   1
+ * Find:    5F 53 54 41
+ * Replace: 5F 53 54 41
  */
 DefinitionBlock ("", "SSDT", 2, "what", "MdSbDsbl", 0x00000000)
 {
@@ -27,15 +35,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "MdSbDsbl", 0x00000000)
             }
         }
 
-        Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
+        If (CondRefOf (\_SB.PEPD.XSTA))
         {
-            If (OSDW ())
+            Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
             {
-                Return (Zero)
-            }
-            Else
-            {
-                Return (\_SB.PEPD.XSTA ())
+                If (OSDW ())
+                {
+                    Return (Zero)
+                }
+                Else
+                {
+                    Return (\_SB.PEPD.XSTA ())
+                }
             }
         }
     }
