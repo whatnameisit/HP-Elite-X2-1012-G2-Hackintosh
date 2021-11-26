@@ -1,45 +1,51 @@
 /*
- * This SSDT tries to debug and support dual sleeping modes found in https://github.com/benbender/x1c6-hackintosh/blob/experimental/EFI/OC/dsl/SSDT-SLEEP.dsl.
- * Purely guessing by using same the offset as benbender and looking at how _S3 initializes.
+ * This SSDT supports dual sleeping modes.
+ * https://github.com/benbender/x1c6-hackintosh/blob/experimental/EFI/OC/dsl/SSDT-SLEEP.dsl
+ * Look into DSDT and SSDT-16 to understand.
  */
-DefinitionBlock ("", "SSDT", 2, "what", "MdrnStby", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "what", "MdSbDsbl", 0x00000000)
 {
-    External (OSDW, MethodObj)    // 0 Arguments
+    External (_SB_.PEPD, DeviceObj)
+    External (_SB_.PEPD.XSTA, MethodObj)
+    External (ECND, FieldUnitObj)
+    External (OSDW, MethodObj)
     External (S0ID, FieldUnitObj)
-    External (SS3, FieldUnitObj)
 
-    If (OSDW ())
+    If (CondRefOf (\_SB.PEPD))
     {
-        Debug = "SS3: enable S3 when 1, S0ID: disable Modern Standby when 0"
-        Concatenate ("SS3 was: ", SS3, Debug) // Probably 1
-        SS3 = One
-        Concatenate ("SS3 is now: ", SS3, Debug) // 1
-        Concatenate ("S0ID was: ", S0ID, Debug) // Probably 1
-        SOID = Zero
-        Concatenate ("S0ID is now: ", S0ID, Debug) // 0
+        If (OSDW ())
+        {
+            Debug = "S0ID: disable Modern Standby when 0, ECND: disable Modern Standby when !0"
+            Concatenate ("S0ID was: ", S0ID, Debug)
+            S0ID = Zero
+            Concatenate ("S0ID is now: ", S0ID, Debug)
+            If (CondRefOf (ECND))
+            {
+                Concatenate ("ECND was: ", ECND, Debug)
+                ECND = One
+                Concatenate ("ECND is now: ", ECND, Debug)
+            }
+        }
+
+        Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
+        {
+            If (OSDW ())
+            {
+                Return (Zero)
+            }
+            Else
+            {
+                Return (\_SB.PEPD.XSTA ())
+            }
+        }
     }
 
+    // Variable and method to store sleep-state on macOS
     Name (SLTP, Zero)
     Method (_TTS, 1, NotSerialized)  // _TTS: Transition To State
     {
         Debug = Concatenate ("SLEEP:_TTS() called with Arg0 = ", Arg0)
         SLTP = Arg0
     }
-
-    // Scope (_GPE)
-    // {
-    //     Method (LXEN, 0, NotSerialized)
-    //     {
-    //         Return (One)
-    //     }
-    // }
-
-    // Scope (_SB)
-    // {
-    //     Method (LPS0, 0, NotSerialized)
-    //     {
-    //         Return (One)
-    //     }
-    // }
 }
 
