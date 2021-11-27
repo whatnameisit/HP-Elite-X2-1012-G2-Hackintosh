@@ -35,18 +35,15 @@ DefinitionBlock ("", "SSDT", 2, "what", "MdSbDsbl", 0x00000000)
             }
         }
 
-        If (CondRefOf (\_SB.PEPD.XSTA))
+        Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
         {
-            Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
+            If (OSDW ())
             {
-                If (OSDW ())
-                {
-                    Return (Zero)
-                }
-                Else
-                {
-                    Return (\_SB.PEPD.XSTA ())
-                }
+                Return (Zero)
+            }
+            Else
+            {
+                Return (\_SB.PEPD.XSTA ())
             }
         }
     }
