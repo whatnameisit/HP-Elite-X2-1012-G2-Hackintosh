@@ -8,6 +8,7 @@
 - https://github.com/khronokernel/DarwinDumped/blob/master/MacBookPro/MacBookPro14%2C1/ACPI%20Tables/DSL/SSDT-4.dsl
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2450#post-2160674
 - https://github.com/jqqqqqqqqqq/Hackintosh-HP-Z2-Mini-G4
+- https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2342
 
 ## Notes
 - Hot plug: `\_GPE._E16`
