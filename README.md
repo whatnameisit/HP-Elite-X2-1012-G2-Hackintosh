@@ -16,7 +16,7 @@ In progress
 | Camera | I2C |
 | Audio | Conexant CX8200 |
 | Touchpad | ALPS |
-| ThunderBolt 3 | Alpine Ridge JHL6540 |
+| ThunderBolt 3 | Alpine Ridge JHL6340 |
 | UEFI BIOS Utility | P87 01.39Rev.A |
 
 ## Working
