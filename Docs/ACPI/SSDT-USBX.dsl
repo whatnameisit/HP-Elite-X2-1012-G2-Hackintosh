@@ -4,6 +4,7 @@
 DefinitionBlock ("", "SSDT", 2, "what", "_USBX", 0x00001000)
 {
     External (_SB_.PCI0.LPCB, DeviceObj)
+    External (DTGP, MethodObj)
 
     Scope (\_SB)
     {
@@ -12,25 +13,15 @@ DefinitionBlock ("", "SSDT", 2, "what", "_USBX", 0x00001000)
             Name (_ADR, Zero)  // _ADR: Address
             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
             {
-                If ((Arg2 == Zero))
-                {
-                    Return (Buffer (One)
+                Local0 = Package (0x04)
                     {
-                         0x03                                             // .
-                    })
-                }
-
-                Return (Package (0x08)
-                {
-                    "kUSBSleepPowerSupply", 
-                    0x13EC, 
-                    "kUSBSleepPortCurrentLimit", 
-                    0x0834, 
-                    "kUSBWakePowerSupply", 
-                    0x13EC, 
-                    "kUSBWakePortCurrentLimit", 
-                    0x0834
-                })
+                        "kUSBSleepPortCurrentLimit", 
+                        0x0BB8, 
+                        "kUSBWakePortCurrentLimit", 
+                        0x0BB8
+                    }
+                DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
+                Return (Local0)
             }
         }
     }
