@@ -11,14 +11,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 
     Scope (_SB.PCI0)
     {
-        If ((OSDW () && ~CondRefOf (DSC1)))
+        Device (MCHC)
         {
-            Device (MCHC)
+            Name (_ADR, Zero)  // _ADR: Address
+            Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Name (_ADR, Zero)  // _ADR: Address
-                Method (_STA, 0, NotSerialized)  // _STA: Status
+                If ((OSDW () && ~CondRefOf (DSC1)))
                 {
-                    Return (0x0F)
+                Return (0x0F)
+                }
+                Else
+                {
+                    Return (Zero)
                 }
             }
         }
