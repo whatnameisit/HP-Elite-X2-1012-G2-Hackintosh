@@ -1,10 +1,28 @@
 /*
  * This SSDT allows SMBus compatibility on macOS.
- * Note that Device MCHC is not defined because the device is physically not present.
+ * Note that Device MCHC is defined only if the device is not already occupied by the name DSC1.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 {
+    External (_SB_.PCI0, DeviceObj)
+    External (_SB_.PCI0.DSC1, DeviceObj)
     External (_SB_.PCI0.SBUS, DeviceObj)
+    External (OSDW, MethodObj)    // 0 Arguments
+
+    Scope (_SB.PCI0)
+    {
+        If ((OSDW () && ~CondRefOf (DSC1)))
+        {
+            Device (MCHC)
+            {
+                Name (_ADR, Zero)  // _ADR: Address
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+            }
+        }
+    }
 
     Device (_SB.PCI0.SBUS.BUS0)
     {
@@ -34,7 +52,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 
         Method (_STA, 0, NotSerialized)  // _STA: Status
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Return (0x0F)
             }
@@ -43,35 +61,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
                 Return (Zero)
             }
         }
-    }
-
-    Method (DTGP, 5, NotSerialized)
-    {
-        If ((Arg0 == ToUUID ("a0b5b7c6-1318-441c-b0c9-fe695eaf949b") /* Unknown UUID */))
-        {
-            If ((Arg1 == One))
-            {
-                If ((Arg2 == Zero))
-                {
-                    Arg4 = Buffer (One)
-                        {
-                             0x03                                             // .
-                        }
-                    Return (One)
-                }
-
-                If ((Arg2 == One))
-                {
-                    Return (One)
-                }
-            }
-        }
-
-        Arg4 = Buffer (One)
-            {
-                 0x00                                             // .
-            }
-        Return (Zero)
     }
 }
 

@@ -4,13 +4,14 @@
 DefinitionBlock ("", "SSDT", 2, "ACDT", "PNLF", 0x00000000)
 {
     External (_SB_.PCI0.GFX0, DeviceObj)
+    External (OSDW, MethodObj)    // 0 Arguments
     External (RMCF.BKLT, IntObj)
     External (RMCF.FBTP, IntObj)
     External (RMCF.GRAN, IntObj)
     External (RMCF.LEVW, IntObj)
     External (RMCF.LMAX, IntObj)
 
-    If (_OSI ("Darwin"))
+    If (OSDW ())
     {
         Scope (\_SB.PCI0.GFX0)
         {

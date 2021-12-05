@@ -1,6 +1,25 @@
 /*
- * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A and fixes RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A.
- * IRQs are removed to match MacBookPro14,1.
+ * This SSDT primarily enables legacy RTC device on BIOS Version 01.39Rev.A, allowing to boot into macOS.
+ * It also tries to fix RTC clock error on the ACPI level in both 01.25 and 01.39Rev.A, if IRQs do anything at all on this laptop.
+ * More exploration is needed with RTC to on regular shutdown, sleep, and reboot and to support hibernation.
+ * https://github.com/acidanthera/bugtracker/issues/765
+ *
+ * Currently shutdown, restart, or resuming from hibernation may throw RTC clock error.
+ * The error is reduced if DF of RTC map is emulated with RTCMemoryFixup, but not completely;
+ * if sleep fails, RTC clock error is displayed. Such a case can be forced with Thunderbolt 3 device.
+ * Hibernation causes the same error.
+ * 
+ * If the Length is reduced from 8 to 2, the RTC clock error is not displayed on normal shutdown or restart, making RTCMemoryFixup seemingly unnecessary.
+ * Using the whole RTC map with bad regions emulated is preferred, and hibernation will still show the very error.
+ *
+ * config.plist ACPI/Patch
+ * Comment: Enable legacy RTC device on macOS by disabling RTC and creating RTC0: M(_STA) to XSTA in \_SB.PCI0.LPCB.RTC
+ * Count:   1
+ * Find:    5F 53 54 41 00 A0 0A 93 53 54 41 53 01
+ * Replace: 58 53 54 41 00 A0 0A 93 53 54 41 53 01
+ *
+ * config.plist NVRAM/7C436110-AB2A-4BBB-A880-FE41995C9F82:boot-args
+ * rtcfx_exclude=DF
  */
 DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
 {
@@ -8,12 +27,13 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
     External (_SB_.PCI0.LPCB.RTC_, DeviceObj)
     External (_SB_.PCI0.LPCB.RTC_.XSTA, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.TIMR, DeviceObj)
+    External (OSDW, MethodObj)    // 0 Arguments
 
     Scope (\_SB.PCI0.LPCB)
     {
         Method (RTC._STA, 0, NotSerialized)  // _STA: Status
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Return (Zero)
             }
@@ -30,7 +50,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
 
         Method (TIMR._STA, 0, NotSerialized)  // _STA: Status
         {
-            If (_OSI ("Darwin"))
+            If (OSDW ())
             {
                 Return (Zero)
             }
@@ -49,12 +69,12 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
                     0x0070,             // Range Minimum
                     0x0070,             // Range Maximum
                     0x01,               // Alignment
-                    0x02,               // Length
+                    0x08,               // Length
                     )
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                If (_OSI ("Darwin"))
+                If (OSDW ())
                 {
                     Return (0x0F)
                 }
@@ -81,6 +101,15 @@ DefinitionBlock ("", "SSDT", 2, "what", "RTC0TIM0", 0x00000000)
                     0x04,               // Length
                     )
             })
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                If (OSDW ())
+                {
+                    Return (0x0F)
+                }
+
+                Return (Zero)
+            }
         }
     }
 }

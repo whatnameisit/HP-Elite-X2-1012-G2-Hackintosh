@@ -10,9 +10,9 @@ DefinitionBlock ("", "SSDT", 2, "what", "ps2", 0x00000000)
     {
         Name (INFO, Package (0x04)
         {
-            "3d=6b: F3 to F14, brightness down",
-            "3e=71: F4 to F15, brightness up",
-            "e038=6a: right cmd (Korean lang key) to F19, set this key to switch source button in Settings",
+            "3d=6b: F3 to F14, brightness down", 
+            "3e=71: F4 to F15, brightness up", 
+            "e038=6a: right cmd (Korean lang key) to F19, set this key to switch source button in Settings", 
             "e005=0: Silence keyboard spam from closing lid"
         })
         Name (RMCF, Package (0x02)
