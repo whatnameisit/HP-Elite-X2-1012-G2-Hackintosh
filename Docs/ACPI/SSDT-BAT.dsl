@@ -1169,7 +1169,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     }
                 }
             }
-            // Don't do anything is SLBV is not set.
+            // Don't do anything if SLBV is not set.
             Else
             {
             }
