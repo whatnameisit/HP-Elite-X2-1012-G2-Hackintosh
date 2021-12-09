@@ -2,7 +2,7 @@
  * This SSDT remaps ADB and PS2.
  * Refer to Package INFO.
  */
-DefinitionBlock ("", "SSDT", 2, "what", "ps2", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "what", "PS2", 0x00000000)
 {
     External (_SB_.PCI0.LPCB.PS2K, DeviceObj)
 

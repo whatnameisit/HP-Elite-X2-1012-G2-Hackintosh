@@ -1,7 +1,7 @@
 /*
  * This SSDT allows charging from USB by injecting current supply properties in macOS.
  */
-DefinitionBlock ("", "SSDT", 2, "what", "_USBX", 0x00001000)
+DefinitionBlock ("", "SSDT", 2, "what", "USBX", 0x00001000)
 {
     External (_SB_.PCI0.LPCB, DeviceObj)
     External (DTGP, MethodObj)
