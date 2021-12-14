@@ -10,7 +10,6 @@
 DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
 {
     External (_SB_.PCI0.XINI, MethodObj)    // 0 Arguments
-    External (_SB_.SLBV, IntObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (OSYS, FieldUnitObj)
 

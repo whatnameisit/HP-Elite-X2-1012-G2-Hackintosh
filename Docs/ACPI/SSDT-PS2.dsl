@@ -1,20 +1,22 @@
 /*
  * This SSDT remaps ADB and PS2.
- * Refer to Package INFO.
+ * Refer to the debug messages.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "PS2", 0x00000000)
 {
     External (_SB_.PCI0.LPCB.PS2K, DeviceObj)
+    External (OSDW, MethodObj)    // 0 Arguments
 
     Scope (_SB.PCI0.LPCB.PS2K)
     {
-        Name (INFO, Package (0x04)
+        If (OSDW ())
         {
-            "3d=6b: F3 to F14, brightness down", 
-            "3e=71: F4 to F15, brightness up", 
-            "e038=6a: right cmd (Korean lang key) to F19, set this key to switch source button in Settings", 
-            "e005=0: Silence keyboard spam from closing lid"
-        })
+            Debug = "PS2:ADB 3d to PS2 6b:F3 to F14, brightness down"
+            Debug = "PS2:ADB 3e to PS2 71:F4 to F15, brightness up"
+            Debug = "PS2:PS2 e038 to PS2 6a:right cmd (Korean lang key) to F19, set this key to switch source button in Settings"
+            Debug = "PS2:PS2 e005 to PS2 0:Silence keyboard spam from closing lid"
+        }
+
         Name (RMCF, Package (0x02)
         {
             "Keyboard", 
