@@ -9,6 +9,8 @@
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2450#post-2160674
 - https://github.com/jqqqqqqqqqq/Hackintosh-HP-Z2-Mini-G4
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2342
+- https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2082#post-2121513
+- https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2070#post-2120677
 
 ## Notes
 - Hot plug: `\_GPE._E16`
