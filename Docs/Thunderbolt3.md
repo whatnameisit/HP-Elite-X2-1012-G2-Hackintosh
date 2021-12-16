@@ -11,6 +11,7 @@
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2342
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2082#post-2121513
 - https://www.tonymacx86.com/threads/success-gigabyte-designare-z390-thunderbolt-3-i7-9700k-amd-rx-580.316533/page-2070#post-2120677
+- https://github.com/benbender/x1c6-hackintosh/issues/8#issuecomment-728345742
 
 ## Notes
 - Hot plug: `\_GPE._E16`
