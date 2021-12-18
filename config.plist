@@ -1506,10 +1506,7 @@
 				<string>No</string>
 			</dict>
 			<key>E09B9297-7928-4440-9AAB-D1F8536FBF0A</key>
-			<dict>
-				<key>hbfx-ahbm</key>
-				<integer>61</integer>
-			</dict>
+			<dict/>
 		</dict>
 		<key>Delete</key>
 		<dict>
@@ -1526,9 +1523,7 @@
 				<string>boot-args</string>
 			</array>
 			<key>E09B9297-7928-4440-9AAB-D1F8536FBF0A</key>
-			<array>
-				<string>hbfx-ahbm</string>
-			</array>
+			<array/>
 		</dict>
 		<key>LegacyEnable</key>
 		<false/>
