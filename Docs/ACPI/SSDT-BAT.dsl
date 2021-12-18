@@ -942,6 +942,15 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         }
 
         Name (SLBV, Zero)
+        If (SLBV)
+        {
+            Debug = "BATTERY:SLBV is set, enabling sleep at low battery mode"
+        }
+        Else
+        {
+            Debug = "BATTERY:SLBV is not set, disabling sleep at low battery mode"
+        }
+
         // SALB
         Method (SALB, 1, NotSerialized)
         {
