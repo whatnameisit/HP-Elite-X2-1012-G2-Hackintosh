@@ -790,8 +790,6 @@
 				<integer>1</integer>
 				<key>framebuffer-con1-index</key>
 				<data>AQAAAA==</data>
-				<key>#framebuffer-con1-busid</key>
-				<data>BQAAAA==</data>
 				<key>framebuffer-portcount</key>
 				<data>AgAAAA==</data>
 				<key>framebuffer-patch-enable</key>
