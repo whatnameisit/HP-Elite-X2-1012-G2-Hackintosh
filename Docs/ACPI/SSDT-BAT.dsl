@@ -1,5 +1,6 @@
 /*
  * Battery patches supporting BIOS Versions 01.39Rev.A
+ * It also supports sleep at custom battery level. Currently set to 20 percent.
  *
  * config.plist ACPI/Patch
  * Comment: Enable battery reading: M(BTIF) to XTIF in \_SB.PCI0.LPCB.EC0
@@ -8,10 +9,9 @@
  * Replace: 58 54 49 46 09 79 01
  *
  * Comment: Enable battery reading: M(BTIX) to XTIX in \_SB.PCI0.LPCB.EC0
- * Count:   1
+ * Count:   2
  * Find:    42 54 49 58 09
  * Replace: 58 54 49 58 09
- * Skip:    1
  *
  * Comment: Enable battery reading: M(BTST) to XTST in \_SB.PCI0.LPCB.EC0
  * Count:   1
@@ -52,6 +52,12 @@
  * Count:   1
  * Find:    53 42 54 43 03
  * Replace: 53 58 54 43 03
+ *
+ * Comment: Enable sleep at low battery(20): M(BTST) to XTST in \_SB
+ * Base:    \_SB
+ * Count:   1
+ * Find:    42 54 53 54
+ * Replace: 58 54 53 54
  */
 DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 {
@@ -920,6 +926,46 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             Else
             {
                 Return (\_TZ.XXGC ())
+            }
+        }
+    }
+
+    Scope (_SB)
+    {
+        Method (BTST, 1, Serialized)
+        {
+            Local0 = ^PCI0.LPCB.EC0.BTST (Arg0, One)
+            If ((Local0 == Zero)){}
+            // Sleep at low battery(SALB)
+            SALB (Arg0)
+            Return (DerefOf (NBST [Arg0]))
+        }
+
+        Name (SLBV, Zero)
+        // SALB
+        Method (SALB, 1, NotSerialized)
+        {
+            If (SLBV = One)
+            {
+                // If discharging,
+                If ((DerefOf (DerefOf (NBST [Arg0]) [Zero]) & One
+                    ))
+                {
+                    // store 20 % battery capacity into Local2
+                    Divide (DerefOf (DerefOf (NBTE [Arg0]) [0x02]), 0x0A, Local0, 
+                        Local1)
+                    Local1 *= 0x07
+                    // If current capacity is less than 20 % battery capacity,
+                    If ((DerefOf (DerefOf (NBST [Arg0]) [0x02]) < Local1))
+                    {
+                        // sleep.
+                        Notify (SLPB, 0x80) // Status Change
+                    }
+                }
+            }
+            // Don't do anything if SLBV is not set.
+            Else
+            {
             }
         }
     }
