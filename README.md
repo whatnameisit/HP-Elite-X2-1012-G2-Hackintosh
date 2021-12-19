@@ -28,7 +28,7 @@ In progress
 - [x] Audio input and output
 - [x] Touchscreen
 - [x] Touchpad
-- [x] Brightness control via keyboard: There are issues with Windows 10 HP keyboard driver which remaps the original brightness control keys to something else. You can use SSDT-PS2.dsl which provides an option to remap F3 and F4 to brightness up and down, respectively. Or you can disable Windows 10 driver under Device Manager-Keyboard-HID Keyboard.
+- [x] Brightness control via keyboard: There are issues with Windows 10 HP keyboard driver which remaps the original brightness control keys to something else. You can use SSDT-PS2.dsl which provides an option to remap F3 and F4 to brightness up and down, respectively. Or you can disable the ALPS keyboard driver in Windows 10 driver under Device Manager-Keyboard, and reset the keyboard by pressing the power button for about 30 seconds. Credit midi1996.
 - [x] Shutdown and reboot
 - [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur.
 - [ ] Realtek PCIe Card Reader RTS522A: Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
