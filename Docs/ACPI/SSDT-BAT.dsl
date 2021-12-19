@@ -1,5 +1,5 @@
 /*
- * Battery patches supporting BIOS Versions 01.39Rev.A
+ * Patches methods to support battery reading.
  * It also supports sleep at custom battery level. Currently set to 20 percent.
  *
  * config.plist ACPI/Patch
