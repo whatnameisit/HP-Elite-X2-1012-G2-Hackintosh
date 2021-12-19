@@ -796,8 +796,6 @@
 				<data>AQAAAA==</data>
 				<key>framebuffer-unifiedmem</key>
 				<data>AAAAgA==</data>
-				<key>#force-online</key>
-				<data>AQAAAA==</data>
 				<key>hda-gfx</key>
 				<string>onboard-1</string>
 			</dict>
@@ -1485,8 +1483,6 @@
 			</dict>
 			<key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
 			<dict>
-				<key>#rtc-blacklist</key>
-				<data>Dg8QERITFBUWFxgZGhscHR4fICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj9AQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpbXF1eX2BhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ent8fX5/gIGCg4SFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam5ydnp+goaKjpKWmp6ipqqusra6vsLGys7S1tre4ubq7vL2+v8DBwsPExcbHyMnKy8zNzs/Q0dLT1NXW19jZ2tvc3d7f4OHi4+Tl5ufo6err7O3u7/Dx8vP09fb3+Pn6+/z9/v8=</data>
 				<key>rtc-blacklist</key>
 				<data>3w==</data>
 			</dict>
@@ -1659,7 +1655,7 @@
 				<key>Comment</key>
 				<string></string>
 				<key>Path</key>
-				<string>HfsPlus.efi</string>
+				<string>ExFatDxe.efi</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Arguments</key>
@@ -1669,7 +1665,7 @@
 				<key>Comment</key>
 				<string></string>
 				<key>Path</key>
-				<string>ExFatDxe.efi</string>
+				<string>HfsPlus.efi</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Arguments</key>
