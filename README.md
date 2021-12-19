@@ -3,21 +3,21 @@ In progress
 
 ## System specification
 
-| Item | Details |
-| - | - |
-| Model | HP Elite X2 1012 G2 |
-| CPU | Intel Core i5-7300U |
-| Graphics | Intel HD Graphics 620 |
-| Display | 2736 x 1824 @ 60Hz |
-| RAM | 4GB x 2 1866 MHz LPDDR3 |
-| Wi-Fi / Bluetooth | BCM94360NG / BCM20702 *(Replaced)* |
-| WWAN | Empty |
-| Card Reader | Realtek PCIe Card Reader RTS522A |
-| Camera | I2C |
-| Audio | Conexant CX8200 |
-| Touchpad | ALPS |
-| ThunderBolt 3 | Alpine Ridge JHL6340 |
-| UEFI BIOS Utility | P87 01.39Rev.A |
+| Item | Details | Note |
+| - | - | - |
+| Model | HP Elite X2 1012 G2 | |
+| CPU | Intel Core i5-7300U | |
+| Graphics | Intel HD Graphics 620 | |
+| Display | 2736 x 1824 @ 60Hz | |
+| RAM | 4GB x 2 1866 MHz LPDDR3 | |
+| Wi-Fi / Bluetooth | BCM94360NG / BCM20702 | Replaced |
+| WWAN | Empty | Not tested |
+| Card Reader | Realtek PCIe Card Reader RTS522A | |
+| Camera | I2C | Not working |
+| Audio | Conexant CX8200 | |
+| Touchpad | ALPS | |
+| ThunderBolt 3 | Alpine Ridge JHL6340 | In progress |
+| UEFI BIOS Utility | P87 01.39Rev.A | |
 
 ## Working
 - [x] CPU Power Management
@@ -44,7 +44,7 @@ In progress
 - DRM contents
 
 # Not tested
-- WWAN slot
+- WWAN slot. One stock antenna.
 - 
 
 ## What else
