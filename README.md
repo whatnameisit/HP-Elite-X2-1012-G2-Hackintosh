@@ -20,35 +20,35 @@ In progress
 | UEFI BIOS Utility | P87 01.39Rev.A | |
 
 ## Working
-- [x] CPU Power Management
-- [x] QE/CI Acceration and brightness control
-- [x] HiDPI resolution
-- [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
-- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
 - [x] Audio input and output
-- [x] Touchscreen
-- [x] Touchpad
 - [x] Brightness control via keyboard: There are issues with Windows 10 HP keyboard driver which remaps the original brightness control keys to something else. You can use SSDT-PS2.dsl which provides an option to remap F3 and F4 to brightness up and down, respectively. Or you can disable the ALPS keyboard driver in Windows 10 driver under Device Manager-Keyboard, and reset the keyboard by pressing the power button for about 30 seconds. Credit midi1996.
+- [x] CPU Power Management
+- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
+- [x] HiDPI resolution
+- [x] QE/CI Acceration and brightness control
+- [ ] Realtek PCIe Card Reader RTS522A: Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
 - [x] Shutdown and reboot
 - [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur.
-- [ ] Realtek PCIe Card Reader RTS522A: Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
-- [x] Wi-Fi / Bluetooth and Continuity
 - [ ] Thunderbolt 3: Only if connected during startup. Sleep with a device connected to the port will break things.
+- [x] Touchscreen
+- [x] Touchpad
+- [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
+- [x] Wi-Fi / Bluetooth and Continuity
 - [ ] what else
 
 ## Not working
-- I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
-- Correct Thunderbolt 3 and USB-C device initialization for macOS: Thunderbolt 3 device will work only if connected at startup, and USB-C hotplug will work with an ACPI patch hack.
 - Accelerometer and Gyro sensors
-- Light sensor
+- Correct Thunderbolt 3 and USB-C device initialization for macOS: Thunderbolt 3 device will work only if connected at startup, and USB-C hotplug will work with an ACPI patch hack.
 - DRM contents
+- I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
+- Light sensor
 
 # Not tested
 - WWAN slot. One stock antenna.
 - 
 
 ## What else
-to be filled
+- to be filled
 
 ## Acknowledgment
 
