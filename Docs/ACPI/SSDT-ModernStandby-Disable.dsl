@@ -21,31 +21,49 @@ DefinitionBlock ("", "SSDT", 2, "what", "MdSbDsbl", 0x00000000)
 
     If (CondRefOf (\_SB.PEPD))
     {
+        Debug = "MDSB:BIOS Modern Standby is ON"
         If (OSDW ())
         {
-            Debug = "S0ID: disable Modern Standby when 0, ECND: disable Modern Standby when !0"
-            Concatenate ("S0ID was: ", S0ID, Debug)
-            S0ID = Zero
-            Concatenate ("S0ID is now: ", S0ID, Debug)
-            If (CondRefOf (ECND))
+            Debug = "MDSB:Disabling Modern Standby on OS:Darwin"
+            Debug = "MDSB:Disabling Modern Standby by setting S0ID = 0"
+            If (S0ID = Zero)
             {
-                Concatenate ("ECND was: ", ECND, Debug)
-                ECND = One
-                Concatenate ("ECND is now: ", ECND, Debug)
+                Debug = "MDSB:S0ID is already 0"
             }
-        }
+            Else
+            {
+                S0ID = Zero
+                Concatenate ("MDSB:S0ID is: ", S0ID, Debug)
+            }
+
+            Debug = "MDSB:Disabling Modern Standby by setting ECND = 1"
+            If (ECND = One)
+            {
+                Debug = "MDSB:ECND is already 1"
+            }
+            Else
+            {
+                ECND = One
+                Concatenate ("MDSB:ECND is: ", ECND, Debug)
+            }
 
         Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
         {
             If (OSDW ())
             {
+                Debug = "MDSB:Turning OFF Modern Standby device _SB.PEPD on OS:Darwin"
                 Return (Zero)
             }
             Else
             {
+                Debug = "MDSB:Turning OFF Modern Standby device _SB.PEPD on OS:Darwin"
                 Return (\_SB.PEPD.XSTA ())
             }
         }
+    }
+    Else
+    {
+        Debug = "MDSB:BIOS Modern Standby is OFF"
     }
 
     // Variable and method to store sleep-state on macOS
