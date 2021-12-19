@@ -2,7 +2,6 @@
 In progress
 
 ## System specification
-
 | Item | Details | Note |
 | - | - | - |
 | Model | HP Elite X2 1012 G2 | |
@@ -51,7 +50,6 @@ In progress
 - to be filled
 
 ## Acknowledgment
-
 Apple for macOS
 
 The Acidanthera team for OpenCore and many kexts
