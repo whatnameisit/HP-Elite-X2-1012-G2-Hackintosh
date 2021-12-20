@@ -56,15 +56,15 @@ In progress
 4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
 5. After the installation, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
 
-## Realtek PCIe Card Reader information
-- Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
-
 Credit: midi1996
 
 - Note
     1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non functioning keys. If you are uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
     2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMBIOSGuid` set to `True` and `UpdateSMBIOSMode` to `Custom`, but it does not seem to restore the keys.
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS, or brightness down and up, respectively.
+
+## Realtek PCIe Card Reader information
+- Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
 
 ## What else
 - to be filled
