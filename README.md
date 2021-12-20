@@ -33,7 +33,7 @@ In progress
 - [ ] what else
 
 ## Somewhat working
-- [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Hibernation](#hibernation)
+- [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [ ] Thunderbolt 3: Simple PCI-to-PCI bridge with no power management. See [Thunderbolt 3](#thunderbolt-3)
