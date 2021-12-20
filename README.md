@@ -35,8 +35,8 @@ In progress
 ## Somewhat working
 - [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
-- [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
-- [ ] Thunderbolt 3: Simple PCI-to-PCI bridge with no power management. See [Thunderbolt 3](#thunderbolt-3)
+- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation) and [Thunderbolt 3](#thunderbolt-3).
+- [ ] Thunderbolt 3: Simple PCI-to-PCI bridge with no power management. See [Thunderbolt 3](#thunderbolt-3).
 
 ## Not working
 - [ ] Accelerometer and Gyro sensors
@@ -61,7 +61,7 @@ Credit: midi1996
 - Note
     1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non-functioning keys. If you are feeling uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
     2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMBIOSGuid` set to `True` and `UpdateSMBIOSMode` to `Custom`, but it does not seem to restore the keys.
-    3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS, or brightness down and up, respectively.
+    3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ## Sleep, wake, and hibernation
 Background: The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
@@ -73,13 +73,10 @@ If the RTC region length is kept as `8` while blacklisting and emulating Region 
 To have an error-free environment, disable hibernation and limit the RTC region length to `2`.
 
 ## Realtek PCIe Card Reader
-- Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
+Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
 
 ## Thunderbolt 3
-- info
-
-## What else
-- to be filled
+info
 
 ## Acknowledgment
 Apple for macOS
