@@ -19,20 +19,20 @@ In progress
 | UEFI BIOS Utility | P87 01.39Rev.A | |
 
 ## Working
-- [x] Audio input and output
-- [x] Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
-- [x] CPU Power Management
+- :heavy_check_mark: Audio input and output
+- :heavy_check_mark: Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
+- :heavy_check_mark: CPU Power Management
 - [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
-- [x] HiDPI resolution
-- [x] QE/CI Acceration and brightness control
-- [ ] Realtek PCIe Card Reader RTS522A: Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
-- [x] Shutdown and reboot
+- :heavy_check_mark: HiDPI resolution
+- :heavy_check_mark: QE/CI Acceration and brightness control
+- :white_check_mark: Realtek PCIe Card Reader RTS522A: See [Realtek PCIe Card Reader information](#realtek-pcie-card-reader-information).
+- :heavy_check_mark: Shutdown and reboot
 - [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur.
 - [ ] Thunderbolt 3: Only if connected during startup. Sleep with a device connected to the port will break things.
-- [x] Touchscreen
-- [x] Touchpad
-- [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
-- [x] Wi-Fi / Bluetooth and Continuity
+- :heavy_check_mark: Touchscreen
+- :heavy_check_mark: Touchpad
+- :heavy_check_mark: USB map except USB-C with WWAN and fingerprint reader disabled and power supply
+- :heavy_check_mark: Wi-Fi / Bluetooth and Continuity
 - [ ] what else
 
 ## Not working
@@ -52,12 +52,15 @@ In progress
 2. Look for an "HID keyboard device" with "ALPS" identifier under "Keyboards." You will need to check each of them by double clicking to display more information.
 3. Right-click on the "HID keyboard device" with "ALPS" identifier, choose "Update driver," choose "Browse my computer for drivers," and choose "Let me pick from a list of available drivers on my computer."
 4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
-5. After the installation finishes, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
+5. After the installation, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
+
+## Realtek PCIe Card Reader information
+- Currently the driver kills connection on sleep to workaround kernel panics. The card needs to be physically reconnected. To continue using the card on wake, a pin needs to be inserted to access the slot or the laptop needs to be rebooted.
 
 Credit: midi1996
 
 - Note
-    1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non functioning keys. If you are uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/SSDT-PS2.dsl) for more information.
+    1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non functioning keys. If you are uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
     2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMBIOSGuid` set to `True` and `UpdateSMBIOSMode` to `Custom`, but it does not seem to restore the keys.
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS, or brightness down and up, respectively.
 
