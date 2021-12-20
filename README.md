@@ -19,21 +19,23 @@ In progress
 | UEFI BIOS Utility | P87 01.39Rev.A | |
 
 ## Working
-- :heavy_check_mark: Audio input and output
-- :heavy_check_mark: Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
-- :heavy_check_mark: CPU Power Management
+- [x] Audio input and output
+- [x] Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
+- [x] CPU Power Management
 - [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
-- :heavy_check_mark: HiDPI resolution
-- :heavy_check_mark: QE/CI Acceration and brightness control
-- :white_check_mark: Realtek PCIe Card Reader RTS522A: See [Realtek PCIe Card Reader information](#realtek-pcie-card-reader-information).
-- :heavy_check_mark: Shutdown and reboot
+- [x] HiDPI resolution
+- [x] QE/CI Acceration and brightness control
+- [x] Shutdown and reboot
 - [ ] Sleep and wake: If USB-C, Thunderbolt, or display adapter are connected, kernel panic or power management failure will likely occur.
 - [ ] Thunderbolt 3: Only if connected during startup. Sleep with a device connected to the port will break things.
-- :heavy_check_mark: Touchscreen
-- :heavy_check_mark: Touchpad
-- :heavy_check_mark: USB map except USB-C with WWAN and fingerprint reader disabled and power supply
-- :heavy_check_mark: Wi-Fi / Bluetooth and Continuity
+- [x] Touchscreen
+- [x] Touchpad
+- [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
+- [x] Wi-Fi / Bluetooth and Continuity
 - [ ] what else
+
+## Somewhat working
+- [x] Realtek PCIe Card Reader RTS522A: See [Realtek PCIe Card Reader information](#realtek-pcie-card-reader-information).
 
 ## Not working
 - Accelerometer and Gyro sensors
