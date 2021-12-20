@@ -65,8 +65,11 @@ Credit: midi1996
 
 ## Sleep, wake, and hibernation
 Background: The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
+
 If HibernationFixup.kext is loaded, the RTC error may occur on restart, wake, or resume from hibernation regardless of `hibernatemode` chosen.
+
 If the RTC region length is kept as `8` while blacklisting and emulating Region `DF`, the chance of the RTC error is greatly reduced.
+
 To have an error-free environment, disable hibernation and limit the RTC region length to `2`.
 
 ## Realtek PCIe Card Reader
