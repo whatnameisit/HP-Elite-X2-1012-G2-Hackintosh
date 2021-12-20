@@ -1,6 +1,7 @@
 /*
  * This SSDT remaps ADB and PS2.
  * Refer to the debug messages.
+ * The toggle keys can be switched in SSDT-INIT.dsl.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "PS2", 0x00000000)
 {

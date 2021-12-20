@@ -29,7 +29,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
             OSYS = 0x07DF
         }
         // This variable is used to set sleep at low battery method.
-        // https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/blob/29ba0cdb720024cf2baaf8fd137104c19c4a235d/Docs/ACPI/SSDT-BAT.dsl#L1129-L1177
         // See SSDT-Battery.dsl.
         SLBV = One
         // This variable is used to remap F3 and F4 to brightness down and up, respectively.

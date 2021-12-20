@@ -941,6 +941,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             Return (DerefOf (NBST [Arg0]))
         }
 
+        // This toggle key can be switched in SSDT-INIT.dsl.
         Name (SLBV, Zero)
         If (SLBV)
         {

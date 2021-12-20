@@ -20,7 +20,7 @@ In progress
 
 ## Working
 - [x] Audio input and output
-- [x] Brightness control via keyboard: There are issues with Windows 10 HP keyboard driver which remaps the original brightness control keys to something else. You can use SSDT-PS2.dsl which provides an option to remap F3 and F4 to brightness up and down, respectively. Or you can disable the ALPS keyboard driver in Windows 10 driver under Device Manager-Keyboard, and reset the keyboard by pressing the power button for about 30 seconds. Credit midi1996.
+- [x] Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
 - [x] CPU Power Management
 - [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
 - [x] HiDPI resolution
@@ -38,13 +38,28 @@ In progress
 ## Not working
 - Accelerometer and Gyro sensors
 - Correct Thunderbolt 3 and USB-C device initialization for macOS: Thunderbolt 3 device will work only if connected at startup, and USB-C hotplug will work with an ACPI patch hack.
-- DRM contents
+- DRM contents on Safari
 - I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - Light sensor
 
-# Not tested
+## Not tested
 - WWAN slot. One stock antenna.
 - 
+
+## Disable Windows 10 ALPS keyboard driver
+- Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
+1. Open up Device Manager in Windows 10. Shortcut: Press the `Windows key` + `x` and `m`.
+2. Look for an "HID keyboard device" with "ALPS" identifier under "Keyboards." You will need to check each of them by double clicking to display more information.
+3. Right-click on the "HID keyboard device" with "ALPS" identifier, choose "Update driver," choose "Browse my computer for drivers," and choose "Let me pick from a list of available drivers on my computer."
+4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
+5. After the installation finishes, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
+
+Credit: midi1996
+
+- Note
+    1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non functioning keys. If you are uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/SSDT-PS2.dsl) for more information.
+    2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMBIOSGuid` set to `True` and `UpdateSMBIOSMode` to `Custom`, but it does not seem to restore the keys.
+    3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS, or brightness down and up, respectively.
 
 ## What else
 - to be filled
