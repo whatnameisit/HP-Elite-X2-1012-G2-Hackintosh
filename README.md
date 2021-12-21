@@ -51,7 +51,7 @@ In progress
 ## Disable Windows 10 ALPS keyboard driver
 Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
 1. Open up Device Manager in Windows 10. Shortcut: Press the `Windows key` + `x` and `m`.
-2. Look for an "HID keyboard device" with "ALPS" identifier under "Keyboards." You will need to check each of them by double clicking to display more information.
+2. Look for an "HID keyboard device" with "ALPS" identifier under "Keyboards." You will need to check each of them with double click to display more information.
 3. Right-click on the "HID keyboard device" with "ALPS" identifier, choose "Update driver," choose "Browse my computer for drivers," and choose "Let me pick from a list of available drivers on my computer."
 4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
 5. After the installation, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
@@ -76,7 +76,11 @@ To have an error-free environment, disable hibernation and limit the RTC region 
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
 
 ## Thunderbolt 3
-info
+There is an immense amount of rich information if you search for native Thunderbolt experiences and solutions on macOS. It is known that correct ACPI and Thunderbolt firmware are needed for fully working Thunderbolt in macOS, both the functionality and power management.
+
+Incorrect Thunderbolt setup may leave the system in an unstable state, resulting in sleep failures.
+
+Currently in progress.
 
 ## Acknowledgment
 Apple for macOS
