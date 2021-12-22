@@ -47,7 +47,6 @@ In progress
 - WWAN slot. One stock antenna.
 
 ## UEFI BIOS settings
-- In Security tab, set Intel Software Guard Extensions (SGX) to `Disabled`
   ![](/images/bios-security.webp)
   ![](/images/bios-advanced-boot-options-1.webp)
   ![](/images/bios-advanced-boot-options-2.webp)
