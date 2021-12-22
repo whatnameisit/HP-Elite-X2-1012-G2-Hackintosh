@@ -8,7 +8,7 @@ In progress
 | CPU | Intel Core i5-7300U | |
 | Graphics | Intel HD Graphics 620 | |
 | Display | 2736 x 1824 @ 60Hz | |
-| RAM | 4GB x 2 1866 MHz LPDDR3 | |
+| RAM | Micron / Elpida 4GB x 2 1866 MHz LPDDR3 | |
 | Wi-Fi / Bluetooth | BCM94360NG / BCM20702 | Replaced |
 | WWAN | Empty | Not tested |
 | Card Reader | Realtek PCIe Card Reader RTS522A | |
@@ -46,7 +46,19 @@ In progress
 ## Not tested
 - WWAN slot. One stock antenna.
 
-## BIOS settings
+## UEFI BIOS settings
+- In Security tab, set Intel Software Guard Extensions (SGX) to `Disabled`
+  ![](/images/bios-security.webp)
+  ![](/images/bios-advanced-boot-options-1.webp)
+  ![](/images/bios-advanced-boot-options-2.webp)
+  ![](/images/bios-advanced-secure-boot-configuration.webp)
+  ![](/images/bios-advanced-system-options.webp.webp)
+  ![](/images/bios-advanced-built-in-device-options-1.webp)
+  ![](/images/bios-advanced-built-in-device-options-2.webp)
+  ![](/images/bios-advanced-port-options.webp)
+  ![](/images/bios-advanced-power-management-options.webp)
+  ![](/images/bios-advanced-remote-management-options.webp)
+  
 
 ## Disable Windows 10 ALPS keyboard driver
 Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
@@ -60,8 +72,8 @@ Credit: midi1996
 
 - Note
     1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non-functioning keys. If you are feeling uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
-    2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMBIOSGuid` set to `True` and `UpdateSMBIOSMode` to `Custom`, but it does not seem to restore the keys.
-    3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
+    2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMUEFI BIOSGuid` set to `True` and `UpdateSMUEFI BIOSMode` to `Custom`, but it does not seem to restore the keys.
+    3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in UEFI BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ## Sleep, wake, and hibernation
 Background: The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
@@ -72,7 +84,7 @@ If the RTC region length is kept as `8` while blacklisting and emulating Region 
 
 If USB-C is enabled, wake results in a kernel panic which I have trouble getting log of, not to mention I could recognize anything.
 
-To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in BIOS.
+To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in UEFI BIOS.
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
