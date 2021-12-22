@@ -72,7 +72,9 @@ If HibernationFixup.kext is loaded, the RTC error may occur on restart, wake, or
 
 If the RTC region length is kept as `8` while blacklisting and emulating Region `DF`, the chance of the RTC error is greatly reduced.
 
-To have an error-free environment, disable hibernation and limit the RTC region length to `2`.
+If USB-C is enabled, wake results in a kernel panic which I have trouble getting log of, not to mention I could recognize anything.
+
+To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in BIOS.
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
