@@ -48,6 +48,8 @@ In progress
 - WWAN slot. One stock antenna.
 - 
 
+## BIOS settings
+
 ## Disable Windows 10 ALPS keyboard driver
 Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
 1. Open up Device Manager in Windows 10. Shortcut: Press the `Windows key` + `x` and `m`.
