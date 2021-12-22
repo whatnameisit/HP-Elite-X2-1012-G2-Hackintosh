@@ -30,7 +30,6 @@ In progress
 - [x] Touchpad
 - [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
 - [x] Wi-Fi / Bluetooth and Continuity
-- [ ] what else
 
 ## Somewhat working
 - [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
@@ -46,7 +45,6 @@ In progress
 
 ## Not tested
 - WWAN slot. One stock antenna.
-- 
 
 ## BIOS settings
 
