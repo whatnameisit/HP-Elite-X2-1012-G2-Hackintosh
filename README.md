@@ -15,7 +15,7 @@ In progress
 | Camera | I2C | Not working |
 | Audio | Conexant CX8200 | |
 | Touchpad | ALPS | |
-| ThunderBolt 3 | Alpine Ridge JHL6340 | In progress |
+| ThunderBolt 3 | Alpine Ridge JHL6340 | |
 | UEFI BIOS Utility | P87 01.39Rev.A | |
 
 ## Working
@@ -35,14 +35,14 @@ In progress
 ## Somewhat working
 - [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
-- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation) and [Thunderbolt 3](#thunderbolt-3).
-- [ ] Thunderbolt 3: Simple PCI-to-PCI bridge with no power management. See [Thunderbolt 3](#thunderbolt-3).
+- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
 
 ## Not working
 - [ ] Accelerometer and Gyro sensors
 - [ ] DRM contents on Safari: This is limited by non-native IGPU firmware not having Apple keys.
 - [ ] I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - [ ] Light sensor
+- [ ] Thunderbolt 3
 
 ## Not tested
 - WWAN slot. One stock antenna.
@@ -76,13 +76,6 @@ To have an error-free environment, disable hibernation and limit the RTC region 
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
-
-## Thunderbolt 3
-There is an immense amount of rich information if you search for native Thunderbolt experiences and solutions on macOS. It is known that correct ACPI and Thunderbolt firmware are needed for fully working Thunderbolt in macOS, both the functionality and power management.
-
-Incorrect Thunderbolt setup may leave the system in an unstable state, resulting in sleep failures.
-
-Currently in progress.
 
 ## Acknowledgment
 Apple for macOS
