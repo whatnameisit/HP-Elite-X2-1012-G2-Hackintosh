@@ -32,7 +32,7 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ## Somewhat working
-- [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
+- [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 
@@ -102,6 +102,8 @@ Thanks to [benbender](https://github.com/benbender/x1c6-hackintosh/blob/experime
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
+
+More reading at the kext repository [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader/) and [InsanelyMac development thread](https://www.insanelymac.com/forum/topic/348130-realtek-pcieusb-sd-card-reader-driver-for-macos/)
 
 ## Acknowledgment
 Apple for macOS
