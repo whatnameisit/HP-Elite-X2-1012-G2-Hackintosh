@@ -34,7 +34,7 @@ In progress
 ## Somewhat working
 - [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
-- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation) and [Sleep on low battery](#sleep-on-low-battery).
+- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 
 ## Not working
 - [ ] Accelerometer and Gyro sensors
@@ -68,7 +68,7 @@ Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware w
 4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
 5. After the installation, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
 
-Credit: midi1996
+Credits to [midi1996](https://github.com/midi1996/X2G2-opencore-hackintosh)
 
 - Note
     1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non-functioning keys. If you are feeling uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
@@ -87,6 +87,18 @@ If USB-C is enabled, wake results in a kernel panic which I have trouble getting
 To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in UEFI BIOS.
 
 ## Sleep on low battery
+The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and a helpful guide on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
+
+Thanks to [usr-sse2](https://github.com/usr-sse2)
+
+## Modern Standby
+Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disabled for actual sleep and wake.
+
+HP laptops have ACPI objects which correspond to Modern Standby selection. By writing to the objects and making the patch OS-aware, one can have normal sleep under macOS and Modern Standby under Windows.
+
+See [SSDT-ModernStandby-Disable.dsl](/Docs/ACPI/SSDT-ModernStandby-Disable.dsl)].
+
+Thanks to [benbender](https://github.com/benbender/x1c6-hackintosh/blob/experimental/EFI/OC/dsl/SSDT-SLEEP.dsl)
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
