@@ -32,9 +32,9 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ## Somewhat working
-- [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
+- [ ] Hibernation: Hibernation works accompanied by RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
-- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
+- [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation) and [Sleep on low battery](#sleep-on-low-battery).
 
 ## Not working
 - [ ] Accelerometer and Gyro sensors
@@ -47,6 +47,7 @@ In progress
 - WWAN slot. One stock antenna.
 
 ## UEFI BIOS settings
+Necessary options are commented in the photos below. You can pick other options to your taste.
   ![](/images/bios-security.webp)
   ![](/images/bios-advanced-boot-options-1.webp)
   ![](/images/bios-advanced-boot-options-2.webp)
@@ -84,6 +85,8 @@ If the RTC region length is kept as `8` while blacklisting and emulating Region 
 If USB-C is enabled, wake results in a kernel panic which I have trouble getting log of, not to mention I could recognize anything.
 
 To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in UEFI BIOS.
+
+## Sleep on low battery
 
 ## Realtek PCIe Card Reader
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
