@@ -13,7 +13,7 @@ In progress
   - [UEFI BIOS settings](#uefi-bios-settings)
 - [Documentation](#documentation)
   - [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver)
-  - [Sleep, wake, and hibernation](#sleep--wake--and-hibernation)
+  - [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
   - [Sleep on low battery](#sleep-on-low-battery)
   - [Modern Standby](#modern-standby)
   - [Realtek PCIe Card Reader](#realtek-pcie-card-reader)
