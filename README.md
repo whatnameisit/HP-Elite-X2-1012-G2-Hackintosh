@@ -1,6 +1,23 @@
 # HP-Elite-X2-1012-G2-Hackintosh
 In progress
 
+## Table of Contents
+- [System specification](#system-specification)
+- [Working](#working)
+- [Somewhat working](#somewhat-working)
+- [Not working](#not-working)
+- [Not tested](#not-tested)
+- [Installation](#installation)
+- [UEFI BIOS settings](#uefi-bios-settings)
+- [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver)
+- [Sleep, wake, and hibernation](#sleep--wake--and-hibernation)
+- [Sleep on low battery](#sleep-on-low-battery)
+- [Modern Standby](#modern-standby)
+- [Realtek PCIe Card Reader](#realtek-pcie-card-reader)
+- [Laptop teardown](#laptop-teardown)
+- [Troubleshooting](#troubleshooting)
+- [Acknowledgment](#acknowledgment)
+
 ## System specification
 | Item | Details | Note |
 | - | - | - |
@@ -22,7 +39,6 @@ In progress
 - [x] Audio input and output
 - [x] Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
 - [x] CPU Power Management with CPUFriend
-- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~
 - [x] HiDPI resolution
 - [x] QE/CI Acceration and brightness control
 - [x] Shutdown and reboot
@@ -32,6 +48,7 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ## Somewhat working
+- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~ and sometimes fails to output after wake.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
@@ -45,6 +62,9 @@ In progress
 
 ## Not tested
 - WWAN slot. One stock antenna.
+
+## Installation
+Follow [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/).
 
 ## UEFI BIOS settings
 Necessary options are commented in the photos below. You can pick other options to your taste.
@@ -105,6 +125,9 @@ You may want to tear down the laptop for Wi-Fi / Bluetooth card replacement, WWA
 See this guide for a complete teardown process: [HP Elite x2 1012 G2 Repairability Assessment](https://ko.ifixit.com/Guide/HP+Elite+x2+1012+G2+Repairability+Assessment/95992?lang=en).
 
 - Note: You do not need a suction cup to remove the display. Just a guitar pick would do.
+
+## Troubleshooting
+Read this README _again_, OpenCore's official [Configuration.pdf](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf) and Dortania's [General Troubleshooting](https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html).
 
 ## Acknowledgment
 Apple for macOS
