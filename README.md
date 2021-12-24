@@ -98,7 +98,7 @@ Background: Windows 10 ALPS keyboard driver writes _something_ to the firmware w
 
 - Note
     1. I do not know if there are any _apparent_ consequences of having disabled this driver, such as non-functioning keys. If you are feeling uneasy about disabling the driver, you may try to remap F3 and F4 keys to brightness down and up, respectively. See [SSDT-PS2.dsl](/Docs/ACPI/SSDT-PS2.dsl) for more information.
-    2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMUEFI BIOSGuid` set to `True` and `UpdateSMUEFI BIOSMode` to `Custom`, but it does not seem to restore the keys.
+    2. The brightness control is not working in Windows 10 not because of the driver, but because of patches done through OpenCore on Windows. I have tried `CustomSMUBIOSGuid` set to `True` and `UpdateSMUBIOSMode` to `Custom`, but it does not seem to restore the keys.
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in UEFI BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ### Sleep, wake, and hibernation
