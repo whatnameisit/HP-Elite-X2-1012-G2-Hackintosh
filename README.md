@@ -90,7 +90,7 @@ The batteries on modern portable devices may wear down quickly if the battery le
 ## Modern Standby
 Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disabled for actual sleep and wake.
 
-HP laptops have ACPI objects which correspond to Modern Standby selection. By writing to the objects and making the patch OS-aware, one can have normal sleep under macOS and Modern Standby under Windows.
+HP laptops have ACPI objects which correspond to Modern Standby selection. By writing to the objects and making the patch OS-aware, the laptop can have normal sleep under macOS and Modern Standby under Windows.
 
 See [SSDT-ModernStandby-Disable.dsl](/Docs/ACPI/SSDT-ModernStandby-Disable.dsl)].
 
@@ -98,6 +98,13 @@ See [SSDT-ModernStandby-Disable.dsl](/Docs/ACPI/SSDT-ModernStandby-Disable.dsl)]
 Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
 
 More reading at the kext repository [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader/) and [InsanelyMac development thread](https://www.insanelymac.com/forum/topic/348130-realtek-pcieusb-sd-card-reader-driver-for-macos/)
+
+## Laptop teardown
+You may want to tear down the laptop for Wi-Fi / Bluetooth card replacement, WWAN / GPS card installation, and/or SSD replacement.
+
+See this guide for a complete teardown process: [HP Elite x2 1012 G2 Repairability Assessment](https://ko.ifixit.com/Guide/HP+Elite+x2+1012+G2+Repairability+Assessment/95992?lang=en).
+
+- Note: You do not need a suction cup to remove the display. Just a guitar pick would do.
 
 ## Acknowledgment
 Apple for macOS
