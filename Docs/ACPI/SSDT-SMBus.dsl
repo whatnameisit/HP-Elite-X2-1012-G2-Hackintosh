@@ -1,6 +1,7 @@
 /*
  * This SSDT allows SMBus compatibility on macOS.
  * Note that Device MCHC is defined only if the device is not already occupied by the name DSC1.
+ * The necessity of this SSDT is questionable since AppleSMBusControllerICH is not loaded on MBP14,1.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 {
@@ -11,14 +12,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
 
     Scope (_SB.PCI0)
     {
-        If ((OSDW () && ~CondRefOf (DSC1)))
+        Device (MCHC)
         {
-            Device (MCHC)
+            Name (_ADR, Zero)  // _ADR: Address
+            Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Name (_ADR, Zero)  // _ADR: Address
-                Method (_STA, 0, NotSerialized)  // _STA: Status
+                If ((OSDW () && ~CondRefOf (DSC1)))
                 {
-                    Return (0x0F)
+                Return (0x0F)
+                }
+                Else
+                {
+                    Return (Zero)
                 }
             }
         }

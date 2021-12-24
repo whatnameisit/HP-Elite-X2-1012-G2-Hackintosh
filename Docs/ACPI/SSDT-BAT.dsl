@@ -1,20 +1,14 @@
 /*
- * Battery patches supporting both BIOS Versions 01.25 and 01.39Rev.A
- * Implements Method _BIX on 01.25 to display cycle count.
- * 01.39Rev.A alreay has such feature.
+ * Patches methods to support battery reading.
+ * It also supports sleep at custom battery level. Currently set to 20 percent.
  *
  * config.plist ACPI/Patch
- * Comment: Enable battery reading: M(_BIX) to XBIX
- * Count:   1
- * Find:    5F 42 49 58 00
- * Replace: 58 42 49 58 00
- *
  * Comment: Enable battery reading: M(BTIF) to XTIF in \_SB.PCI0.LPCB.EC0
  * Count:   1
  * Find:    42 54 49 46 09 79 01
  * Replace: 58 54 49 46 09 79 01
  *
- * Comment: Enable battery reading: M(BTIX) to XTIX in \_SB and \_SB.PCI0.LPCB.EC0
+ * Comment: Enable battery reading: M(BTIX) to XTIX in \_SB.PCI0.LPCB.EC0
  * Count:   2
  * Find:    42 54 49 58 09
  * Replace: 58 54 49 58 09
@@ -59,7 +53,7 @@
  * Find:    53 42 54 43 03
  * Replace: 53 58 54 43 03
  *
- * Comment: Enable sleep at low battery(20): M(BTST) to XTST in \_SB
+ * Comment: Enable sleep on low battery(20): M(BTST) to XTST in \_SB
  * Base:    \_SB
  * Count:   1
  * Find:    42 54 53 54
@@ -856,152 +850,9 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Return (\_SB.PCI0.LPCB.EC0.SXTC ())
             }
         }
-    }
 
-    Scope (\_TZ)
-    {
-        Method (GCGC, 0, Serialized)
-        {
-            If (OSDW ())
-            {
-                Name (LTMP, Buffer (0x02){})
-                If (\_SB.PCI0.LPCB.EC0.ECRG)
-                {
-                    Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
-                    LTMP = R16B (\_SB.PCI0.LPCB.EC0.PR00, \_SB.PCI0.LPCB.EC0.PR01)
-                    Release (\_SB.PCI0.LPCB.EC0.ECMX)
-                }
-
-                Return (LTMP) /* \_TZ_.GCGC.LTMP */
-            }
-            Else
-            {
-                Return (\_TZ.XXGC ())
-            }
-        }
-    }
-
-    Scope (\_SB)
-    {
-        // Paired with M(_BIX) to XBIX on BIOS Version 01.39Rev.A.
-        Method (BAT0._BIX, 0, NotSerialized)  // _BIX: Battery Information Extended
-        {
-            Return (\_SB.BTIX (Zero))
-        }
-
-        // Paired with M(BTIX) to XTIX on 01.39Rev.A.
         Method (BTIX, 1, Serialized)
         {
-            // If _SB.XTIX exists, if on 01.39Rev.A, execute original method.
-            If (CondRefOf (\_SB.XTIX))
-            {
-                Return (\_SB.XTIX ())
-            }
-            // If not, if on 01.25, execute the code copied from BTIX on 01.39Rev.A.
-            Else
-            {
-                Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
-                If ((Local0 == 0xFF))
-                {
-                    Return (Package (0x15)
-                    {
-                        One, 
-                        One, 
-                        0xFFFFFFFF, 
-                        0xFFFFFFFF, 
-                        One, 
-                        0xFFFFFFFF, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x00017318, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        Zero, 
-                        0x64, 
-                        0x64, 
-                        "", 
-                        "", 
-                        "", 
-                        "", 
-                        One
-                    })
-                }
-                Else
-                {
-                    // NBTE on 01.39Rev.A
-                    Return (DerefOf (NBIX [Arg0]))
-                }
-            }
-        }
-
-        // If NBTE does not exist, if on 01.25,
-        If (~CondRefOf (\_SB.NBTE))
-        {
-            // Create NBIX with code copied from NBTE on 01.39Rev.A.
-            Name (NBIX, Package (0x02)
-            {
-                Package (0x15)
-                {
-                    One, 
-                    One, 
-                    0xFFFFFFFF, 
-                    0xFFFFFFFF, 
-                    One, 
-                    0xFFFFFFFF, 
-                    Zero, 
-                    Zero, 
-                    0x64, 
-                    0x00017318, 
-                    Zero, 
-                    Zero, 
-                    Zero, 
-                    Zero, 
-                    0x64, 
-                    0x64, 
-                    "Primary", 
-                    "123456789", 
-                    "LIon", 
-                    "Hewlett-Packard", 
-                    One
-                }, 
-
-                Package (0x15)
-                {
-                    One, 
-                    One, 
-                    0xFFFFFFFF, 
-                    0xFFFFFFFF, 
-                    One, 
-                    0xFFFFFFFF, 
-                    Zero, 
-                    Zero, 
-                    0x64, 
-                    0x00017318, 
-                    Zero, 
-                    Zero, 
-                    Zero, 
-                    Zero, 
-                    0x64, 
-                    0x64, 
-                    "Primary", 
-                    "100000", 
-                    "LIon", 
-                    "Hewlett-Packard", 
-                    One
-                }
-            })
-        }
-    }
-
-    // Paired with M(BTIX) to XTIX on 01.39Rev.A.
-    Method (\_SB.PCI0.LPCB.EC0.BTIX, 1, Serialized)
-    {
-        // If XTIX exists, if on 01.39Rev.A,
-        If (CondRefOf (\_SB.PCI0.LPCB.EC0.XTIX))
-        {
-            // and the OS is "Darwin", execute the below
             If (OSDW ())
             {
                 Local7 = (One << Arg0)
@@ -1049,80 +900,33 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                 Release (\_SB.PCI0.LPCB.EC0.BTMX)
                 Return (Zero)
             }
-            // and if the OS is not "Darwin", execute original BTIX.
             Else
             {
                 Return (\_SB.PCI0.LPCB.EC0.XTIX ())
             }
         }
-        // If XTIX does not exist, if on 01.25, execute code copied from BTIX on 01.39Rev.A
-        Else
+    }
+
+    Scope (\_TZ)
+    {
+        Method (GCGC, 0, Serialized)
         {
-            Local7 = (One << Arg0)
-            BTDR (One)
-            If ((\_SB.PCI0.LPCB.EC0.BSTA (Local7) == 0x0F))
+            If (OSDW ())
             {
-                Return (0xFF)
-            }
-
-            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-            Local0 = \_SB.PCI0.LPCB.EC0.NGBF /* External reference */
-            Release (\_SB.PCI0.LPCB.EC0.BTMX)
-            If (((Local0 & Local7) == Zero))
-            {
-                Return (Zero)
-            }
-
-            \_SB.NBST [Arg0] = \_SB.NDBS /* External reference */
-            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-            \_SB.PCI0.LPCB.EC0.NGBT |= Local7
-            Release (\_SB.PCI0.LPCB.EC0.BTMX)
-            Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
-            If (\_SB.PCI0.LPCB.EC0.ECRG)
-            {
-                // with a condition that if the OS is "Darwin", execute patched BTIX content
-                If (OSDW ())
+                Name (LTMP, Buffer (0x02){})
+                If (\_SB.PCI0.LPCB.EC0.ECRG)
                 {
-                    \_SB.PCI0.LPCB.EC0.BSEL = Arg0
-                    DerefOf (NBIX [Arg0]) [0x02] = R16B (DC00, DC01)
-                    DerefOf (NBIX [Arg0]) [0x03] = R16B (FC00, FC01)
-                    DerefOf (NBIX [Arg0]) [0x05] = R16B (DV00, DV01)
-                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
-                    Local4 = (Local0 / 0x64)
-                    DerefOf (NBIX [Arg0]) [0x06] = Local4
-                    Local0 = (R16B (FC00, FC01) * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
-                    Local4 = (Local0 / 0x64)
-                    DerefOf (NBIX [Arg0]) [0x07] = Local4
-                    DerefOf (NBIX [Arg0]) [0x08] = R16B (CC00, CC01)
-                    Local0 = R16B (SN00, SN01)
-                    Local1 = R16B (AT00, AT01)
+                    Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
+                    LTMP = R16B (\_SB.PCI0.LPCB.EC0.PR00, \_SB.PCI0.LPCB.EC0.PR01)
+                    Release (\_SB.PCI0.LPCB.EC0.ECMX)
                 }
-                // and if the OS is not "Darwin", execute original BTIX content.
-                Else
-                {
-                    BSEL = Arg0
-                    DerefOf (NBIX [Arg0]) [0x02] = \_SB.PCI0.LPCB.EC0.BDC /* External reference */
-                    DerefOf (NBIX [Arg0]) [0x03] = \_SB.PCI0.LPCB.EC0.BFC /* External reference */
-                    DerefOf (NBIX [Arg0]) [0x05] = \_SB.PCI0.LPCB.EC0.BDV /* External reference */
-                    Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLB1) /* External reference */
-                    Local4 = (Local0 / 0x64)
-                    DerefOf (NBIX [Arg0]) [0x06] = Local4
-                    Local0 = (\_SB.PCI0.LPCB.EC0.BFC * \_SB.PCI0.LPCB.EC0.NLO2) /* External reference */
-                    Local4 = (Local0 / 0x64)
-                    DerefOf (NBIX [Arg0]) [0x07] = Local4
-                    DerefOf (NBIX [Arg0]) [0x08] = \_SB.PCI0.LPCB.EC0.BCC /* External reference */
-                    Local0 = \_SB.PCI0.LPCB.EC0.BSN /* External reference */
-                    Local1 = \_SB.PCI0.LPCB.EC0.BDAT /* External reference */
-                }
-            }
 
-            Release (\_SB.PCI0.LPCB.EC0.ECMX)
-            Local2 = \_SB.PCI0.LPCB.EC0.GBSS (Local0, Local1)
-            DerefOf (NBIX [Arg0]) [0x11] = Local2
-            Acquire (\_SB.PCI0.LPCB.EC0.BTMX, 0xFFFF)
-            \_SB.PCI0.LPCB.EC0.NGBF &= ~Local7
-            Release (\_SB.PCI0.LPCB.EC0.BTMX)
-            Return (Zero)
+                Return (LTMP) /* \_TZ_.GCGC.LTMP */
+            }
+            Else
+            {
+                Return (\_TZ.XXGC ())
+            }
         }
     }
 
@@ -1132,17 +936,25 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         {
             Local0 = ^PCI0.LPCB.EC0.BTST (Arg0, One)
             If ((Local0 == Zero)){}
-            // Sleep at low battery(SALB)
+            // Sleep on low battery(SOLB)
             SALB (Arg0)
             Return (DerefOf (NBST [Arg0]))
         }
 
-        // Variable to check if SALB will be executed
+        // This toggle key can be switched in SSDT-INIT.dsl.
         Name (SLBV, Zero)
+        If (SLBV)
+        {
+            Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
+        }
+        Else
+        {
+            Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
+        }
+
         // SALB
         Method (SALB, 1, NotSerialized)
         {
-            // If SLBV is set, execute below.
             If (SLBV = One)
             {
                 // If discharging,
@@ -1150,26 +962,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     ))
                 {
                     // store 20 % battery capacity into Local2
-                    If (~CondRefOf (NBTE))
-                    {
-                        Divide (DerefOf (DerefOf (NBIX [Arg0]) [0x02]), 0x05, Local1, 
-                            Local2)
-                    }
-                    Else
-                    {
-                        Divide (DerefOf (DerefOf (NBTE [Arg0]) [0x02]), 0x05, Local1, 
-                            Local2)
-                    }
-
+                    Divide (DerefOf (DerefOf (NBTE [Arg0]) [0x02]), 0x0A, Local0, 
+                        Local1)
+                    Local1 *= 0x07
                     // If current capacity is less than 20 % battery capacity,
-                    If ((DerefOf (DerefOf (NBST [Arg0]) [0x02]) < Local2))
+                    If ((DerefOf (DerefOf (NBST [Arg0]) [0x02]) < Local1))
                     {
                         // sleep.
                         Notify (SLPB, 0x80) // Status Change
                     }
                 }
             }
-            // Don't do anything is SLBV is not set.
+            // Don't do anything if SLBV is not set.
             Else
             {
             }
