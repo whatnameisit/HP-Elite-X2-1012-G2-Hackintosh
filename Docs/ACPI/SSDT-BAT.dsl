@@ -53,7 +53,7 @@
  * Find:    53 42 54 43 03
  * Replace: 53 58 54 43 03
  *
- * Comment: Enable sleep at low battery(20): M(BTST) to XTST in \_SB
+ * Comment: Enable sleep on low battery(20): M(BTST) to XTST in \_SB
  * Base:    \_SB
  * Count:   1
  * Find:    42 54 53 54
@@ -936,7 +936,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         {
             Local0 = ^PCI0.LPCB.EC0.BTST (Arg0, One)
             If ((Local0 == Zero)){}
-            // Sleep at low battery(SALB)
+            // Sleep on low battery(SOLB)
             SALB (Arg0)
             Return (DerefOf (NBST [Arg0]))
         }
@@ -945,11 +945,11 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         Name (SLBV, Zero)
         If (SLBV)
         {
-            Debug = "BATTERY:SLBV is set, enabling sleep at low battery mode"
+            Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
         }
         Else
         {
-            Debug = "BATTERY:SLBV is not set, disabling sleep at low battery mode"
+            Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
         }
 
         // SALB

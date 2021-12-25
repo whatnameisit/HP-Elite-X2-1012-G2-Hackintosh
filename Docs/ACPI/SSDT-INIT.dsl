@@ -28,7 +28,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
             // https://www.tonymacx86.com/threads/hp-zbook-video-mux-control.316221/
             OSYS = 0x07DF
         }
-        // This variable is used to set sleep at low battery method.
+        // This variable is used to enable sleep on low battery.
         // See SSDT-Battery.dsl.
         SLBV = One
         // This variable is used to remap F3 and F4 to brightness down and up, respectively.
