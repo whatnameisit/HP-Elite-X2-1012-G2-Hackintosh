@@ -134,6 +134,13 @@ See this guide for a complete teardown process: [HP Elite x2 1012 G2 Repairabili
 
 - Note: You do not need a suction cup to remove the display. Just a guitar pick would do.
 
+### Thunderbolt 3
+There is an immense amount of rich information if you search for native Thunderbolt experiences and solutions on macOS. It is known that correct ACPI and Thunderbolt firmware are needed for fully working Thunderbolt in macOS, both the functionality and power management.
+
+Incorrect Thunderbolt setup may leave the system in an unstable state, resulting in sleep failures.
+
+Currently in progress.
+
 ## Troubleshooting
 Read this README _again_, OpenCore's official [Configuration.pdf](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf) and Dortania's [General Troubleshooting](https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html).
 
