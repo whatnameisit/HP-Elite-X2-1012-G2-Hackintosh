@@ -102,7 +102,7 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in UEFI BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ### Sleep, wake, and hibernation
-The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
+The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl) alongside [SSDT-RTC0TIM0.dsl](/Docs/ACPI/SSDT-RTC0TIM0.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
 
 If HibernationFixup.kext is loaded, the RTC error may occur on restart, wake, or resume from hibernation regardless of `hibernatemode` chosen.
 
@@ -113,7 +113,7 @@ If USB-C is enabled, wake results in a kernel panic which I have trouble getting
 To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in UEFI BIOS.
 
 ### Sleep on low battery
-The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and a helpful guide on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
+The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
 
 ### Modern Standby
 Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disabled for actual sleep and wake.
