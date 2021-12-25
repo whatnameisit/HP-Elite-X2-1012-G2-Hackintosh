@@ -110,38 +110,46 @@ DefinitionBlock ("", "SSDT", 2, "APPLE ", "TbtOnPCH", 0x00001000)
                 Case (One)
                 {
                     Local1 = Local0
+                    Concatenate ("TB:MMBA (One) = ", Local1, Debug)
                 }
                 Case (0x02)
                 {
                     Local1 = (\_SB.PCI0.GPCB () + (SB19 * 0x00100000))
+                    Concatenate ("TB:MMBA (0x02) = ", Local1, Debug)
                 }
                 Case (0x03)
                 {
                     Local1 = (\_SB.PCI0.GPCB () + ((SB19 + One) * 0x00100000))
+                    Concatenate ("TB:MMBA (0x03) = ", Local1, Debug)
                 }
                 Case (0x04)
                 {
                     Local1 = ((\_SB.PCI0.GPCB () + ((SB19 + One) * 0x00100000)) + 
                         0x8000)
+                    Concatenate ("TB:MMBA (0x04) = ", Local1, Debug)
                 }
                 Case (0x05)
                 {
                     Local1 = ((\_SB.PCI0.GPCB () + ((SB19 + One) * 0x00100000)) + 
                         0x00010000)
+                    Concatenate ("TB:MMBA (0x05) = ", Local1, Debug)
                 }
                 Case (0x06)
                 {
                     Local1 = ((\_SB.PCI0.GPCB () + ((SB19 + One) * 0x00100000)) + 
                         0x00020000)
+                    Concatenate ("TB:MMBA (0x06) = ", Local1, Debug)
                 }
                 Case (0x07)
                 {
                     Local1 = (\_SB.PCI0.GPCB () + ((SB19 + 0x02) * 0x00100000))
+                    Concatenate ("TB:MMBA (0x07) = ", Local1, Debug)
                 }
                 Case (0x08)
                 {
                     Local1 = ((((SB20 & 0xFFFC) << 0x10) & 0xFFF00000) + 
                         0x00039854)
+                    Concatenate ("TB:MMBA (0x08) = ", Local1, Debug)
                 }
 
             }
