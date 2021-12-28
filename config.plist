@@ -12,7 +12,7 @@
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
-				<string>SSDT-BAT.aml</string>
+				<string>SSDT-Battery.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -21,30 +21,6 @@
 				<true/>
 				<key>Path</key>
 				<string>SSDT-EC.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Fix sleep</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-GPRW.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Disable HPET</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-HPET-Disable.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Modern Sleep</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-ModernStandby-Disable.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -101,6 +77,14 @@
 				<true/>
 				<key>Path</key>
 				<string>SSDT-SMBus.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Fix sleep</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-Sleep.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
