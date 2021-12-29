@@ -937,7 +937,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             Local0 = ^PCI0.LPCB.EC0.BTST (Arg0, One)
             If ((Local0 == Zero)){}
             // Sleep on low battery(SOLB)
-            SALB (Arg0)
+            SOLB (Arg0)
             Return (DerefOf (NBST [Arg0]))
         }
 
@@ -953,7 +953,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         }
 
         // SALB
-        Method (SALB, 1, NotSerialized)
+        Method (SOLB, 1, NotSerialized)
         {
             If (SLBV = One)
             {
@@ -964,7 +964,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     // store 20 % battery capacity into Local2
                     Divide (DerefOf (DerefOf (NBTE [Arg0]) [0x02]), 0x0A, Local0, 
                         Local1)
-                    Local1 *= 0x07
+                    Local1 *= 0x02
                     // If current capacity is less than 20 % battery capacity,
                     If ((DerefOf (DerefOf (NBST [Arg0]) [0x02]) < Local1))
                     {
