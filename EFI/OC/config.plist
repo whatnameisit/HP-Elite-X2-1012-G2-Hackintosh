@@ -64,11 +64,11 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Use legacy RTC device on macOS and fix conflicting IRQs</string>
+				<string>Use legacy RTC device on macOS</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
-				<string>SSDT-RTC0TIM0.aml</string>
+				<string>SSDT-RTC0.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -624,36 +624,6 @@
 				<data></data>
 				<key>Replace</key>
 				<data>WFBTMwhTRw==</data>
-				<key>ReplaceMask</key>
-				<data></data>
-				<key>Skip</key>
-				<integer>0</integer>
-				<key>TableLength</key>
-				<integer>0</integer>
-				<key>TableSignature</key>
-				<data></data>
-			</dict>
-			<dict>
-				<key>Base</key>
-				<string></string>
-				<key>BaseSkip</key>
-				<integer>0</integer>
-				<key>Comment</key>
-				<string>Enable legacy RTC device on macOS by disabling RTC and creating RTC0: M(_STA) to XSTA in \_SB.PCI0.LPCB.RTC</string>
-				<key>Count</key>
-				<integer>1</integer>
-				<key>Enabled</key>
-				<true/>
-				<key>Find</key>
-				<data>X1NUQQCgCpNTVEFTAQ==</data>
-				<key>Limit</key>
-				<integer>0</integer>
-				<key>Mask</key>
-				<data></data>
-				<key>OemTableId</key>
-				<data></data>
-				<key>Replace</key>
-				<data>WFNUQQCgCpNTVEFTAQ==</data>
 				<key>ReplaceMask</key>
 				<data></data>
 				<key>Skip</key>
