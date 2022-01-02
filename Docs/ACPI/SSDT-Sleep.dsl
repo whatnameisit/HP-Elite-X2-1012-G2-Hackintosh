@@ -86,17 +86,17 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
                 }
             }
         }
-        Else
-        {
-            Debug = "MDSB:BIOS Modern Standby is OFF"
-        }
+    }
+    Else
+    {
+        Debug = "MDSB:BIOS Modern Standby is OFF"
+    }
 
-        Name (SLTP, Zero)
-        Method (_TTS, 1, NotSerialized)  // _TTS: Transition To State
-        {
-            Debug = Concatenate ("SLEEP:_TTS() called with Arg0 = ", Arg0)
-            SLTP = Arg0
-        }
+    Name (SLTP, Zero)
+    Method (_TTS, 1, NotSerialized)  // _TTS: Transition To State
+    {
+        Debug = Concatenate ("SLEEP:_TTS() called with Arg0 = ", Arg0)
+        SLTP = Arg0
     }
 }
 
