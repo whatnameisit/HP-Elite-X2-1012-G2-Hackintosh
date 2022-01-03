@@ -943,16 +943,19 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
 
         // This toggle key can be switched in SSDT-INIT.dsl.
         Name (SLBV, Zero)
-        If (SLBV)
+        Method (MSGB, 0, NotSerialized)
         {
-            Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
-        }
-        Else
-        {
-            Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
+            If (SLBV)
+            {
+                Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
+            }
+            Else
+            {
+                Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
+            }
         }
 
-        // SALB
+        // SOLB
         Method (SOLB, 1, NotSerialized)
         {
             If (SLBV = One)

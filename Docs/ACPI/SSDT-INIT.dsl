@@ -9,6 +9,8 @@
  */
 DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
 {
+    External (_SB_.MSGB, MethodObj)    // 0 Arguments
+    External (_SB_.PCI0.LPCB.PS2K.MSGP, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.PS2K.RMTB, IntObj)
     External (_SB_.PCI0.LPCB.PS2K.RMTC, IntObj)
     External (_SB_.PCI0.XINI, MethodObj)    // 0 Arguments
@@ -16,7 +18,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
     External (HPTE, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (OSYS, FieldUnitObj)
-    External (SLBV, IntObj)
 
     Method (\_SB.PCI0._INI, 0, Serialized)  // _INI: Initialize
     {
@@ -29,24 +30,24 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
             // https://www.tonymacx86.com/threads/hp-zbook-video-mux-control.316221/
             OSYS = 0x07DF
             HPTE = Zero
-            // This variable is used to remap F3 and F4 to brightness down and up, respectively.
+            // RMTB is used to remap F3 and F4 to brightness down and up, respectively.
+            // RMTC is used to remap right cmd to F19.
             // See SSDT-PS2.dsl.
-            If (CondRefOf (\_SB.PCI0.LPCB.PS2K.RMTB))
+            If (((CondRefOf (\_SB.PCI0.LPCB.PS2K.RMTB) && CondRefOf (\_SB.PCI0.LPCB.PS2K.RMTC)) && CondRefOf (\_SB.PCI0.LPCB.PS2K.MSGP)))
             {
                 \_SB.PCI0.LPCB.PS2K.RMTB = Zero
-            }
-
-            // This variable is used to remap right cmd to F19.
-            // See SSDT-PS2.dsl.
-            If (CondRefOf (\_SB.PCI0.LPCB.PS2K.RMTC))
-            {
                 \_SB.PCI0.LPCB.PS2K.RMTC = One
+                \_SB.PCI0.LPCB.PS2K.MSGP ()
             }
         }
         
-        // This variable is used to enable sleep on low battery.
+        // SLBV is used to enable sleep on low battery.
         // See SSDT-Battery.dsl.
-        SLBV = One
+        If ((CondRefOf (\_SB.SLBV) && CondRefOf (\_SB.MSGB)))
+        {
+            \_SB.SLBV = One
+            \_SB.MSGB ()
+        }
     }
 }
 

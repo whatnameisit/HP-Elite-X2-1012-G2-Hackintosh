@@ -12,28 +12,31 @@ DefinitionBlock ("", "SSDT", 2, "what", "PS2", 0x00000000)
     {
         Name (RMTB, Zero)
         Name (RMTC, Zero)
-        If (\OSDW ())
+        Method (MSGP, 0, NotSerialized)
         {
-            Debug = "PS2:1.PS2 e005 to PS2 0:Silence keyboard spam from closing lid"
-            If (RMTB)
+            If (\OSDW ())
             {
-                Debug = "PS2:RMTB is set, enabling 2 & 3"
-                Debug = "PS2:3.ADB 3d to PS2 6b:F3 to F14, brightness down"
-                Debug = "PS2:4.ADB 3e to PS2 71:F4 to F15, brightness up"
-            }
-            Else
-            {
-                Debug = "PS2:RMTB is not set, ignoring 2 & 3"
-            }
+                Debug = "PS2:1.PS2 e005 to PS2 0:Silence keyboard spam from closing lid"
+                If (RMTB)
+                {
+                    Debug = "PS2:RMTB is set, enabling 2 & 3"
+                    Debug = "PS2:3.ADB 3d to PS2 6b:F3 to F14, brightness down"
+                    Debug = "PS2:4.ADB 3e to PS2 71:F4 to F15, brightness up"
+                }
+                Else
+                {
+                    Debug = "PS2:RMTB is not set, ignoring 2 & 3"
+                }
 
-            If (RMTC)
-            {
-                Debug = "PS2:RMTC is set, enabling 4"
-                Debug = "PS2:4.PS2 e038 to PS2 6a:right cmd (Korean lang key) to F19, set this key to switch source button in Settings"
-            }
-            Else
-            {
-                Debug = "PS2:RMTC is not set, ignoring 4"
+                If (RMTC)
+                {
+                    Debug = "PS2:RMTC is set, enabling 4"
+                    Debug = "PS2:4.PS2 e038 to PS2 6a:right cmd (Korean lang key) to F19, set this key to switch source button in Settings"
+                }
+                Else
+                {
+                    Debug = "PS2:RMTC is not set, ignoring 4"
+                }
             }
         }
 
