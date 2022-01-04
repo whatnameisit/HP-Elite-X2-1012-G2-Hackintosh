@@ -4,7 +4,7 @@
  * And the other is to add RehabMan's ACPIDebug methods. To actually make use of it, read here: https://github.com/RehabMan/OS-X-ACPI-Debug.
  *
  * In config.plist ACPI/Patch
- * Comment: Enable debug messages: M(ADBG) to (XDBG)
+ * Comment: Enable debug messages: M(ADBG) to XDBG
  * Count:   1
  * Find:    41 44 42 47 09
  * Replace: 58 44 42 47 09
