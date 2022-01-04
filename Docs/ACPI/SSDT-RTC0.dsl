@@ -12,12 +12,6 @@
  * See SSDT-RTC0-2.dsl.
  * Using the whole RTC map with bad regions emulated is preferred, but hibernation will still show the very error.
  *
- * config.plist ACPI/Patch
- * Comment: Enable legacy RTC device on macOS by disabling RTC and creating RTC0: M(_STA) to XSTA in \_SB.PCI0.LPCB.RTC
- * Count:   1
- * Find:    5F 53 54 41 00 A0 0A 93 53 54 41 53 01
- * Replace: 58 53 54 41 00 A0 0A 93 53 54 41 53 01
- *
  * config.plist NVRAM/7C436110-AB2A-4BBB-A880-FE41995C9F82:boot-args
  * rtcfx_exclude=DF
  */
