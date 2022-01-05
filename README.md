@@ -77,16 +77,16 @@ Follow [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-I
 Necessary options are commented in the photos below. You can pick other options to your taste.
 <details>
  <summary>UEFI BIOS screenshots</summary>
-  ![](/images/bios-security.webp)
-  ![](/images/bios-advanced-boot-options-1.webp)
-  ![](/images/bios-advanced-boot-options-2.webp)
-  ![](/images/bios-advanced-secure-boot-configuration.webp)
-  ![](/images/bios-advanced-system-options.webp.webp)
-  ![](/images/bios-advanced-built-in-device-options-1.webp)
-  ![](/images/bios-advanced-built-in-device-options-2.webp)
-  ![](/images/bios-advanced-port-options.webp)
-  ![](/images/bios-advanced-power-management-options.webp)
-  ![](/images/bios-advanced-remote-management-options.webp)
+  <img src="/images/bios-security.webp" title="Security"/>
+  <img src="/images/bios-advanced-boot-options-1.webp" title="Advanced-Boot Options 1"/>
+  <img src="/images/bios-advanced-boot-options-2.webp" title="Advanced-Boot Options 2"/>
+  <img src="/images/bios-advanced-secure-boot-configuration.webp" title="Advanced-Secure Boot Configuration"/>
+  <img src="/images/bios-advanced-system-options.webp" title="Advanced-System Options"/>
+  <img src="/images/bios-advanced-built-in-device-options-1.webp" title="Advanced-Built-in Device Options 1"/>
+  <img src="/images/bios-advanced-built-in-device-options-2.webp" title="Advanced-Built-in Device Options 2"/>
+  <img src="/images/bios-advanced-port-options.webp" title="Advanced-Port Options"/>
+  <img src="/images/bios-advanced-power-management-options.webp" title="Advanced-Power Management Options"/>
+  <img src="/images/bios-advanced-remote-management-options.webp" title="Advanced-Remote Management Options"/>
 </details>
 
 ## Documentation
