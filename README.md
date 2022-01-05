@@ -91,6 +91,9 @@ Necessary options are commented in the photos below. You can pick other options 
 
 ## Documentation
 
+### No apparent options to unlock MSR 0xE2 register (CFG Lock)
+HP has hidden the MSR 0xE2 register (option to lock or unlock CFG) to average users. To unlock, you will have to reverse engineer the UEFI BIOS or heavily mod it. Use `AppleXcpmCfgLock` Quirk as a workaround which is already applied in config.plist.
+
 ### Disable Windows 10 ALPS keyboard driver
 Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
 1. Open up Device Manager in Windows 10. Shortcut: Press the `Windows key` + `x` and `m`.
