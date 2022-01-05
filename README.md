@@ -75,6 +75,8 @@ Follow [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-I
 
 ### UEFI BIOS settings
 Necessary options are commented in the photos below. You can pick other options to your taste.
+<details>
+ <summary>UEFI BIOS screenshots</summary>
   ![](/images/bios-security.webp)
   ![](/images/bios-advanced-boot-options-1.webp)
   ![](/images/bios-advanced-boot-options-2.webp)
@@ -85,7 +87,8 @@ Necessary options are commented in the photos below. You can pick other options 
   ![](/images/bios-advanced-port-options.webp)
   ![](/images/bios-advanced-power-management-options.webp)
   ![](/images/bios-advanced-remote-management-options.webp)
-  
+</details>
+
 ## Documentation
 
 ### Disable Windows 10 ALPS keyboard driver
