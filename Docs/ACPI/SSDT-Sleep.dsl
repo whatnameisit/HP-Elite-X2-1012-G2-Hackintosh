@@ -1,5 +1,5 @@
 /*
- * This SSDT fixes wake problems.
+ * This SSDT fixes sleep problems.
  *
  * config.plist ACPI/Patch
  * Comment: Fix sleep: M(GPRW) to XPRW
