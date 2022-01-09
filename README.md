@@ -38,7 +38,7 @@ In progress
 | Audio | Conexant CX8200 | |
 | Touchpad | ALPS | |
 | ThunderBolt 3 | Alpine Ridge JHL6340 | |
-| UEFI BIOS Utility | P87 01.39Rev.A | |
+| UEFI BIOS Utility | P87 01.40 | |
 
 ### Working
 - [x] Audio input and output
