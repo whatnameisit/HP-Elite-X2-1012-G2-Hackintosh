@@ -53,7 +53,7 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ### Somewhat working
-- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~ and sometimes fails to output after wake.
+- [x] DP-Alt mode to output to secondary screen. It sometimes fails to output after wake which works again if unplugged and reconnected.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
@@ -63,7 +63,7 @@ In progress
 - [ ] DRM contents on Safari: This is limited by non-native IGPU firmware not having Apple keys.
 - [ ] I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - [ ] Light sensor
-- [ ] Thunderbolt 3
+- [ ] Thunderbolt 3: testing in [tb3 branch](https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/tree/tb3).
 
 ### Not tested
 - WWAN slot. One stock antenna.
