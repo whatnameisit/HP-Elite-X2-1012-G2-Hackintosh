@@ -53,7 +53,7 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ### Somewhat working
-- [ ] DP-Alt mode to output to secondary screen ~~need to test audio~~ and sometimes fails to output after wake.
+- [x] DP-Alt mode to output to secondary screen. It sometimes fails to output after wake which works again if unplugged and reconnected.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 - [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
@@ -63,7 +63,7 @@ In progress
 - [ ] DRM contents on Safari: This is limited by non-native IGPU firmware not having Apple keys.
 - [ ] I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - [ ] Light sensor
-- [ ] Thunderbolt 3
+- [ ] Thunderbolt 3: testing in [tb3 branch](https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/tree/tb3).
 
 ### Not tested
 - WWAN slot. One stock antenna.
@@ -92,7 +92,7 @@ Necessary options are commented in the photos below. You can pick other options 
 ## Documentation
 
 ### No apparent options to unlock MSR 0xE2 register (CFG Lock)
-HP has hidden the MSR 0xE2 register (option to lock or unlock CFG) to average users. To unlock, you will have to reverse engineer the UEFI BIOS or heavily mod it. Use `AppleXcpmCfgLock` Quirk as a workaround which is already applied in config.plist.
+HP has hidden the MSR 0xE2 register (option to lock or unlock CFG) to average users. To unlock, you will have to reverse engineer the UEFI BIOS and/or heavily mod it. Use `AppleXcpmCfgLock` Quirk as a workaround which is already applied in config.plist.
 
 ### Disable Windows 10 ALPS keyboard driver
 Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.

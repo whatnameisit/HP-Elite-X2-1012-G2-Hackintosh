@@ -22,6 +22,18 @@ DefinitionBlock ("", "SSDT", 0, "what", "DEBUG", 0)
     Device (RMDT)
     {
         Name (_HID, "RMD0000")  // _HID: Hardware ID
+        Method (_STA, 0, NotSerialized)  // _STA: Status
+        {
+            If (OSDW ())
+            {
+                Return (0x0F)
+            }
+            Else
+            {
+                Return (Zero)
+            }
+        }
+
         Name (RING, Package (0x0100){})
         Mutex (RTMX, 0x00)
         Name (HEAD, Zero)
