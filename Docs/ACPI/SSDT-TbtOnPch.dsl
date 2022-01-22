@@ -366,6 +366,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             Else
             {
                 XINI ()
+                ICMS ()
             }
         }
 
@@ -405,7 +406,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
 
         Method (ICMD, 0, NotSerialized)
         {
-            Debug = "TB:ICMD - Disable ICM "
+            Debug = "TB:ICMD - Disable ICM on Darwin"
             \_SB.PCI0.RP01.POC0 = One
             Debug = Concatenate ("TB:ICMD - ICME 1: ", \_SB.PCI0.RP01.ICME)
             If ((\_SB.PCI0.RP01.ICME != 0x800001A3))
@@ -445,7 +446,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
 
         Method (ICMS, 0, NotSerialized)
         {
-            Debug = "TB:ICMS - Enable ICM "
+            Debug = "TB:ICMS - Enable ICM on non-Darwin"
             \_SB.PCI0.RP01.POC0 = One
             Debug = Concatenate ("TB:ICMS - ICME 1: ", \_SB.PCI0.RP01.ICME)
             If ((\_SB.PCI0.RP01.ICME != 0x800001A6))
@@ -1925,6 +1926,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                 {
                     Name (_ADR, Zero)  // _ADR: Address
                     Name (_STR, Unicode ("Thunderbolt"))  // _STR: Description String
+                    Method (_STA, 0, NotSerialized)  // _STA: Status
+                    {
+                        If (OSDW ())
+                        {
+                            Return (0x0F)
+                        }
+                        Else
+                        {
+                            Return (Zero)
+                        }
+                    }
+
                     Method (PCED, 0, Serialized)
                     {
                         Debug = "TB:NHI0:PCED"
