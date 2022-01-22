@@ -46,6 +46,7 @@ In progress
 - [x] CPU Power Management with CPUFriend
 - [x] HiDPI resolution
 - [x] QE/CI Acceration and brightness control
+- [x] Realtek PCIe Card Reader RTS522A
 - [x] Shutdown and reboot
 - [x] Touchscreen
 - [x] Touchpad
@@ -55,7 +56,6 @@ In progress
 ### Somewhat working
 - [x] DP-Alt mode to output to secondary screen. It sometimes fails to output after wake which works again if unplugged and reconnected.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
-- [x] Realtek PCIe Card Reader RTS522A: The card loses connection upon wake. See [Realtek PCIe Card Reader](#realtek-pcie-card-reader).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 
 ### Not working
@@ -127,11 +127,6 @@ Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disa
 HP laptops have ACPI objects which correspond to Modern Standby selection. By writing to the objects and making the patch OS-aware, the laptop can have normal sleep under macOS and Modern Standby under Windows.
 
 See [SSDT-ModernStandby-Disable.dsl](/Docs/ACPI/SSDT-ModernStandby-Disable.dsl)].
-
-### Realtek PCIe Card Reader
-Currently the driver kills connection on sleep to workaround kernel panics. To continue using the card on wake, a pin needs to be inserted to access the slot and physically reconnect the card or the laptop needs to be rebooted.
-
-More reading at the kext repository [RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader/) and [InsanelyMac development thread](https://www.insanelymac.com/forum/topic/348130-realtek-pcieusb-sd-card-reader-driver-for-macos/)
 
 ### Laptop teardown
 You may want to tear down the laptop for Wi-Fi / Bluetooth card replacement, WWAN / GPS card installation, and/or SSD replacement.
