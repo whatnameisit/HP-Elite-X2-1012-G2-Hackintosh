@@ -104,19 +104,19 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Enable USB-C hotplug</string>
-				<key>Enabled</key>
-				<false/>
-				<key>Path</key>
-				<string>SSDT-TBHP.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>Enable touchscreen</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
 				<string>SSDT-TPL0.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Testing TB3</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-TbtOnPch.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -695,13 +695,13 @@
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>Enable USB-C hotplug: M(_RMV) to XRMV in \_SB.PCI0.RP01.PXSX</string>
+				<string>TB3: M(_INI) to XINI in RP01</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>Find</key>
-				<data>MVBYU1gUC19STVY=</data>
+				<data>FCpfSU5JAHA=</data>
 				<key>Limit</key>
 				<integer>0</integer>
 				<key>Mask</key>
@@ -709,7 +709,37 @@
 				<key>OemTableId</key>
 				<data></data>
 				<key>Replace</key>
-				<data>MVBYU1gUC1hSTVY=</data>
+				<data>FCpYSU5JAHA=</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>0</integer>
+				<key>TableSignature</key>
+				<data></data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string></string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>TB3: M(NTFY) to XTFY</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>TlRGWQk=</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data></data>
+				<key>Replace</key>
+				<data>WFRGWQk=</data>
 				<key>ReplaceMask</key>
 				<data></data>
 				<key>Skip</key>
@@ -1307,7 +1337,7 @@
 			<key>CustomSMBIOSGuid</key>
 			<false/>
 			<key>DisableIoMapper</key>
-			<true/>
+			<false/>
 			<key>DisableLinkeditJettison</key>
 			<true/>
 			<key>DisableRtcChecksum</key>
@@ -1437,7 +1467,68 @@
 			<string>Optional</string>
 		</dict>
 		<key>Tools</key>
-		<array/>
+		<array>
+			<dict>
+				<key>Arguments</key>
+				<string></string>
+				<key>Auxiliary</key>
+				<false/>
+				<key>Comment</key>
+				<string>Not signed for security reasons</string>
+				<key>Enabled</key>
+				<false/>
+				<key>Flavour</key>
+				<string>Auto</string>
+				<key>Name</key>
+				<string>UEFI Shell</string>
+				<key>Path</key>
+				<string>OpenShell.efi</string>
+				<key>RealPath</key>
+				<false/>
+				<key>TextMode</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>Arguments</key>
+				<string>interactive</string>
+				<key>Auxiliary</key>
+				<false/>
+				<key>Comment</key>
+				<string>Not signed for security reasons</string>
+				<key>Enabled</key>
+				<false/>
+				<key>Flavour</key>
+				<string>Auto</string>
+				<key>Name</key>
+				<string>Control MsrE2</string>
+				<key>Path</key>
+				<string>ControlMsrE2.efi</string>
+				<key>RealPath</key>
+				<false/>
+				<key>TextMode</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>Arguments</key>
+				<string></string>
+				<key>Auxiliary</key>
+				<false/>
+				<key>Comment</key>
+				<string>Not signed for security reasons</string>
+				<key>Enabled</key>
+				<false/>
+				<key>Flavour</key>
+				<string>Auto</string>
+				<key>Name</key>
+				<string>modGRUBShell</string>
+				<key>Path</key>
+				<string>modGRUBShell.efi</string>
+				<key>RealPath</key>
+				<false/>
+				<key>TextMode</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>NVRAM</key>
 	<dict>
@@ -1588,12 +1679,6 @@
 			<integer>0</integer>
 			<key>KeySubsequentDelay</key>
 			<integer>5</integer>
-			<key>PointerPollMin</key>
-			<integer>0</integer>
-			<key>PointerPollMax</key>
-			<integer>0</integer>
-			<key>PointerPollMask</key>
-			<integer>-1</integer>
 			<key>PointerSpeedDiv</key>
 			<integer>1</integer>
 			<key>PointerSpeedMul</key>
@@ -1605,24 +1690,20 @@
 			<integer>0</integer>
 			<key>AudioDevice</key>
 			<string>PciRoot(0x0)/Pci(0x1f,0x3)</string>
-			<key>AudioOutMask</key>
+			<key>AudioOut</key>
 			<integer>1</integer>
 			<key>AudioSupport</key>
 			<true/>
-			<key>DisconnectHda</key>
-			<false/>
-			<key>MaximumGain</key>
-			<integer>-15</integer>
-			<key>MinimumAssistGain</key>
-			<integer>-30</integer>
-			<key>MinimumAudibleGain</key>
-			<integer>-128</integer>
+			<key>MinimumVolume</key>
+			<integer>30</integer>
 			<key>PlayChime</key>
 			<string>Disabled</string>
 			<key>ResetTrafficClass</key>
 			<false/>
 			<key>SetupDelay</key>
 			<integer>0</integer>
+			<key>VolumeAmplifier</key>
+			<integer>100</integer>
 		</dict>
 		<key>ConnectDrivers</key>
 		<true/>
@@ -1663,6 +1744,16 @@
 				<string></string>
 				<key>Path</key>
 				<string>OpenCanopy.efi</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Arguments</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string></string>
+				<key>Path</key>
+				<string>TbtForcePower.efi</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Arguments</key>
