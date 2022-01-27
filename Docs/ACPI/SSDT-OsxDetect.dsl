@@ -1,7 +1,7 @@
 /*
  * This SSDT contains methods that can be used in other code to make it specific to macOS.
  */
-DefinitionBlock ("", "SSDT", 2, "what", "OsxDet", 0x00001000)
+DefinitionBlock ("", "SSDT", 2, "what", "OsxDet", 0x00000000)
 {
     Method (DTGP, 5, NotSerialized)
     {
@@ -32,20 +32,17 @@ DefinitionBlock ("", "SSDT", 2, "what", "OsxDet", 0x00001000)
         Return (Zero)
     }
 
-    Scope (\)
+    Method (OSDW, 0, NotSerialized)
     {
-        Method (OSDW, 0, NotSerialized)
+        If (CondRefOf (\_OSI))
         {
-            If (CondRefOf (\_OSI))
+            If (_OSI ("Darwin"))
             {
-                If (_OSI ("Darwin"))
-                {
-                    Return (One)
-                }
+                Return (One)
             }
-
-            Return (Zero)
         }
+
+        Return (Zero)
     }
 }
 
