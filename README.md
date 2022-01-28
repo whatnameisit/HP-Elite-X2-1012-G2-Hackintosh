@@ -126,7 +126,7 @@ Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disa
 
 HP laptops have ACPI objects which correspond to Modern Standby selection. By writing to the objects and making the patch OS-aware, the laptop can have normal sleep under macOS and Modern Standby under Windows.
 
-See [SSDT-ModernStandby-Disable.dsl](/Docs/ACPI/SSDT-Sleep.dsl)].
+See [SSDT-Sleep.dsl](/Docs/ACPI/SSDT-Sleep.dsl)].
 
 ### Laptop teardown
 You may want to tear down the laptop for Wi-Fi / Bluetooth card replacement, WWAN / GPS card installation, and/or SSD replacement.
