@@ -1082,7 +1082,7 @@
 				<key>BundlePath</key>
 				<string>VoodooI2CHID.kext</string>
 				<key>Comment</key>
-				<string>Enables touchscreen and touchpad</string>
+				<string>Enables touchscreen</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -1100,7 +1100,7 @@
 				<key>BundlePath</key>
 				<string>AlpsHID.kext</string>
 				<key>Comment</key>
-				<string>Enables ALPS USB HID touchpad with VoodooI2CHID.kext</string>
+				<string>Enables ALPS USB HID touchpad</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -1170,7 +1170,7 @@
 				<key>Arch</key>
 				<string>x86_64</string>
 				<key>BundlePath</key>
-				<string>USBMap.kext</string>
+				<string>USBPorts.kext</string>
 				<key>Comment</key>
 				<string>Assign USB ports to be used in macOS</string>
 				<key>Enabled</key>
