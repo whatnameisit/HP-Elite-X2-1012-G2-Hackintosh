@@ -44,13 +44,13 @@ In progress
 - [x] Audio input and output
 - [x] Brightness control via keyboard: See [Disable Windows 10 ALPS keyboard driver](#disable-windows-10-alps-keyboard-driver).
 - [x] CPU Power Management with CPUFriend
-- [x] HiDPI resolution
+- [x] HiDPI resolution: Native on macOS 12
 - [x] QE/CI Acceration and brightness control
 - [x] Realtek PCIe Card Reader RTS522A
 - [x] Shutdown and reboot
 - [x] Touchscreen
 - [x] Touchpad
-- [x] USB map except USB-C with WWAN and fingerprint reader disabled and power supply
+- [x] USB map except USB-C with fingerprint reader disabled and power supply
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ### Somewhat working
