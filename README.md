@@ -16,7 +16,6 @@ In progress
   - [Sleep, wake, and hibernation](#sleep-wake-and-hibernation)
   - [Sleep on low battery](#sleep-on-low-battery)
   - [Modern Standby](#modern-standby)
-  - [Realtek PCIe Card Reader](#realtek-pcie-card-reader)
   - [Laptop teardown](#laptop-teardown)
 - [Troubleshooting](#troubleshooting)
 - [Acknowledgment](#acknowledgment)
