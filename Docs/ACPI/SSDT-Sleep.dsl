@@ -6,17 +6,10 @@
  * Count:   1
  * Find:    47 50 52 57 02
  * Replace: 58 50 52 57 02
- *
- * Base:    \_SB.PEPD
- * Comment: Fix sleep: M(_STA) to XSTA in \_SB.PEPD
- * Count:   1
- * Find:    5F 53 54 41
- * Replace: 5F 53 54 41
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 {
     External (_SB_.PEPD, DeviceObj)
-    External (_SB_.PEPD.XSTA, MethodObj)    // 0 Arguments
     External (ECND, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (S0ID, FieldUnitObj)
@@ -70,20 +63,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
             {
                 ECND = One
                 Concatenate ("MDSB:ECND is: ", ECND, Debug)
-            }
-
-            Method (\_SB.PEPD._STA, 0, NotSerialized)  // _STA: Status
-            {
-                If (OSDW ())
-                {
-                    Debug = "MDSB:Turning OFF Modern Standby device _SB.PEPD on OS:Darwin"
-                    Return (Zero)
-                }
-                Else
-                {
-                    Debug = "MDSB:Turning OFF Modern Standby device _SB.PEPD on OS:Darwin"
-                    Return (\_SB.PEPD.XSTA ())
-                }
             }
         }
     }
