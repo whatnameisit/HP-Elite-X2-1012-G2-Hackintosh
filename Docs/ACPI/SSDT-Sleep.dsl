@@ -2,10 +2,22 @@
  * This SSDT fixes sleep problems.
  *
  * config.plist ACPI/Patch
- * Comment: Fix sleep: M(GPRW) to XPRW
+ * Comment: Sleep: M(GPRW) to XPRW
  * Count:   1
  * Find:    47 50 52 57 02
  * Replace: 58 50 52 57 02
+ *
+ * Comment: Sleep: M(_PTS) to ZPTS
+ * Base:    \
+ * Count:   1
+ * Find:    5F 50 54 53
+ * Replace: 5A 50 54 53
+ *
+ * Comment: Sleep: M(_WAK) to ZWAK
+ * Base:    \
+ * Count:   1
+ * Find:    5F 57 41 4B
+ * Replace: 5A 57 41 4B
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 {
@@ -31,6 +43,43 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
         }
 
         Return (XPRW (Arg0, Arg1))
+    }
+
+    Method (_PTS, 1, NotSerialized)  // _PTS: Prepare To Sleep
+    {
+        If (OSDW ())
+        {
+            // Fix restart from shutdown
+            If ((0x05 == Arg0))
+            {
+                \_SB.PCI0.XHC.PMEE = Zero
+            }
+
+            // Probably helps with sleep / wake on Thunderbolt
+            If ((Arg0 >= 0x05))
+            {
+                Debug = "_PTS: LSTX"
+                \_SB.PCI0.RP01.UPSB.LSTX (Zero, One)
+                \_SB.PCI0.RP01.UPSB.LSTX (One, One)
+            }
+        }
+
+        ZPTS (Arg0)
+    }
+
+    Method (_WAK, 1, Serialized)  // _WAK: Wake
+    {
+        Local0 = ZWAK (Arg0)
+        If (OSDW ())
+        {
+            // Force wake screen on wake
+            If ((Arg0 < 0x05))
+            {
+                Notify (\_SB.LID, 0x80) // Status Change
+            }
+        }
+
+        Return (Local0)
     }
 
     // The code below supports dual sleeping modes.
@@ -71,11 +120,11 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
         Debug = "MDSB:BIOS Modern Standby is OFF"
     }
 
-    Name (SLTP, Zero)
+    Name (XLTP, Zero)
     Method (_TTS, 1, NotSerialized)  // _TTS: Transition To State
     {
         Debug = Concatenate ("SLEEP:_TTS() called with Arg0 = ", Arg0)
-        SLTP = Arg0
+        XLTP = Arg0
     }
 }
 

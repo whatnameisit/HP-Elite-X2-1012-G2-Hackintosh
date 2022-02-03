@@ -32,7 +32,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
     External (TBSE, FieldUnitObj)
     External (TNAT, FieldUnitObj)
     External (TWIN, FieldUnitObj)
-    External (XLTP, MethodObj)    // 0 Arguments
+    External (XLTP, IntObj)    // 0 Arguments
 
     Scope (\_GPE)
     {
@@ -2389,7 +2389,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                         If ((Arg0 == Zero))
                         {
                             XRTE = Zero
-                            If ((XLTP () == Zero))
+                            If ((XLTP == Zero))
                             {
                                 Debug = "TB:NHI0:XRST - TRPE L23 Detect"
                                 \_SB.PCI0.RP01.L23D = One
@@ -2413,7 +2413,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                         ElseIf ((Arg0 == One))
                         {
                             XRTE = One
-                            If ((XLTP () == Zero))
+                            If ((XLTP == Zero))
                             {
                                 \_SB.PCI0.RP01.PSTX = 0x03
                                 If ((\_SB.PCI0.RP01.LACR == One))
