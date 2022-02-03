@@ -3,57 +3,57 @@
  * It also supports sleep at custom battery level. Currently set to 20 percent.
  *
  * config.plist ACPI/Patch
- * Comment: Enable battery reading: M(BTIF) to XTIF in \_SB.PCI0.LPCB.EC0
+ * Comment: Battery: M(BTIF) to XTIF in \_SB.PCI0.LPCB.EC0
  * Count:   1
  * Find:    42 54 49 46 09 79 01
  * Replace: 58 54 49 46 09 79 01
  *
- * Comment: Enable battery reading: M(BTIX) to XTIX in \_SB.PCI0.LPCB.EC0
+ * Comment: Battery: M(BTIX) to XTIX in \_SB.PCI0.LPCB.EC0
  * Count:   2
  * Find:    42 54 49 58 09
  * Replace: 58 54 49 58 09
  *
- * Comment: Enable battery reading: M(BTST) to XTST in \_SB.PCI0.LPCB.EC0
+ * Comment: Battery: M(BTST) to XTST in \_SB.PCI0.LPCB.EC0
  * Count:   1
  * Find:    42 54 53 54 0A
  * Replace: 58 54 53 54 0A
  *
- * Comment: Enable battery reading: M(GACW) to XACW
+ * Comment: Battery: M(GACW) to XACW
  * Count:   1
  * Find:    47 41 43 57 00
  * Replace: 58 41 43 57 00
  *
- * Comment: Enable battery reading: M(GBAW) to XBAW
+ * Comment: Battery: M(GBAW) to XBAW
  * Count:   1
  * Find:    47 42 41 57 00
  * Replace: 58 42 41 57 00
  *
- * Comment: Enable battery reading: M(GBTC) to XBTC
+ * Comment: Battery: M(GBTC) to XBTC
  * Count:   1
  * Find:    47 42 54 43 00
  * Replace: 58 42 54 43 00
  *
- * Comment: Enable battery reading: M(GBTI) to XBTI
+ * Comment: Battery: M(GBTI) to XBTI
  * Count:   1
  * Find:    47 42 54 49 01 70 0D
  * Replace: 58 42 54 49 01 70 0D
  *
- * Comment: Enable battery reading: M(GCGC) to XXGC
+ * Comment: Battery: M(GCGC) to XXGC
  * Count:   1
  * Find:    47 43 47 43 08
  * Replace: 58 58 47 43 08
  *
- * Comment: Enable battery reading: M(ITLB) to XTLB
+ * Comment: Battery: M(ITLB) to XTLB
  * Count:   1
  * Find:    49 54 4C 42 00
  * Replace: 58 54 4C 42 00
  *
- * Comment: Enable battery reading: M(SBTC) to SXTC
+ * Comment: Battery: M(SBTC) to SXTC
  * Count:   1
  * Find:    53 42 54 43 03
  * Replace: 53 58 54 43 03
  *
- * Comment: Enable sleep on low battery(20): M(BTST) to XTST in \_SB
+ * Comment: Battery - Sleep on low battery (20): M(BTST) to XTST in \_SB
  * Base:    \_SB
  * Count:   1
  * Find:    42 54 53 54

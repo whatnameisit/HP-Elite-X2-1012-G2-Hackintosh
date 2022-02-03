@@ -2,7 +2,7 @@
  * This SSDT sets multiple variables during initialization.
  *
  * config.plist ACPI/Patch
- * Comment: Enable OS specific code in Darwin: M(_INI) to XINI in PCI0
+ * Comment: INIT: M(_INI) to XINI in PCI0
  * Count:   1
  * Find:    5F 49 4E 49 08
  * Replace: 58 49 4E 49 08
