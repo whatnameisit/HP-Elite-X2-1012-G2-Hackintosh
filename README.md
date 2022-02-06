@@ -107,7 +107,7 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in UEFI BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ### Sleep, wake, and hibernation
-The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0TIM0-2.dsl](/Docs/ACPI/SSDT-RTC0TIM0-2.dsl) alongside [SSDT-RTC0TIM0.dsl](/Docs/ACPI/SSDT-RTC0TIM0.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
+The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0-2.dsl](/Docs/ACPI/SSDT-RTC0-2.dsl) alongside [SSDT-RTC0.dsl](/Docs/ACPI/SSDT-RTC0.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
 
 If HibernationFixup.kext is loaded, the RTC error may occur on restart, wake, or resume from hibernation regardless of `hibernatemode` chosen.
 
