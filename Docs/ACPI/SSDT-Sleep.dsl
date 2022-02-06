@@ -8,16 +8,14 @@
  * Replace: 58 50 52 57 02
  *
  * Comment: Sleep: M(_PTS) to ZPTS
- * Base:    \
  * Count:   1
- * Find:    5F 50 54 53
- * Replace: 5A 50 54 53
+ * Find:    5F 50 54 53 01
+ * Replace: 5A 50 54 53 01
  *
  * Comment: Sleep: M(_WAK) to ZWAK
- * Base:    \
  * Count:   1
- * Find:    5F 57 41 4B
- * Replace: 5A 57 41 4B
+ * Find:    5F 57 41 4B 09
+ * Replace: 5A 57 41 4B 09
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 {
