@@ -62,7 +62,16 @@ In progress
 - [ ] DRM contents on Safari: This is limited by non-native IGPU firmware not having Apple keys.
 - [ ] I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
 - [ ] Light sensor
-- [ ] Thunderbolt 3: testing in [tb3 branch](https://github.com/whatnameisit/HP-Elite-X2-1012-G2-Hackintosh/tree/tb3).
+- [ ] Thunderbolt 3
+  - [ ] Tb3 devices tested - none
+  - [x] Sleep and wake works with or without cable. Hibernation fails.
+    - [ ] When TbtForcePower.efi is enabled - successful only once
+    - [x] When TbtForcePower.efi is disabled - successful every time
+  - [ ] XHC2 hotplug works only if at first hotplug it is correctly recognized.
+  - [x] IORegistry TB3 tree fully shown
+    - [x] When TbtForcePower.efi is enabled - always
+    - [ ] When TbtForcePower.efi is disabled - almost always
+  - [ ] GPIO - I have no idea what the concept is or if there are separate ones for TBT and XHC2 or not. Currently `TBFP` is used for both.
 
 ### Not tested
 - WWAN slot. One stock antenna.
