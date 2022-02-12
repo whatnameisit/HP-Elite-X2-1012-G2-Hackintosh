@@ -54,7 +54,7 @@ In progress
 
 ### Somewhat working
 - [x] DP-Alt mode to output to secondary screen. It sometimes fails to output after wake which works again if unplugged and reconnected.
-- [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [
+- [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep
 , wake, and hibernation](#sleep-wake-and-hibernation).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
 
@@ -117,15 +117,11 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
     3. If you toggle "Special Keys mapped to Fn + keypress" in the Advanced tab in UEFI BIOS, Fn+C and Fn+W are mapped to Windows "Scroll Lock" and "pause" which are recognized as F14 and F15 in macOS with VoodooPS2, or brightness down and up, respectively.
 
 ### Sleep, wake, and hibernation
-The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation. If the region length is limited to `2` (See [SSDT-RTC0-2.dsl](/Docs/ACPI/SSDT-RTC0-2.dsl) alongside [SSDT-RTC0.dsl](/Docs/ACPI/SSDT-RTC0.dsl).), on normal restart without hibernation support (no HibernationFixup.kext), the RTC error is no longer displayed.
+The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation.
 
-If HibernationFixup.kext is loaded, the RTC error may occur on restart, wake, or resume from hibernation regardless of `hibernatemode` chosen.
+The conflicting RTC regions are at least `58, 59, B0-B3, B7, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
 
-If the RTC region length is kept as `8` while blacklisting and emulating Region `DF`, the chance of the RTC error is greatly reduced.
-
-If USB-C is enabled, wake results in a kernel panic which I have trouble getting log of, not to mention I could recognize anything.
-
-To have an error-free environment, disable hibernation, limit the RTC region length to `2`, and set disable USB-C in UEFI BIOS.
+If USB-C is enabled, wake results in a kernel panic. The current workaround is to enable Thunderbolt related patches. See [SSDT-TbtOnPch.dsl](/Docs/ACPI/SSDT-TbtOnPch.dsl).
 
 ### Sleep on low battery
 The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
