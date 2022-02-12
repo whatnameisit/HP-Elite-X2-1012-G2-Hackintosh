@@ -18,6 +18,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
     External (HPTE, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (OSYS, FieldUnitObj)
+    External (STAS, FieldUnitObj)
 
     Method (\_SB.PCI0._INI, 0, Serialized)  // _INI: Initialize
     {
@@ -29,7 +30,15 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
             // More exploration is needed as there are other unknown code that checks for OS version such as Method GTOS.
             // https://www.tonymacx86.com/threads/hp-zbook-video-mux-control.316221/
             OSYS = 0x07DF
+            // HPTE is used in HPET._STA for it to return false when set to zero to match MacBookPro14,1.
             HPTE = Zero
+            // STAS is used in RTC._STA for it to return true when set to one to force enable legacy RTC.
+            // In addition, RTC region must be limited or emulated to bypass RTC error on boot and reboot.
+            // In config.plist
+            // NVRAM/7C436110-AB2A-4BBB-A880-FE41995C9F82:boot-args - (string) - rtcfx_exclude=58,59,B0-B3,B7,DF
+            // NVRAM/4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:rtc-blacklist - (data) - 58 59 B0 B1 B2 B3 B7 DF
+            // Currently the region for successful exit from hibernation without error is unknown.
+            STAS = One
             // RMTB is used to remap F3 and F4 to brightness down and up, respectively.
             // RMTC is used to remap right cmd to F19.
             // See SSDT-PS2.dsl.

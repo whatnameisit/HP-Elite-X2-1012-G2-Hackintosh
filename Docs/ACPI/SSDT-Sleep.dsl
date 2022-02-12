@@ -19,11 +19,16 @@
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 {
+    External (_SB_.LID_, DeviceObj)
+    External (_SB_.PCI0.RP01.UPSB.LSTX, MethodObj)    // 2 Arguments
+    External (_SB_.PCI0.XHC_.PMEE, IntObj)
     External (_SB_.PEPD, DeviceObj)
     External (ECND, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (S0ID, FieldUnitObj)
     External (XPRW, MethodObj)    // 2 Arguments
+    External (ZPTS, MethodObj)    // 1 Arguments
+    External (ZWAK, MethodObj)    // 1 Arguments
 
     // the usual immediate wake from sleep fix
     Method (GPRW, 2, NotSerialized)
@@ -45,6 +50,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 
     Method (_PTS, 1, NotSerialized)  // _PTS: Prepare To Sleep
     {
+        ZPTS (Arg0)
         If (OSDW ())
         {
             // Fix restart from shutdown
@@ -61,13 +67,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
                 \_SB.PCI0.RP01.UPSB.LSTX (One, One)
             }
         }
-
-        ZPTS (Arg0)
     }
 
     Method (_WAK, 1, Serialized)  // _WAK: Wake
     {
-        Local0 = ZWAK (Arg0)
         If (OSDW ())
         {
             // Force wake screen on wake
@@ -77,6 +80,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
             }
         }
 
+        Local0 = ZWAK (Arg0)
         Return (Local0)
     }
 

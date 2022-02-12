@@ -456,6 +456,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             \_SB.PCI0.RP01.POC0 = Zero
         }
 
+        /* No need for this without TbtForcePower.efi
         Method (ICMS, 0, NotSerialized)
         {
             Debug = "TB:ICMS - Enable ICM on non-Darwin"
@@ -494,6 +495,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
 
             \_SB.PCI0.RP01.POC0 = Zero
         }
+        */
 
         Method (TBTC, 1, Serialized)
         {
@@ -969,10 +971,9 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             {
                 Debug = "TB:UGIO - Make sure TBT is on"
                 Local2 = TBON ()
-                If (Zero)
+                If (Local2)
                 {
                     Debug = "TB:UGIO - Turn on TBT GPIO"
-                    Local2 = One
                     \_SB.PCI0.RP01.CTPD = Zero
                 }
             }
@@ -981,9 +982,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             {
                 Debug = "TB:UGIO - Make sure USB is on"
                 Local2 = TBON ()
-                If (Zero)
+                If (Local2)
                 {
-                    Local2 = One
+                    Debug = "TB:UGIO - Turn on TBT GPIO"
+                    \_SB.PCI0.RP01.CTPD = Zero
                 }
             }
 
@@ -995,31 +997,13 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             }
 
             Local3 = Zero
-            If ((Local0 == Zero))
+            If (((Local0 == Zero) && (Local1 == Zero)))
             {
-                Debug = "TB:UGIO - Make sure TBT is off"
+                Debug = "TB:UGIO - Make sure TBT and USB are off"
+                \_SB.PCI0.RP01.CTBT ()
                 If ((\_SB.PCI0.RP01.CTPD != Zero))
                 {
                     TBOF ()
-                    Local3 = One
-                }
-
-                If (Zero)
-                {
-                    \_SB.PCI0.RP01.CTBT ()
-                    If ((\_SB.PCI0.RP01.CTPD != Zero))
-                    {
-                        Debug = "TB:UGIO - Turn off TBT GPIO"
-                        Local3 = One
-                    }
-                }
-            }
-
-            If ((Local1 == Zero))
-            {
-                Debug = "TB:UGIO - Make sure USB is off"
-                If (Zero)
-                {
                     Local3 = One
                 }
             }
@@ -2306,10 +2290,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                                     Buffer (0x6B)
                                     {
                                         /* 0000 */  0xCF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0,  // ........
-                                        /* 0008 */  0x00, 0x81, 0xCD, 0x2D, 0x77, 0x01, 0x5E, 0x00,  // ...-w.^.
+                                        /* 0008 */  0x00, 0x96, 0x83, 0xE1, 0x68, 0x01, 0x5E, 0x00,  // ....h.^.
                                         /* 0010 */  0xF0, 0x00, 0xCA, 0x82, 0x01, 0x2E, 0x08, 0x81,  // ........
                                         /* 0018 */  0x80, 0x02, 0x80, 0x00, 0x00, 0x00, 0x08, 0x82,  // ........
-                                        /* 0020 */  0x90, 0x01, 0x80, 0x00, 0x00, 0x00, 0x02, 0x83,  // ........
+                                        /* 0020 */  0x90, 0x01, 0x80, 0x00, 0x00, 0x00, 0x02, 0xC3,  // ........
                                         /* 0028 */  0x02, 0xC4, 0x02, 0xC5, 0x0B, 0x86, 0x20, 0x01,  // ...... .
                                         /* 0030 */  0x00, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,  // .d......
                                         /* 0038 */  0x87, 0x80, 0x05, 0x88, 0x50, 0x40, 0x00, 0x05,  // ....P@..
@@ -2327,7 +2311,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                                         /* 0000 */  0x00, 0x02, 0x1C, 0x00, 0x02, 0x00, 0x05, 0x03,  // ........
                                         /* 0008 */  0x01, 0x00, 0x04, 0x00, 0x05, 0x03, 0x02, 0x00,  // ........
                                         /* 0010 */  0x03, 0x00, 0x05, 0x03, 0x01, 0x00, 0x00, 0x00,  // ........
-                                        /* 0018 */  0x03, 0x03, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00   // ........
+                                        /* 0018 */  0x03, 0x03, 0x02, 0x00, 0x01, 0x00, 0x02, 0x00   // ........
                                     }, 
 
                                     "TBTDPLowToHigh", 
