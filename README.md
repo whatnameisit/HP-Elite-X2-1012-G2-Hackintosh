@@ -53,7 +53,9 @@ In progress
 - [x] Wi-Fi / Bluetooth and Continuity
 
 ### Somewhat working
-- [x] DP-Alt mode to output to secondary screen. It sometimes fails to output after wake which works again if unplugged and reconnected.
+- [x] DP-Alt mode to output to secondary screen.
+  - [x] ~~It sometimes fails to output after wake which works again if unplugged and reconnected.~~ Progress in Thunderbolt 3 may have improved interaction with the graphics; The screen output is always recognized.
+  - [ ] With or without the Thunderbolt work, sound output to secondary monitor is not always recognized. It seems it is recognized only if the laptop enters clamshell mode after which the sound works whether the laptop stays or exits the aforementioned mode thereafter. This may require AppleALC rewrite which I have no knowledge of.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep
 , wake, and hibernation](#sleep-wake-and-hibernation).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
