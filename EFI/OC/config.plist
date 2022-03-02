@@ -1730,7 +1730,7 @@
 				<key>Path</key>
 				<string>TbtForcePower.efi</string>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>Arguments</key>
 				<string></string>
 			</dict>
