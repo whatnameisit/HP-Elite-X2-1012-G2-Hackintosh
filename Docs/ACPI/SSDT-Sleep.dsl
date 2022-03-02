@@ -71,6 +71,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
 
     Method (_WAK, 1, Serialized)  // _WAK: Wake
     {
+        Local0 = ZWAK (Arg0)
         If (OSDW ())
         {
             // Force wake screen on wake
@@ -78,9 +79,14 @@ DefinitionBlock ("", "SSDT", 2, "what", "SLEEP", 0x00000000)
             {
                 Notify (\_SB.LID, 0x80) // Status Change
             }
+
+            // Notify NHI0 on wake. See SSDT-TbtOnPch.dsl.
+            If (CondRefOf (\TWAK))
+            {
+                TWAK (Arg0)
+            }
         }
 
-        Local0 = ZWAK (Arg0)
         Return (Local0)
     }
 

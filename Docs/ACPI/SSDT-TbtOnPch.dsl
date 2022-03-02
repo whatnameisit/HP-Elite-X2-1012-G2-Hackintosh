@@ -1,14 +1,14 @@
 /*
  * Test TB3. I do not have any device to test though.
  *
- * Ported codes from various places: osy, benbender, and tonyshit
- * Drivers loaded and shown in System Profiler
- * It does wake from sleep, but XHC2 seems to die.
+ * Ported codes from various places: osy, benbender, and TonyShit
+ * Drivers loaded and shown in System Profiler if used with TbtForcePower.efi
+ * Currently, it wakes from sleep only if the laptop was booted with the port unoccupied.
+ * XHC2 always works. Created fake ports and assigned them UsbPortNumber of two to match ThunderboltConfig. Need more test.
  *
- * Current structure is that of Two-Thunderbolt-3-port MacBookPro14,1 and leftover Windows/Linux compatible parts whereas HP Elite X2 1012 G2 has one Thunderbolt 3 port.
- * MacBookAir7.x is a One-Thunderbolt-2-port model, so adapting to this model's structure may be necessary.
+ * Need more test with TWIN register
  */
-DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
+DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 {
     External (_GPE.TBFF, MethodObj)    // 1 Arguments
     External (_GPE.TFPS, MethodObj)    // 0 Arguments
@@ -17,6 +17,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
     External (_SB_.PCI0.GPCB, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.RP01, DeviceObj)
     External (_SB_.PCI0.RP01.PXSX, DeviceObj)
+    External (_SB_.PCI0.RP01.VDID, FieldUnitObj)
     External (_SB_.PCI0.RP01.XINI, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.XHC_, DeviceObj)
     External (_SB_.TBFP, MethodObj)    // 1 Arguments
@@ -32,7 +33,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
     External (TBSE, FieldUnitObj)
     External (TNAT, FieldUnitObj)
     External (TWIN, FieldUnitObj)
-    External (XLTP, IntObj)    // 0 Arguments
+    External (XLTP, IntObj)
 
     Scope (\_GPE)
     {
@@ -455,47 +456,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
 
             \_SB.PCI0.RP01.POC0 = Zero
         }
-
-        /* No need for this without TbtForcePower.efi
-        Method (ICMS, 0, NotSerialized)
-        {
-            Debug = "TB:ICMS - Enable ICM on non-Darwin"
-            \_SB.PCI0.RP01.POC0 = One
-            Debug = Concatenate ("TB:ICMS - ICME 1: ", \_SB.PCI0.RP01.ICME)
-            If ((\_SB.PCI0.RP01.ICME != 0x800001A6))
-            {
-                If (\_SB.PCI0.RP01.CNHI ())
-                {
-                    If ((\_SB.PCI0.RP01.ICME != 0xFFFFFFFF))
-                    {
-                        \_SB.PCI0.RP01.WTLT ()
-                        If (!Local0 = (\_SB.PCI0.RP01.ICME & 0x80000000))
-                        {
-                            \_SB.PCI0.RP01.ICME |= 0x06
-                            Debug = Concatenate ("TB:ICMS - ICME 2: ", \_SB.PCI0.RP01.ICME)
-                            Local0 = 0x03E8
-                            While (((\_SB.PCI0.RP01.ICME & 0x80000000) == Zero))
-                            {
-                                Local0--
-                                If ((Local0 == Zero))
-                                {
-                                    Break
-                                }
-
-                                Sleep (One)
-                            }
-
-                            Sleep (0x03E8)
-                        }
-
-                        Debug = Concatenate ("TB:ICMS - ICME 3: ", \_SB.PCI0.RP01.ICME)
-                    }
-                }
-            }
-
-            \_SB.PCI0.RP01.POC0 = Zero
-        }
-        */
 
         Method (TBTC, 1, Serialized)
         {
@@ -971,9 +931,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             {
                 Debug = "TB:UGIO - Make sure TBT is on"
                 Local2 = TBON ()
-                If (Local2)
+                If (Zero)
                 {
                     Debug = "TB:UGIO - Turn on TBT GPIO"
+                    Local2 = One
                     \_SB.PCI0.RP01.CTPD = Zero
                 }
             }
@@ -982,10 +943,9 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             {
                 Debug = "TB:UGIO - Make sure USB is on"
                 Local2 = TBON ()
-                If (Local2)
+                If (Zero)
                 {
-                    Debug = "TB:UGIO - Turn on TBT GPIO"
-                    \_SB.PCI0.RP01.CTPD = Zero
+                    Local2 = One
                 }
             }
 
@@ -6062,7 +6022,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                         Return (Package (0x02)
                         {
                             0x6D, 
-                            0x03
+                            Zero
                         })
                     }
 
@@ -6101,23 +6061,20 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                         Return (Zero)
                     }
 
-                    Method (MODU, 0, Serialized)
+                    Method (MBSD, 0, NotSerialized)
                     {
-                        If (CondRefOf (\_SB.PCI0.RP01.UPSB.MDUV))
-                        {
-                            Debug = Concatenate ("TB:DSB2:XHC2:MODU - MDUV - return: ", \_SB.PCI0.RP01.UPSB.MDUV)
-                            Return (\_SB.PCI0.RP01.UPSB.MDUV)
-                        }
-                        Else
-                        {
-                            Debug = Concatenate ("TB:DSB2:XHC2:MODU - return: ", ^^RUSB)
-                            Return (^^RUSB) /* \_SB_.PCI0.RP01.UPSB.DSB2.RUSB */
-                        }
+                        Debug = "TB:MBSD called"
+                        Return (One)
                     }
 
                     Device (RHUB)
                     {
                         Name (_ADR, Zero)  // _ADR: Address
+                        Method (_RMV, 0, NotSerialized)  // _RMV: Removal Status
+                        {
+                            Return (Zero)
+                        }
+
                         Device (HS01)
                         {
                             Name (_ADR, One)  // _ADR: Address
@@ -6172,6 +6129,60 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                             }
                         }
 
+                        Device (HS02)
+                        {
+                            Name (_ADR, 0x02)  // _ADR: Address
+                            Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
+                            {
+                                Zero, 
+                                0x09, 
+                                Zero, 
+                                Zero
+                            })
+                            Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
+                            {
+                                ToPLD (
+                                    PLD_Revision           = 0x1,
+                                    PLD_IgnoreColor        = 0x1,
+                                    PLD_Red                = 0x0,
+                                    PLD_Green              = 0x0,
+                                    PLD_Blue               = 0x0,
+                                    PLD_Width              = 0x0,
+                                    PLD_Height             = 0x0,
+                                    PLD_UserVisible        = 0x1,
+                                    PLD_Dock               = 0x0,
+                                    PLD_Lid                = 0x0,
+                                    PLD_Panel              = "UNKNOWN",
+                                    PLD_VerticalPosition   = "UPPER",
+                                    PLD_HorizontalPosition = "LEFT",
+                                    PLD_Shape              = "UNKNOWN",
+                                    PLD_GroupOrientation   = 0x0,
+                                    PLD_GroupToken         = 0x0,
+                                    PLD_GroupPosition      = 0x0,
+                                    PLD_Bay                = 0x0,
+                                    PLD_Ejectable          = 0x0,
+                                    PLD_EjectRequired      = 0x0,
+                                    PLD_CabinetNumber      = 0x0,
+                                    PLD_CardCageNumber     = 0x0,
+                                    PLD_Reference          = 0x0,
+                                    PLD_Rotation           = 0x0,
+                                    PLD_Order              = 0x0,
+                                    PLD_VerticalOffset     = 0x0,
+                                    PLD_HorizontalOffset   = 0x0)
+
+                            })
+                            Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+                            {
+                                Local0 = Package (0x02)
+                                    {
+                                        "UsbCPortNumber", 
+                                        0x02
+                                    }
+                                DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
+                                Return (Local0)
+                            }
+                        }
+
                         Device (SSP1)
                         {
                             Name (_ADR, 0x03)  // _ADR: Address
@@ -6220,6 +6231,60 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
                                     {
                                         "UsbCPortNumber", 
                                         One
+                                    }
+                                DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
+                                Return (Local0)
+                            }
+                        }
+
+                        Device (SSP2)
+                        {
+                            Name (_ADR, 0x03)  // _ADR: Address
+                            Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
+                            {
+                                Zero, 
+                                0x09, 
+                                Zero, 
+                                Zero
+                            })
+                            Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
+                            {
+                                ToPLD (
+                                    PLD_Revision           = 0x1,
+                                    PLD_IgnoreColor        = 0x1,
+                                    PLD_Red                = 0x0,
+                                    PLD_Green              = 0x0,
+                                    PLD_Blue               = 0x0,
+                                    PLD_Width              = 0x0,
+                                    PLD_Height             = 0x0,
+                                    PLD_UserVisible        = 0x1,
+                                    PLD_Dock               = 0x0,
+                                    PLD_Lid                = 0x0,
+                                    PLD_Panel              = "UNKNOWN",
+                                    PLD_VerticalPosition   = "UPPER",
+                                    PLD_HorizontalPosition = "LEFT",
+                                    PLD_Shape              = "UNKNOWN",
+                                    PLD_GroupOrientation   = 0x0,
+                                    PLD_GroupToken         = 0x0,
+                                    PLD_GroupPosition      = 0x0,
+                                    PLD_Bay                = 0x0,
+                                    PLD_Ejectable          = 0x0,
+                                    PLD_EjectRequired      = 0x0,
+                                    PLD_CabinetNumber      = 0x0,
+                                    PLD_CardCageNumber     = 0x0,
+                                    PLD_Reference          = 0x0,
+                                    PLD_Rotation           = 0x0,
+                                    PLD_Order              = 0x0,
+                                    PLD_VerticalOffset     = 0x0,
+                                    PLD_HorizontalOffset   = 0x0)
+
+                            })
+                            Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+                            {
+                                Local0 = Package (0x02)
+                                    {
+                                        "UsbCPortNumber", 
+                                        0x02
                                     }
                                 DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))
                                 Return (Local0)
@@ -6294,6 +6359,18 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00001000)
             {
                 Debug = "Already off"
                 Return (Zero)
+            }
+        }
+    }
+
+    Method (\TWAK, 1, NotSerialized)
+    {
+        Debug = "TB:_WAK:TWAK - call AMPE ()"
+        If (((Arg0 == 0x03) || (Arg0 == 0x04)))
+        {
+            If ((\_SB.PCI0.RP01.VDID != 0xFFFFFFFF))
+            {
+                \_SB.PCI0.RP01.UPSB.AMPE ()
             }
         }
     }
