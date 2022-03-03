@@ -28,7 +28,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
     External (NOHP, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
     External (OSUM, MutexObj)
-    External (RTBT, FieldUnitObj)
     External (SOHP, FieldUnitObj)
     External (TBSE, FieldUnitObj)
     External (TNAT, FieldUnitObj)
