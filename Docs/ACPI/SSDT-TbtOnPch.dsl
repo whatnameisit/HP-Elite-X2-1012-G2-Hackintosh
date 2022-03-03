@@ -328,8 +328,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
             Debug = "TB:_INI - RP01._INI started"
             If (OSDW ())
             {
-                Debug = "TB:_INI - Force native mode?"
-                TWIN = One
+                Concatenate ("TB:_INI - TWIN is: ", TWIN, Debug)
                 Debug = "TB:_INI - Save Ridge Config on Boot ICM"
                 R020 = R_20 /* \_SB_.PCI0.RP01.R_20 */
                 R024 = R_24 /* \_SB_.PCI0.RP01.R_24 */
@@ -6304,7 +6303,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
                 Return (Zero)
             }
 
-            TWIN = Zero
             \_SB.TBFP (One)
             Debug = "Wait for TB root power up"
             Local1 = (Timer + 0x005B8D80)
@@ -6363,6 +6361,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
         }
     }
 
+    /*
     Method (\TWAK, 1, NotSerialized)
     {
         Debug = "TB:_WAK:TWAK - call AMPE ()"
@@ -6374,5 +6373,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
             }
         }
     }
+    */
 }
 
