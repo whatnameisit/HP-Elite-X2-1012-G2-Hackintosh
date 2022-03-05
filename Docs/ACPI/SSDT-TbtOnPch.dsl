@@ -5,8 +5,6 @@
  * Drivers loaded and shown in System Profiler if used with TbtForcePower.efi
  * Currently, it wakes from sleep only if the laptop was booted with the port unoccupied.
  * XHC2 always works. Created fake ports and assigned them UsbPortNumber of two to match ThunderboltConfig. Need more test.
- *
- * Need more test with TWIN register
  */
 DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 {
@@ -383,14 +381,14 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 
         Method (TBST, 0, Serialized)
         {
-            Debug = Concatenate ("TB:_PS0 - MDUV: ", \_SB.PCI0.RP01.UPSB.MDUV)
-            Debug = Concatenate ("TB:_PS0 - NHI: ", \_SB.PCI0.RP01.NH00)
-            Debug = Concatenate ("TB:_PS0 - Root port: ", \_SB.PCI0.RP01.RPVD)
-            Debug = Concatenate ("TB:_PS0 - Upstream port: ", \_SB.PCI0.RP01.UPVD)
-            Debug = Concatenate ("TB:_PS0 - DSB0: ", \_SB.PCI0.RP01.DPVD)
-            Debug = Concatenate ("TB:_PS0 - DSB1: ", \_SB.PCI0.RP01.D3VD)
-            Debug = Concatenate ("TB:_PS0 - DSB2: ", \_SB.PCI0.RP01.D4VD)
-            Debug = Concatenate ("TB:_PS0 - DSB4: ", \_SB.PCI0.RP01.D5VD)
+            Debug = Concatenate ("TB:_PSx - MDUV: ", \_SB.PCI0.RP01.UPSB.MDUV)
+            Debug = Concatenate ("TB:_PSx - NHI: ", \_SB.PCI0.RP01.NH00)
+            Debug = Concatenate ("TB:_PSx - Root port: ", \_SB.PCI0.RP01.RPVD)
+            Debug = Concatenate ("TB:_PSx - Upstream port: ", \_SB.PCI0.RP01.UPVD)
+            Debug = Concatenate ("TB:_PSx - DSB0: ", \_SB.PCI0.RP01.DPVD)
+            Debug = Concatenate ("TB:_PSx - DSB1: ", \_SB.PCI0.RP01.D3VD)
+            Debug = Concatenate ("TB:_PSx - DSB2: ", \_SB.PCI0.RP01.D4VD)
+            Debug = Concatenate ("TB:_PSx - DSB4: ", \_SB.PCI0.RP01.D5VD)
         }
 
         Method (SCMD, 2, Serialized)
@@ -1433,7 +1431,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 
             Method (UMPE, 0, Serialized)
             {
-                Debug = "TB:UPSB:UMPE() - Hotplug notify XHC2 & XHC by NHI"
+                Debug = "TB:UPSB:UMPE() - Hotplug notify XHC2 by NHI"
                 Notify (\_SB.PCI0.RP01.UPSB.DSB2.XHC2, Zero) // Bus Check
             }
 
@@ -1442,7 +1440,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
             {
                 If ((MDUV != Arg0))
                 {
-                    Debug = Concatenate ("TB:UPSB:MUST calling Hotplug to XHC2 & XHC setting MDUV to: ", Arg0)
+                    Debug = Concatenate ("TB:UPSB:MUST calling Hotplug to XHC2 setting MDUV to: ", Arg0)
                     MDUV = Arg0
                     UMPE ()
                 }
@@ -2078,6 +2076,12 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
                     Method (_PS3, 0, Serialized)  // _PS3: Power State 3
                     {
                         Debug = "TB:NHI0:_PS3"
+                        If (OSDW ())
+                        {
+                            \_SB.PCI0.RP01.TBST ()
+                            SCMD = BMIE /* \_SB_.PCI0.RP01.UPSB.DSB0.NHI0.BMIE */
+                            SBAR = BAR1 /* \_SB_.PCI0.RP01.UPSB.DSB0.NHI0.BAR1 */
+                        }
                     }
 
                     Method (TRPE, 2, Serialized)
@@ -6295,31 +6299,31 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 
         Method (TBON, 0, Serialized)
         {
-            Debug = "TBON"
+            Debug = "TB:TBON"
             If (\_GPE.TFPS ())
             {
-                Debug = "Already on"
+                Debug = "TB:TBON - Already on"
                 Return (Zero)
             }
 
             \_SB.TBFP (One)
-            Debug = "Wait for TB root power up"
+            Debug = "TB:TBON - Wait for TB root power up"
             Local1 = (Timer + 0x005B8D80)
             While (((Timer < Local1) && FFTB (TBSE)))
             {
                 Sleep (One)
             }
 
-            Debug = "Sending OSUP handshake"
+            Debug = "TB:TBON - Sending OSUP handshake"
             Acquire (OSUM, 0xFFFF)
             Local0 = \_GPE.TBFF (TBSE)
             Release (OSUM)
-            Concatenate ("TBFF", Local0, Debug)
-            Debug = "TB hardware init sequence"
+            Concatenate ("TB:TBON:TBFF: ", Local0, Debug)
+            Debug = "TB:TBON - TB hardware init sequence"
             SOHP = Zero
             TNAT = One
             \_GPE.XTBT (TBSE, CPGN)
-            Debug = "Waiting for controller to appear"
+            Debug = "TB:TBON - Waiting for controller to appear"
             OperationRegion (UPS0, SystemMemory, MMTB (TBSE), 0x04)
             Field (UPS0, DWordAcc, NoLock, Preserve)
             {
@@ -6334,19 +6338,19 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
 
             If ((UPV0 != 0xFFFFFFFF))
             {
-                Concatenate ("Seen controller", UPV0, Debug)
+                Concatenate ("TB:TBON - Seen controller: ", UPV0, Debug)
                 Return (One)
             }
             Else
             {
-                Debug = "Failed"
+                Debug = "TB:TBON - Failed"
                 Return (Zero)
             }
         }
 
         Method (TBOF, 0, Serialized)
         {
-            Debug = "TBOF"
+            Debug = "TB:TBOF"
             If (\_GPE.TFPS ())
             {
                 \_SB.TBFP (Zero)
@@ -6354,24 +6358,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "TbtOnPCH", 0x00000000)
             }
             Else
             {
-                Debug = "Already off"
+                Debug = "TB:TBOF - Already off"
                 Return (Zero)
             }
         }
     }
-
-    /*
-    Method (\TWAK, 1, NotSerialized)
-    {
-        Debug = "TB:_WAK:TWAK - call AMPE ()"
-        If (((Arg0 == 0x03) || (Arg0 == 0x04)))
-        {
-            If ((\_SB.PCI0.RP01.VDID != 0xFFFFFFFF))
-            {
-                \_SB.PCI0.RP01.UPSB.AMPE ()
-            }
-        }
-    }
-    */
 }
 
