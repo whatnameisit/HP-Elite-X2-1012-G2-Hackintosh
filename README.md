@@ -118,7 +118,7 @@ The conflicting RTC regions are at least `58, 59, 7F-83, B0-B3, B7, DE, DF`. By 
 If USB-C is enabled, wake results in a kernel panic. The current workaround is to enable Thunderbolt related patches. See [SSDT-TbtOnPch.dsl](/Docs/ACPI/SSDT-TbtOnPch.dsl).
 
 ### Sleep on low battery
-The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
+The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-Battery.dsl](/Docs/ACPI/SSDT-Battery.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
 
 ### Modern Standby
 Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disabled for actual sleep and wake.
