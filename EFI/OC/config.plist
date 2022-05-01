@@ -661,6 +661,36 @@
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
+				<string>TPL0: If ((OSYS &lt; 0x07DC)) to 0x0000 in \_SB.PCI0.I2C0.TPL0._INI to force initialization in macOS</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>lU9TWVML3Ac=</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data></data>
+				<key>Replace</key>
+				<data>lU9TWVMLAAA=</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>5</integer>
+				<key>TableLength</key>
+				<integer>0</integer>
+				<key>TableSignature</key>
+				<data></data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string></string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
 				<string>TB3: M(_INI) to XINI in RP01</string>
 				<key>Count</key>
 				<integer>1</integer>
@@ -1494,7 +1524,7 @@
 			<key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
 			<dict>
 				<key>rtc-blacklist</key>
-				<data>WFmwsbKzt98=</data>
+				<data></data>
 				<key>revpatch</key>
 				<string>none</string>
 			</dict>
@@ -1503,7 +1533,7 @@
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
 				<key>boot-args</key>
-				<string>msgbuf=10485760 -rtcfxdbg rtcfx_exclude=58,59,B0-B3,B7,DF acpi_layer=0x8 acpi_level=0x2 debug=0x100 keepsyms=1</string>
+				<string>msgbuf=10485760 -rtcfxdbg rtcfx_exclude=58,59,7F-83,B0-B3,B7,DE,DF acpi_layer=0x8 acpi_level=0x2 debug=0x100 keepsyms=1</string>
 				<key>csr-active-config</key>
 				<data>AAAAAA==</data>
 				<key>prev-lang:kbd</key>
