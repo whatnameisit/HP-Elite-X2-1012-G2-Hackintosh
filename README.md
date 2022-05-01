@@ -113,7 +113,7 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
 ### Sleep, wake, and hibernation
 The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation.
 
-The conflicting RTC regions are at least `58, 59, B0-B3, B7, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
+The conflicting RTC regions are at least `58, 59, 7F-83, B0-B3, B7, DE, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
 
 If USB-C is enabled, wake results in a kernel panic. The current workaround is to enable Thunderbolt related patches. See [SSDT-TbtOnPch.dsl](/Docs/ACPI/SSDT-TbtOnPch.dsl).
 
