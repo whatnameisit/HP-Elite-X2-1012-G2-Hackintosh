@@ -20,8 +20,8 @@ DefinitionBlock ("", "SSDT", 2, "what", "PS2", 0x00000000)
                 If (RMTB)
                 {
                     Debug = "PS2:RMTB is set, enabling 2 & 3"
-                    Debug = "PS2:3.ADB 3d to PS2 6b:F3 to F14, brightness down"
-                    Debug = "PS2:4.ADB 3e to PS2 71:F4 to F15, brightness up"
+                    Debug = "PS2:2.ADB 3d to PS2 6b:F3 to F14, brightness down"
+                    Debug = "PS2:3.ADB 3e to PS2 71:F4 to F15, brightness up"
                 }
                 Else
                 {

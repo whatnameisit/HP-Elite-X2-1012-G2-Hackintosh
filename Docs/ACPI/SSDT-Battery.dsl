@@ -205,7 +205,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XACW ())
+                Return (XACW ())
             }
         }
 
@@ -232,7 +232,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XBAW ())
+                Return (XBAW ())
             }
         }
 
@@ -286,7 +286,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XTIF ())
+                Return (XTIF (Arg0))
             }
         }
 
@@ -377,7 +377,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XTST ())
+                Return (XTST (Arg0, Arg1))
             }
         }
 
@@ -399,7 +399,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                \_SB.PCI0.LPCB.EC0.XTLB ()
+                XTLB ()
             }
         }
 
@@ -546,7 +546,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XBTI ())
+                Return (XBTI (Arg0))
             }
         }
 
@@ -641,7 +641,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XBTC ())
+                Return (XBTC ())
             }
         }
 
@@ -847,7 +847,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.SXTC ())
+                Return (SXTC (Arg0, Arg1, Arg2))
             }
         }
 
@@ -902,7 +902,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_SB.PCI0.LPCB.EC0.XTIX ())
+                Return (\_SB.PCI0.LPCB.EC0.XTIX (Arg0))
             }
         }
     }
@@ -925,7 +925,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
             Else
             {
-                Return (\_TZ.XXGC ())
+                Return (XXGC ())
             }
         }
     }
@@ -936,12 +936,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         {
             Local0 = ^PCI0.LPCB.EC0.BTST (Arg0, One)
             If ((Local0 == Zero)){}
-            // Sleep on low battery(SOLB)
             SOLB (Arg0)
             Return (DerefOf (NBST [Arg0]))
         }
 
-        // This toggle key can be switched in SSDT-INIT.dsl.
         Name (SLBV, Zero)
         Method (MSGB, 0, NotSerialized)
         {
@@ -955,28 +953,22 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
             }
         }
 
-        // SOLB
         Method (SOLB, 1, NotSerialized)
         {
             If (SLBV = One)
             {
-                // If discharging,
                 If ((DerefOf (DerefOf (NBST [Arg0]) [Zero]) & One
                     ))
                 {
-                    // store 20 % battery capacity into Local2
                     Divide (DerefOf (DerefOf (NBTE [Arg0]) [0x02]), 0x0A, Local0, 
                         Local1)
                     Local1 *= 0x02
-                    // If current capacity is less than 20 % battery capacity,
                     If ((DerefOf (DerefOf (NBST [Arg0]) [0x02]) < Local1))
                     {
-                        // sleep.
                         Notify (SLPB, 0x80) // Status Change
                     }
                 }
             }
-            // Don't do anything if SLBV is not set.
             Else
             {
             }

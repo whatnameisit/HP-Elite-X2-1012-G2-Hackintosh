@@ -17,7 +17,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
     External (_SB_.SLBV, IntObj)
     External (HPTE, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
-    External (OSYS, FieldUnitObj)
     External (STAS, FieldUnitObj)
 
     Method (\_SB.PCI0._INI, 0, Serialized)  // _INI: Initialize
@@ -25,11 +24,6 @@ DefinitionBlock ("", "SSDT", 2, "what", "INIT", 0x00001000)
         XINI ()
         If (OSDW ())
         {
-            // Some ACPI code checks for operating system identification to enable or disable certain features such as touchscreen functionality.
-            // Wacom touchscreen is enabled on Windows 2015 (Windows 10), and so forcing Windows 2015 ID on macOS here will enable touchscreen used with the right kexts.
-            // More exploration is needed as there are other unknown code that checks for OS version such as Method GTOS.
-            // https://www.tonymacx86.com/threads/hp-zbook-video-mux-control.316221/
-            OSYS = 0x07DF
             // HPTE is used in HPET._STA for it to return false when set to zero to match MacBookPro14,1.
             HPTE = Zero
             // STAS is used in RTC._STA for it to return true when set to one to force enable legacy RTC.

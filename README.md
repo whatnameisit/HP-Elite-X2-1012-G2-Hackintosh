@@ -56,6 +56,8 @@ In progress
 - [x] DP-Alt mode to output to secondary screen.
   - [x] ~~It sometimes fails to output after wake which works again if unplugged and reconnected.~~ Progress in Thunderbolt 3 may have improved interaction with the graphics; The screen output is always recognized.
   - [ ] With or without the Thunderbolt work, sound output to secondary monitor is not always recognized. It seems it is recognized only if the laptop enters clamshell mode after which the sound works whether the laptop stays or exits the aforementioned mode thereafter. This may require AppleALC rewrite which I have no knowledge of.
+    - midi1996 says sound output always works, so it may be the USB-C hub that is problematic.
+    - AudioDxe.efi kills sound output no matter what.
 - [ ] Hibernation: Hibernation works, but is accompanied by the RTC power loss (005) error. See [Sleep
 , wake, and hibernation](#sleep-wake-and-hibernation).
 - [ ] Sleep and wake: See [Sleep, wake, and hibernation](#sleep-wake-and-hibernation).
@@ -67,7 +69,7 @@ In progress
 - [ ] Light sensor
 
 ### Not tested
-- WWAN slot. One stock antenna.
+- [ ] WWAN slot. One stock antenna.
 
 ## Installation
 
@@ -111,12 +113,12 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
 ### Sleep, wake, and hibernation
 The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation.
 
-The conflicting RTC regions are at least `58, 59, B0-B3, B7, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
+The conflicting RTC regions are at least `58, 59, 7F-83, B0-B3, B7, DE, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
 
 If USB-C is enabled, wake results in a kernel panic. The current workaround is to enable Thunderbolt related patches. See [SSDT-TbtOnPch.dsl](/Docs/ACPI/SSDT-TbtOnPch.dsl).
 
 ### Sleep on low battery
-The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-BAT.dsl](/Docs/ACPI/SSDT-BAT.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
+The batteries on modern portable devices may wear down quickly if the battery level is below a certain point. I have set the limit on battery level at which the laptop goes to sleep. See the applied SSDT--[SSDT-Battery.dsl](/Docs/ACPI/SSDT-Battery.dsl)--and background reading on how to implement such patch--[Battery: Hibernate at low battery level](https://github.com/whatnameisit/Asus-Vivobook-X510UA-BQ490-Hackintosh/blob/master/Docs/Battery/hibernate-at-low-battery-level.md).
 
 ### Modern Standby
 Modern Standby, or Windows Sleep, is not supported on macOS. It needs to be disabled for actual sleep and wake.
