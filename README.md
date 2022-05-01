@@ -98,9 +98,13 @@ Necessary options are commented in the photos below. You can pick other options 
 HP has hidden the MSR 0xE2 register (option to lock or unlock CFG) to average users. To unlock, you will have to reverse engineer the UEFI BIOS and/or heavily mod it. Use `AppleXcpmCfgLock` Quirk as a workaround which is already applied in config.plist.
 
 ### Disable Windows 10 ALPS keyboard driver
-Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS. I have disabled this driver and cannot find where the device went, so no pictures.
+Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks the functionality of native brightness control keys in macOS. It is necessary that this driver is disabled, so that the keys work as they should in macOS.
 1. Open up Device Manager in Windows 10. Shortcut: Press the `Windows key` + `x` and `m`.
 2. Look for an "HID keyboard device" with "ALPS" identifier under "Keyboards." You will need to check each of them with double click to display more information.
+<details>
+ <summary>Device Manager screenshot</summary>
+  <img src="/images/devicemanager-keyboards.webp" title="Device Manager - Keyboards"/>
+</details>
 3. Right-click on the "HID keyboard device" with "ALPS" identifier, choose "Update driver," choose "Browse my computer for drivers," and choose "Let me pick from a list of available drivers on my computer."
 4. Choose the driver that is not currently selected, and hit "Next." Installation will occur.
 5. After the installation, shut down the laptop, and press hold the power button for about 30 seconds, so that the keyboard firmware resets.
