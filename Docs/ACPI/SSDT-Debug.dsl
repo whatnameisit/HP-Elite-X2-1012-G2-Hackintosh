@@ -3,13 +3,13 @@
  * One is to reroute borked vendor ADBG method that references non-existent MDBG method. Type "log show --last boot --predicate 'process == "kernel" AND senderImagePath CONTAINS "AppleACPIPlatform"' --style compact | awk '/ACPI Debug/{getline; getline; print}'" in the terminal for output.
  * And the other is to add RehabMan's ACPIDebug methods. To actually make use of it, read here: https://github.com/RehabMan/OS-X-ACPI-Debug.
  *
- * In config.plist ACPI/Patch
+ * config.plist ACPI/Patch
  * Comment: Enable debug messages: M(ADBG) to XDBG
  * Count:   1
  * Find:    41 44 42 47 09
  * Replace: 58 44 42 47 09
  *
- * In config.plist NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82
+ * config.plist NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82
  * boot-args: acpi_layer=0x8 acpi_level=0x2
  */
 DefinitionBlock ("", "SSDT", 0, "what", "DEBUG", 0)
