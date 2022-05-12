@@ -32,6 +32,14 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Allows quiet and smooth fan</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-FAN.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>Assign multiple variables during initialization</string>
 				<key>Enabled</key>
 				<true/>
@@ -843,9 +851,29 @@
 				<integer>21</integer>
 			</dict>
 			<key>PciRoot(0x0)/Pci(0x1C,0x4)/Pci(0x0,0x0)</key>
-			<dict/>
-			<key>brcmfx-country</key>
-			<string>#a </string>
+			<dict>
+				<key>brcmfx-country</key>
+				<string>#a </string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x1F,0x0)</key>
+			<dict>
+				<key>ec-device</key>
+				<string>generic</string>
+				<key>fan-count</key>
+				<data>AQAAAA==</data>
+				<key>fan0-addr</key>
+				<data>LgAAAA==</data>
+				<key>fan0-big</key>
+				<data>AAAAAA==</data>
+				<key>fan0-div</key>
+				<data>EQAAAA==</data>
+				<key>fan0-inverse</key>
+				<data>AQAAAA==</data>
+				<key>fan0-mul</key>
+				<data>vgAAAA==</data>
+				<key>fan0-size</key>
+				<data>AQAAAA==</data>
+			</dict>
 		</dict>
 		<key>Delete</key>
 		<dict/>
@@ -937,6 +965,42 @@
 				<true/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/SMCBatteryManager</string>
+				<key>MaxKernel</key>
+				<string></string>
+				<key>MinKernel</key>
+				<string></string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>x86_64</string>
+				<key>BundlePath</key>
+				<string>SMCProcessor.kext</string>
+				<key>Comment</key>
+				<string>Enable CPU sensor reading</string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/SMCProcessor</string>
+				<key>MaxKernel</key>
+				<string></string>
+				<key>MinKernel</key>
+				<string></string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>x86_64</string>
+				<key>BundlePath</key>
+				<string>SMCSuperIO.kext</string>
+				<key>Comment</key>
+				<string>Enable Fan speed reading</string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/SMCSuperIO</string>
 				<key>MaxKernel</key>
 				<string></string>
 				<key>MinKernel</key>
@@ -1729,6 +1793,16 @@
 				<string></string>
 				<key>Path</key>
 				<string>HfsPlus.efi</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Arguments</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string></string>
+				<key>Path</key>
+				<string>HPFanReset.efi</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Arguments</key>
