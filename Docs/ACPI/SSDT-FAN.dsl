@@ -11,7 +11,7 @@
  *                     2. HPFanReset.efi is needed as the driver resets EC for normal behavior on other OS. It is interesting some other vendors may not require resetting EC by an efi driver, such as ASUS.
  *                        https://github.com/RehabMan/HP-ProBook-4x30s-Fan-Reset
  * Note 1: It seems fan control by third-party software, such as iStat Menus or Macs Fan Control is not allowed, neither does it work in Windows.
- * Note 2: The fan may seem to be louder with this patch than without, and I assume it is because the speeds are higher in value with corresponding temperature levels in the tables. Try different values if you don't like it.
+ * Note 2: The fan may seem to be louder with this patch than without, but that is only at high temperature, and I assume it is because the speeds are higher in value with corresponding temperature levels in the tables. Try different values if you don't like it.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "FAN", 0x00000000)
 {
