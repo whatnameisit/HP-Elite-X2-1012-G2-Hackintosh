@@ -19,7 +19,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
             {
                 If ((OSDW () && ~CondRefOf (DSC1)))
                 {
-                Return (0x0F)
+                    Return (0x0F)
                 }
                 Else
                 {
