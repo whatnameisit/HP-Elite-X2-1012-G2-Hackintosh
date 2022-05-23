@@ -1,7 +1,7 @@
 /*
- * This table supposedly helps add AppleVTD support with by deleting Reserved Memory Regions.
- * Note : this is NOT an SSDT, but DMAR, as you can see Signature : "DMAR", and there is no need for a fake DMAC device.
- * Tonyshit needs better people to stop misleading and useless information. Calling this SSDT-DMAR is one.
+ * This table supposedly helps add AppleVTD support by deleting Reserved Memory Regions.
+ * Note : This is NOT an SSDT, but DMAR, as you can see Signature : "DMAR", and there is no need for a fake DMAC device.
+ * Tonyshit needs better people to stop spreading misleading and useless information. Stop calling this SSDT-DMAR for instance.
  */
 
 [000h 0000   4]                    Signature : "DMAR"    [DMA Remapping table]
