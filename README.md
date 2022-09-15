@@ -65,7 +65,7 @@ In progress
 - [ ] Accelerometer and Gyro sensors
 - [ ] DRM contents on Safari: This is limited by non-native IGPU firmware not having Apple keys.
 - [ ] I2C Cameras: Macs have not been shipped with I2C cameras, and currently there are no drivers ported from Linux.
-- [ ] Light sensor
+- [ ] Light sensor: It seems sensor devices are not configured in the universal way, so no support.
 
 ### Not tested
 - [ ] WWAN slot. One stock antenna. The number of antennas could be different on other variants.
