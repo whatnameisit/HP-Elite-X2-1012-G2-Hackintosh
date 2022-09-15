@@ -119,7 +119,7 @@ Windows 10 ALPS keyboard driver writes _something_ to the firmware which breaks 
 ### Sleep, wake, and hibernation
 The Real-Time Clock (RTC) Power Loss (005) error is displayed on HP machines if RTC regions unsupported by the machine are written. This may happen on restart or resume from hibernation.
 
-The conflicting RTC regions are at least `58, 59, 7F-83, B0-B3, B7, DE, DF`. By "at least," I mean it works for regular sleep and wake, but not for resume from hibernation, upon which the very RTC error is displayed.
+The conflicting RTC regions are at least `58, 59, 7F-83, B0-B3, B7, DE, DF`. By "at least," I mean it works for regular sleep and wake; but not for resume from hibernation or OS installations and upgrades, upon which the very RTC error is displayed.
 
 If USB-C is enabled, wake results in a kernel panic. The current workaround is to enable Thunderbolt related patches. See [SSDT-TbtOnPch.dsl](/Docs/ACPI/SSDT-TbtOnPch.dsl).
 
@@ -141,11 +141,11 @@ See this guide for a complete teardown process: [HP Elite x2 1012 G2 Repairabili
 - Note: You do not need a suction cup to remove the display. Just a guitar pick would do.
 
 ### Thunderbolt 3
-There is an immense amount of rich information if you search for native Thunderbolt experiences and solutions on macOS. It is known that correct ACPI and Thunderbolt firmware are needed for fully working Thunderbolt in macOS, both the functionality and power management.
+There is an immense amount of ~~rich but no uniform~~ information if you search for native Thunderbolt experiences and solutions on macOS. It is known that correct ACPI and Thunderbolt firmware are needed for fully working Thunderbolt in macOS, both the functionality and power management.
 
 Incorrect Thunderbolt setup may leave the system in an unstable state, resulting in sleep failures.
 
-Currently in progress.
+Currently in progress: EdwardGeo is looking for a way to apply force power (on/off) controller which is blocked by Thunderbolt security.
 
 ## Troubleshooting
 Read this README _again_, OpenCore's official [Configuration.pdf](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf) and Dortania's [General Troubleshooting](https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html).
