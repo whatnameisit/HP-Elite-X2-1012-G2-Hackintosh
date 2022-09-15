@@ -1,5 +1,5 @@
 /*
- * This SSDT tunes fan to be EXTREMELY quiet at low temperature and allows smooth transition in macOS.
+ * This SSDT tunes the CPU fan to be EXTREMELY quiet at mid to low temperature and allows smooth transition in macOS.
  * The original SSDT can be found in https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch/blob/master/hotpatch/SSDT-FANQ.dsl.
  *
  * Credits: RehabMan for providing the SSDT
@@ -8,10 +8,10 @@
  *
  * Other requirements: 1. ACPIPoller.kext by RehabMan is needed as the kext is the one that executes FCPU Method below.
  *                        https://github.com/RehabMan/OS-X-ACPI-Poller
- *                     2. HPFanReset.efi is needed on as the driver resets EC for normal behavior on other OS. It is interesting some other vendors may not require resetting EC by an efi driver, such as ASUS.
+ *                     2. HPFanReset.efi is needed as the driver resets EC for normal behavior on other OS. It is interesting some other vendors may not require resetting EC by an efi driver, such as ASUS.
  *                        https://github.com/RehabMan/HP-ProBook-4x30s-Fan-Reset
  * Note 1: It seems fan control by third-party software, such as iStat Menus or Macs Fan Control is not allowed, neither does it work in Windows.
- * Note 2: The fan may seem to be louder with this patch than without, and I assume it is because the speeds are higher in value with corresponding temperature levels in the tables. Try different values if you don't like it.
+ * Note 2: The fan may seem to be louder with this patch than without, but that is only at high temperature, and I assume it is because the speeds are higher in value with corresponding temperature levels in the tables. Try different values if you don't like it.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "FAN", 0x00000000)
 {
@@ -27,7 +27,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "FAN", 0x00000000)
     External (_SB_.PCI0.LPCB.EC0_.TEMP, FieldUnitObj)
     External (OSDW, MethodObj)    // 0 Arguments
 
-    Device (CUFA) // CUstom FAn. Don't want any sensor other sensor kexts to attach to the name SMCD.
+    Device (CUFA) // CUstom FAn. Don't want any other sensor kexts to attach to the name SMCD.
     {
         Name (_HID, "FAN00000")  // ACPIPoller.kext scans for this _HID name.
         Method (_STA, 0, NotSerialized)  // _STA: Status
@@ -43,14 +43,14 @@ DefinitionBlock ("", "SSDT", 2, "what", "FAN", 0x00000000)
         }
 
         // Smooth fan table by Don_Grappler
-        Name(FTA1, Package()
+        Name(FTA1, Package() // Temperature table.
         {
             35,  42,  44,  45,  46,  47,  48,  49,  50,  51,
             52,  53,  54,  55,  56,  57,  58,  59,  60,  61,
             62,  63,  64,  65,  66,  67,  68,  69,  70,  71,
             72,  73,  0xFF,
         })
-        Name(FTA2, Package() // inverse
+        Name(FTA2, Package() // Fan speed table. Inverse.
         {
             255, 128, 127, 126, 125, 124, 123, 122, 121, 120,
             119, 118, 117, 116, 115, 113, 111, 109, 107, 102,

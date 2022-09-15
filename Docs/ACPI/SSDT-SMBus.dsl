@@ -1,6 +1,6 @@
 /*
  * This SSDT allows SMBus compatibility on macOS.
- * Note that Device MCHC is defined only if the device is not already occupied by the name DSC1.
+ * Note that Device MCHC is defined only if the device is not already occupied by the name DSC1 in recent UEFI.
  * The necessity of this SSDT is questionable since AppleSMBusControllerICH is not loaded on MBP14,1.
  */
 DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
@@ -19,7 +19,7 @@ DefinitionBlock ("", "SSDT", 2, "what", "SBUS", 0x00000000)
             {
                 If ((OSDW () && ~CondRefOf (DSC1)))
                 {
-                Return (0x0F)
+                    Return (0x0F)
                 }
                 Else
                 {
