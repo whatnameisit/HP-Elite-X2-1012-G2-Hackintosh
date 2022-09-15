@@ -941,22 +941,17 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
         }
 
         Name (SLBV, Zero)
-        Method (MSGB, 0, NotSerialized)
+        Name (BCNT, Zero)
+        Method (SOLB, 1, NotSerialized)
         {
             If (SLBV)
             {
-                Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
-            }
-            Else
-            {
-                Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
-            }
-        }
+                If (!BCNT)
+                {
+                    Debug = "BATTERY:SLBV is set, enabling sleep on low battery mode"
+                    BCNT = One
+                }
 
-        Method (SOLB, 1, NotSerialized)
-        {
-            If (SLBV = One)
-            {
                 If ((DerefOf (DerefOf (NBST [Arg0]) [Zero]) & One
                     ))
                 {
@@ -969,8 +964,10 @@ DefinitionBlock ("", "SSDT", 2, "what", "BATTERY", 0x00000000)
                     }
                 }
             }
-            Else
+            ElseIf (!BCNT)
             {
+                Debug = "BATTERY:SLBV is not set, disabling sleep on low battery mode"
+                BCNT = One
             }
         }
     }

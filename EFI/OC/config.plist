@@ -80,6 +80,14 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Fix RTC clock error</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-RTC0.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>Add SMBus compatibility</string>
 				<key>Enabled</key>
 				<true/>
@@ -1048,24 +1056,6 @@
 				<key>Arch</key>
 				<string>x86_64</string>
 				<key>BundlePath</key>
-				<string>RTCMemoryFixup.kext</string>
-				<key>Comment</key>
-				<string>Emulate RTC regions</string>
-				<key>Enabled</key>
-				<true/>
-				<key>ExecutablePath</key>
-				<string>Contents/MacOS/RTCMemoryFixup</string>
-				<key>MaxKernel</key>
-				<string></string>
-				<key>MinKernel</key>
-				<string></string>
-				<key>PlistPath</key>
-				<string>Contents/Info.plist</string>
-			</dict>
-			<dict>
-				<key>Arch</key>
-				<string>x86_64</string>
-				<key>BundlePath</key>
 				<string>FeatureUnlock.kext</string>
 				<key>Comment</key>
 				<string>Enable AirPlay and others</string>
@@ -1597,7 +1587,7 @@
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
 				<key>boot-args</key>
-				<string>msgbuf=10485760 -rtcfxdbg rtcfx_exclude=58,59,7F-83,B0-B3,B7,DE,DF -disable_nightshift _disable_uni_control acpi_layer=0x8 acpi_level=0x2 debug=0x100 keepsyms=1 </string>
+				<string>msgbuf=10485760 -disable_nightshift _disable_uni_control acpi_layer=0x8 acpi_level=0x2 debug=0x100 keepsyms=1 </string>
 				<key>csr-active-config</key>
 				<data>AAAAAA==</data>
 				<key>prev-lang:kbd</key>
