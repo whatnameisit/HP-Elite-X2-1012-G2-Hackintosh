@@ -75,6 +75,8 @@ In progress
 ### Install macOS
 Follow [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/).
 
+- Note: Even if you read through the above guide, this repository only provides source and base files for pretty much my own documentation purposes. You need to gather other necessary files from other places.
+
 ### UEFI BIOS settings
 Necessary options are commented in the photos below. You can pick other options to your taste.
 <details>
