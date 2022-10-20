@@ -128,14 +128,6 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Change _WED&apos;s return object type from buffer to int to satisfy VoodooWMI.kext</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-_WED.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>Testing TB3</string>
 				<key>Enabled</key>
 				<true/>
@@ -712,36 +704,6 @@
 				<data></data>
 				<key>Skip</key>
 				<integer>5</integer>
-				<key>TableLength</key>
-				<integer>0</integer>
-				<key>TableSignature</key>
-				<data></data>
-			</dict>
-			<dict>
-				<key>Base</key>
-				<string></string>
-				<key>BaseSkip</key>
-				<integer>0</integer>
-				<key>Comment</key>
-				<string>_WED: M(_WED) to XWED in WMIV</string>
-				<key>Count</key>
-				<integer>1</integer>
-				<key>Enabled</key>
-				<true/>
-				<key>Find</key>
-				<data>X1dFRA==</data>
-				<key>Limit</key>
-				<integer>0</integer>
-				<key>Mask</key>
-				<data></data>
-				<key>OemTableId</key>
-				<data></data>
-				<key>Replace</key>
-				<data>WFdFRA==</data>
-				<key>ReplaceMask</key>
-				<data></data>
-				<key>Skip</key>
-				<integer>1</integer>
 				<key>TableLength</key>
 				<integer>0</integer>
 				<key>TableSignature</key>
